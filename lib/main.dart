@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:salmonia_android/generated/l10n.dart';
 import 'package:salmonia_android/ui/all.dart';
 
 void main() => runApp(MyApp());
@@ -8,6 +10,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: <LocalizationsDelegate<dynamic>>[
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        S.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
       title: 'Salmonia',
       theme: ThemeData(
         primarySwatch: Colors.teal,
@@ -57,11 +66,11 @@ class _MyHomePageState extends State<MyHomePage> {
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(FontAwesomeIcons.list),
-              title: Text('Results'),
+              title: Text(S.of(context).results),
             ),
             BottomNavigationBarItem(
               icon: Icon(FontAwesomeIcons.snowflake),
-              title: Text('Salmon Stats'),
+              title: Text(S.of(context).salmonStats),
             ),
           ],
         ),
