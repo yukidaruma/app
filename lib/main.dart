@@ -40,15 +40,13 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Salmonia'),
-      ),
       body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
         onPageChanged: (int newPage) => _destinationPageIndex = newPage,
         controller: _pageController,
         children: <Widget>[
-          Text('Results'),
-          Text('Salmon Stats'),
+          ResultsPage(),
+          const SalmonStatsPage(),
         ],
       ),
       bottomNavigationBar: AnimatedBuilder(
