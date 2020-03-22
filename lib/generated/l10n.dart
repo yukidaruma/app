@@ -61,6 +61,24 @@ class S {
       args: [],
     );
   }
+
+  String get clear {
+    return Intl.message(
+      'Clear',
+      name: 'clear',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get fail {
+    return Intl.message(
+      'Fail',
+      name: 'fail',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

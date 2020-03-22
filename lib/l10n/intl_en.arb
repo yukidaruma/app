@@ -6,5 +6,7 @@
 
   "$todo": "TODO: Use comment instead of $comment",
   "$comment2": "These values are used globally. DO NOT TRANSLATE.",
-  "salmonStats": "Salmon Stats"
+  "salmonStats": "Salmon Stats",
+  "clear": "Clear",
+  "fail": "Fail"
 }

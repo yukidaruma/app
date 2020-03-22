@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:salmonia_android/model/all.dart';
 import 'package:salmonia_android/repository/splatnet_repository.dart';
 import 'package:salmonia_android/store/global.dart';
 import 'package:salmonia_android/ui/all.dart';
@@ -9,7 +10,7 @@ class ResultsPage extends StatefulWidget {
 }
 
 class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClientMixin<ResultsPage> {
-  Future<Map<String, dynamic>> _resultsFuture;
+  Future<SalmonResults> _resultsFuture;
 
   @override
   bool get wantKeepAlive => true;
@@ -27,9 +28,27 @@ class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClient
 
     return Scaffold(
       appBar: AppBar(title: Text(S.of(context).navResults)),
-      body: FutureBuilderWrapper<Map<String, dynamic>>(
+      body: FutureBuilderWrapper<SalmonResults>(
         future: _resultsFuture,
-        builder: (_, Map<String, dynamic> res) => Text(res.toString()),
+        builder: (_, SalmonResults results) {
+          return ListView.builder(
+            itemBuilder: (_, int i) {
+              final SalmonResult result = results.results[i];
+
+              return Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Text('${result.jobId}'),
+                      Text(result.jobResult.isClear ? S.of(context).clear : S.of(context).fail),
+                    ],
+                  ),
+                ],
+              );
+            },
+            itemCount: results.results.length,
+          );
+        },
         errorBuilder: (_, __) => ErrorText(S.of(context).resultsFetchingError),
       ),
     );

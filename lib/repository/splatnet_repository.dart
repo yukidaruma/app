@@ -1,7 +1,9 @@
 import 'package:cookie_jar/cookie_jar.dart';
+import 'package:dart_json_mapper/dart_json_mapper.dart';
 import 'package:dio/dio.dart';
 import 'package:salmonia_android/api_provider.dart';
 import 'package:salmonia_android/config.dart';
+import 'package:salmonia_android/model/all.dart';
 
 final RequestOptions _options = RequestOptions(
   headers: <String, String>{
@@ -17,11 +19,16 @@ final RequestOptions _options = RequestOptions(
   },
 );
 
+const _serializeOptions = SerializationOptions(caseStyle: CaseStyle.Snake);
+
 class SplatnetAPIRepository {
   SplatnetAPIRepository(CookieJar cookieJar) : _provider = SplatnetAPIProvider(cookieJar);
 
   final SplatnetAPIProvider _provider;
 
-  Future<Map<String, dynamic>> fetchResults() => _provider.get('/coop_results', _options);
-  Future<Map<String, dynamic>> fetchResult(int resultId) => _provider.get('/coop_results/$resultId', _options);
+  Future<SalmonResults> fetchResults() {
+    return _provider.get('/coop_results', _options).then((String data) => JsonMapper.deserialize<SalmonResults>(data, _serializeOptions));
+  }
+
+//  Future<Map<String, dynamic>> fetchResult(int resultId) => _provider.get('/coop_results/$resultId', _options);
 }
