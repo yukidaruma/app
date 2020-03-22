@@ -38,9 +38,20 @@ class S {
     );
   }
 
+  // skipped getter for the '\$comment1' key
+
+  String get resultsFetchingError {
+    return Intl.message(
+      'Failed to fetch results from Splatnet.',
+      name: 'resultsFetchingError',
+      desc: '',
+      args: [],
+    );
+  }
+
   // skipped getter for the '\$todo' key
 
-  // skipped getter for the '\$comment1' key
+  // skipped getter for the '\$comment2' key
 
   String get salmonStats {
     return Intl.message(

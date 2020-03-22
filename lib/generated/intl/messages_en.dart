@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "navResults" : MessageLookupByLibrary.simpleMessage("Results"),
+    "resultsFetchingError" : MessageLookupByLibrary.simpleMessage("Failed to fetch results from Splatnet."),
     "salmonStats" : MessageLookupByLibrary.simpleMessage("Salmon Stats")
   };
 }
