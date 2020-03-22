@@ -1,10 +1,44 @@
+import 'dart:io';
+
+import 'package:cookie_jar/cookie_jar.dart';
+import 'package:dart_json_mapper/dart_json_mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:salmonia_android/config.dart';
 import 'package:salmonia_android/generated/l10n.dart';
+import 'package:salmonia_android/main.reflectable.dart' show initializeReflectable;
+import 'package:salmonia_android/model/all.dart';
+import 'package:salmonia_android/store/global.dart';
 import 'package:salmonia_android/ui/all.dart';
 
-void main() => runApp(MyApp());
+Future<void> main() async {
+  initializeReflectable();
+
+
+  GlobalStore.cookieJar = await _loadCookieJar();
+
+  JsonMapper().useAdapter(
+    JsonMapperAdapter(
+      valueDecorators: {
+        typeOf<List<IdEntity>>(): (dynamic value) => value.cast<IdEntity>(),
+      },
+    ),
+  );
+
+  runApp(MyApp());
+}
+
+Future<CookieJar> _loadCookieJar() async {
+  // TODO: load from persistent storage
+
+  final CookieJar cookieJar = CookieJar();
+  cookieJar.saveFromResponse(Uri.parse(Config.SPLATNET_API_ORIGIN), <Cookie>[
+    Cookie('iksm_session', Config.DEV_IKSM_SESSION),
+  ]);
+
+  return cookieJar;
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -66,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(FontAwesomeIcons.list),
-              title: Text(S.of(context).results),
+              title: Text(S.of(context).navResults),
             ),
             BottomNavigationBarItem(
               icon: Icon(FontAwesomeIcons.snowflake),

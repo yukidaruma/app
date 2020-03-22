@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
@@ -27,34 +25,34 @@ abstract class _APIProvider<T, U> {
   }
 }
 
-class SalmonStatsAPIProvider extends _APIProvider<String, Map<String, dynamic>> {
+class SalmonStatsAPIProvider extends _APIProvider<String, String> {
   @override
   // ignore: avoid_renaming_method_parameters
-  Future<Map<String, dynamic>> get(String path, [_]) => super.get(Config.SALMON_STATS_API_ORIGIN + path);
+  Future<String> get(String path, [_]) => super.get(Config.SALMON_STATS_API_ORIGIN + path);
 
   @override
-  Map<String, dynamic> parseResponse(Response<String> response) {
+  String parseResponse(Response<String> response) {
     switch (response.statusCode) {
       case 200:
-        return Map<String, dynamic>.from(json.decode(response.data) as Map<dynamic, dynamic>);
+        return response.data;
       default:
         throw APIException.salmonStats('Status Code ${response.statusCode}');
     }
   }
 }
 
-class SplatnetAPIProvider extends _APIProvider<String, Map<String, dynamic>> {
+class SplatnetAPIProvider extends _APIProvider<String, String> {
   SplatnetAPIProvider(CookieJar cookieJar) : super(cookieJar);
 
   @override
   // ignore: avoid_renaming_method_parameters
-  Future<Map<String, dynamic>> get(String path, [RequestOptions options]) => super.get(Config.SPLATNET_API_ORIGIN + path, options);
+  Future<String> get(String path, [RequestOptions options]) => super.get(Config.SPLATNET_API_ORIGIN + path, options);
 
   @override
-  Map<String, dynamic> parseResponse(Response<String> response) {
+  String parseResponse(Response<String> response) {
     switch (response.statusCode) {
       case 200:
-        return Map<String, dynamic>.from(json.decode(response.data) as Map<dynamic, dynamic>);
+        return response.data;
       default:
         throw APIException.splatnet('Status Code ${response.statusCode}');
     }

@@ -37,6 +37,7 @@ analyzer:
     sdk_version_async_exported_from_core: ignore
   exclude:
     - "lib/generated/*"
+    - "lib/**/*.reflectable.dart"
 
 linter:
   rules:
@@ -101,7 +102,7 @@ linter:
     - empty_constructor_bodies
     - empty_statements
     # - file_names # not yet tested
-    - flutter_style_todos
+    # - flutter_style_todos # Disabled for this project
     - hash_and_equals
     - implementation_imports
     # - invariant_booleans # too many false positives: https://github.com/dart-lang/linter/issues/811
