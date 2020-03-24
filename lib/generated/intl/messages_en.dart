@@ -26,6 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "navResults" : MessageLookupByLibrary.simpleMessage("Results"),
     "resultsFetchingError" : MessageLookupByLibrary.simpleMessage("Failed to fetch results from Splatnet."),
     "salmonStats" : MessageLookupByLibrary.simpleMessage("Salmon Stats"),
+    "salmonStatsApiToken" : MessageLookupByLibrary.simpleMessage("Salmon Stats\nAPI Token"),
     "settings" : MessageLookupByLibrary.simpleMessage("Settings")
   };
 }

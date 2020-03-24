@@ -88,6 +88,15 @@ class S {
       args: [],
     );
   }
+
+  String get salmonStatsApiToken {
+    return Intl.message(
+      'Salmon Stats\nAPI Token',
+      name: 'salmonStatsApiToken',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

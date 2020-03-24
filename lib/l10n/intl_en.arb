@@ -8,5 +8,6 @@
   "clear": "Clear",
   "fail": "Fail",
   "navResults": "Results",
-  "salmonStats": "Salmon Stats"
+  "salmonStats": "Salmon Stats",
+  "salmonStatsApiToken": "Salmon Stats\nAPI Token"
 }

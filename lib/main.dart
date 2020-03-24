@@ -9,10 +9,14 @@ import 'package:salmonia_android/generated/l10n.dart';
 import 'package:salmonia_android/main.reflectable.dart' show initializeReflectable;
 import 'package:salmonia_android/model/all.dart';
 import 'package:salmonia_android/store/global.dart';
+import 'package:salmonia_android/store/shared_prefs.dart';
 import 'package:salmonia_android/ui/all.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   initializeReflectable();
+  await AppSharedPrefs.load();
 
   GlobalStore.cookieJar = await _loadCookieJar();
 
