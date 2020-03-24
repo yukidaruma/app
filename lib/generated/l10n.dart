@@ -29,15 +29,6 @@ class S {
 
   final String localeName;
 
-  String get navResults {
-    return Intl.message(
-      'Results',
-      name: 'navResults',
-      desc: '',
-      args: [],
-    );
-  }
-
   // skipped getter for the '\$comment1' key
 
   String get resultsFetchingError {
@@ -49,18 +40,18 @@ class S {
     );
   }
 
-  // skipped getter for the '\$todo' key
-
-  // skipped getter for the '\$comment2' key
-
-  String get salmonStats {
+  String get settings {
     return Intl.message(
-      'Salmon Stats',
-      name: 'salmonStats',
+      'Settings',
+      name: 'settings',
       desc: '',
       args: [],
     );
   }
+
+  // skipped getter for the '\$todo' key
+
+  // skipped getter for the '\$comment2' key
 
   String get clear {
     return Intl.message(
@@ -75,6 +66,24 @@ class S {
     return Intl.message(
       'Fail',
       name: 'fail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get navResults {
+    return Intl.message(
+      'Results',
+      name: 'navResults',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get salmonStats {
+    return Intl.message(
+      'Salmon Stats',
+      name: 'salmonStats',
       desc: '',
       args: [],
     );

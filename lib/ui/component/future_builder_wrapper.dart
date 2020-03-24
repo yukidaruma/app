@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:salmonia_android/ui/all.dart';
 
 typedef _AsyncBuilder<T> = Widget Function(BuildContext context, T response);
 typedef ErrorMessageBuilder = Widget Function(BuildContext context, Object error);

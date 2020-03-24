@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:salmonia_android/ui/styles.dart';
+import 'package:salmonia_android/ui/all.dart';
 
 class ErrorText extends StatelessWidget {
   const ErrorText(this.text);

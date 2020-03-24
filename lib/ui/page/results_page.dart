@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:salmonia_android/api.dart';
 import 'package:salmonia_android/model/all.dart';
 import 'package:salmonia_android/repository/salmon_stats_repository.dart';

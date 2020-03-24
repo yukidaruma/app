@@ -1,2 +1,5 @@
 {
+  "$comment1": "Error messages",
+  "resultsFetchingError": "Splatnetからリザルトを取得できませんでした。",
+  "settings": "設定"
 }

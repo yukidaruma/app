@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dart_json_mapper/dart_json_mapper.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:salmonia_android/config.dart';
@@ -14,7 +13,6 @@ import 'package:salmonia_android/ui/all.dart';
 
 Future<void> main() async {
   initializeReflectable();
-
 
   GlobalStore.cookieJar = await _loadCookieJar();
 
@@ -83,6 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const PrimaryDrawer(),
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         onPageChanged: (int newPage) => _destinationPageIndex = newPage,

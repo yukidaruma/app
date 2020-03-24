@@ -1,12 +1,12 @@
 {
-  "navResults": "Results",
-
   "$comment1": "Error messages",
   "resultsFetchingError": "Failed to fetch results from Splatnet.",
+  "settings": "Settings",
 
   "$todo": "TODO: Use comment instead of $comment",
   "$comment2": "These values are used globally. DO NOT TRANSLATE.",
-  "salmonStats": "Salmon Stats",
   "clear": "Clear",
-  "fail": "Fail"
+  "fail": "Fail",
+  "navResults": "Results",
+  "salmonStats": "Salmon Stats"
 }
