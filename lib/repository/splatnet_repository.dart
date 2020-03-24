@@ -30,5 +30,5 @@ class SplatnetAPIRepository {
     return _provider.get('/coop_results', _options).then((String data) => JsonMapper.deserialize<SalmonResults>(data, _serializeOptions));
   }
 
-//  Future<Map<String, dynamic>> fetchResult(int resultId) => _provider.get('/coop_results/$resultId', _options);
+  Future<String> fetchResult(int jobId) => _provider.get('/coop_results/$jobId', _options);
 }

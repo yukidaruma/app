@@ -1,6 +1,7 @@
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:flutter/widgets.dart' show mustCallSuper;
 import 'package:salmonia_android/config.dart';
 
 abstract class _APIProvider<T, U> {
@@ -19,8 +20,19 @@ abstract class _APIProvider<T, U> {
 
   U parseResponse(Response<T> response);
 
+  @mustCallSuper
   Future<U> get(String url, [RequestOptions options]) async {
     final Response<T> response = await _dio.get<T>(url, options: options);
+    return parseResponse(response);
+  }
+
+  @mustCallSuper
+  Future<U> postJson(String url, Map<String, dynamic> payload, [RequestOptions options]) async {
+    final Response<T> response = await _dio.post<T>(
+      url,
+      data: payload,
+      options: options..contentType = 'application/json',
+    );
     return parseResponse(response);
   }
 }
@@ -29,6 +41,10 @@ class SalmonStatsAPIProvider extends _APIProvider<String, String> {
   @override
   // ignore: avoid_renaming_method_parameters
   Future<String> get(String path, [_]) => super.get(Config.SALMON_STATS_API_ORIGIN + path);
+
+  @override
+  // ignore: avoid_renaming_method_parameters
+  Future<String> postJson(String path, Map<String, dynamic> payload, [RequestOptions options]) => super.postJson(Config.SALMON_STATS_API_ORIGIN + path, payload, options);
 
   @override
   String parseResponse(Response<String> response) {
