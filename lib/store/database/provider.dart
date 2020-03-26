@@ -1,10 +1,19 @@
 import 'package:path/path.dart';
+import 'package:salmonia_android/logger.dart';
 import 'package:salmonia_android/store/database/all.dart';
+import 'package:salmonia_android/store/database/user_profile.dart';
 
 // ignore_for_file: always_specify_types
 
 // TODO
-const int DB_SCHEMA_VERSION = 0;
+const int DB_SCHEMA_VERSION = 1;
+
+final migrations = <int, List<Dao<dynamic>>>{
+  1: [
+    UserProfileDao(),
+  ],
+  // TODO
+};
 
 class DatabaseProvider {
   DatabaseProvider._();
@@ -24,30 +33,43 @@ class DatabaseProvider {
   }
 
   Future<void> _init() async {
-    final migrations = <int, List<Dao<dynamic>>>{
-      // TODO
-      1: [],
-    };
+    Future<void> runMigrations(Database db, bool Function(int migratingVersion) runPredicate) async {
+      for (final MapEntry<int, List<Dao>> entry in migrations.entries) {
+        final int migratingVersion = entry.key;
+        if (!runPredicate(migratingVersion)) {
+          continue;
+        }
+
+        final List<Dao> entities = entry.value;
+
+        debug('Running migration $migratingVersion');
+        debug('Creating table(s): ${entities.map((Dao entity) => entity.tableName).join(',')}');
+
+        await Future.forEach<String>(
+          entities.map((Dao entity) => entity.createTableQuery),
+          db.execute,
+        );
+      }
+    }
 
     final String databasesPath = await getDatabasesPath();
+    // TODO
     final String path = join(databasesPath, 'salmonia-test.db');
 
     _db = await openDatabase(
       path,
       version: DB_SCHEMA_VERSION,
-      onCreate: (Database db, int oldVersion) async {
-        if (oldVersion > DB_SCHEMA_VERSION) {
-          return;
-        }
-
-        for (final MapEntry<int, List<Dao>> entry in migrations.entries) {
-          final int migrationVersion = entry.key;
-          final List<Dao> entities = entry.value;
-
-          if (migrationVersion > oldVersion) {
-            entities.map((Dao entity) => entity.createTableQuery).forEach(db.execute);
-          }
-        }
+      onCreate: (Database db, int version) async {
+        runMigrations(
+          db,
+          (int version) => version <= DB_SCHEMA_VERSION,
+        );
+      },
+      onUpgrade: (Database db, int oldVersion, _) {
+        runMigrations(
+          db,
+          (int version) => oldVersion < version && version <= DB_SCHEMA_VERSION,
+        );
       },
     );
   }

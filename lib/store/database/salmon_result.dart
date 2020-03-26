@@ -10,7 +10,7 @@ class SalmonResultDao extends Dao<SalmonResult> with JsonMapperDaoMixin<SalmonRe
   String get createTableQuery => throw UnimplementedError();
 }
 
-class SalmonResultRepository extends AbstractCRUDRepository<SalmonResultDao> {
+class SalmonResultRepository extends AbstractCRUDRepository<SalmonResult, SalmonResultDao> {
   SalmonResultRepository(DatabaseProvider databaseProvider) : super(databaseProvider);
 
   @override

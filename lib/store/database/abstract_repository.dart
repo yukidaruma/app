@@ -9,27 +9,29 @@ abstract class AbstractRepository<T extends Dao<dynamic>> {
   DatabaseProvider get databaseProvider => _databaseProvider;
 }
 
-abstract class AbstractCRUDRepository<T extends Dao<dynamic>> extends AbstractRepository<T> implements Gettable<T>, Deletable<T>, Savable<T> {
+abstract class AbstractCRUDRepository<E, T extends Dao<dynamic>> extends AbstractRepository<T> implements Gettable<E>, Deletable<E>, Savable<E> {
   AbstractCRUDRepository(DatabaseProvider databaseProvider) : super(databaseProvider);
 
+  String get singleWhereClause => '${dao.primaryKey} = ?';
+
   @override
-  Future<void> deleteById(int id) async {
+  Future<void> deleteById(dynamic id) async {
     final Database db = await databaseProvider.db();
 
     return db.delete(
       dao.tableName,
-      where: 'id = ?',
+      where: singleWhereClause,
       whereArgs: <dynamic>[id],
     );
   }
 
   @override
-  Future<T> get(int id) async {
+  Future<E> get(dynamic id) async {
     final Database db = await databaseProvider.db();
 
     final List<Map<String, dynamic>> result = await db.query(
       dao.tableName,
-      where: 'id = ?',
+      where: singleWhereClause,
       whereArgs: <dynamic>[id],
     );
 
@@ -37,21 +39,21 @@ abstract class AbstractCRUDRepository<T extends Dao<dynamic>> extends AbstractRe
   }
 
   @override
-  Future<T> getOrFail(int id) async {
-    final T entity = await get(id);
+  Future<E> getOrFail(dynamic id) async {
+    final E entity = await get(id);
 
     if (entity == null) {
-      throw Exception('Entity id: $id was not found.');
+      throw Exception('Entity id $id was not found.');
     }
 
     return entity;
   }
 
   @override
-  Future<int> save(T entity) async {
+  Future<int> save(E entity) async {
     final Database db = await databaseProvider.db();
 
-    return db.update(
+    return db.insert(
       dao.tableName,
       dao.toMap(entity),
       conflictAlgorithm: ConflictAlgorithm.replace,
@@ -59,15 +61,15 @@ abstract class AbstractCRUDRepository<T extends Dao<dynamic>> extends AbstractRe
   }
 }
 
-abstract class Deletable<T extends Dao<dynamic>> {
-  Future<void> deleteById(int id);
+abstract class Deletable<E> {
+  Future<void> deleteById(dynamic id);
 }
 
-abstract class Gettable<T extends Dao<dynamic>> {
-  Future<T> get(int id);
-  Future<T> getOrFail(int id);
+abstract class Gettable<E> {
+  Future<E> get(dynamic id);
+  Future<E> getOrFail(dynamic id);
 }
 
-abstract class Savable<T extends Dao<dynamic>> {
-  Future<int> save(T entity);
+abstract class Savable<E> {
+  Future<int> save(E entity);
 }
