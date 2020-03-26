@@ -19,15 +19,13 @@ final RequestOptions _options = RequestOptions(
   },
 );
 
-const _serializeOptions = SerializationOptions(caseStyle: CaseStyle.Snake);
-
 class SplatnetAPIRepository {
   SplatnetAPIRepository(CookieJar cookieJar) : _provider = SplatnetAPIProvider(cookieJar);
 
   final SplatnetAPIProvider _provider;
 
   Future<SalmonResults> fetchResults() {
-    return _provider.get('/coop_results', _options).then((String data) => JsonMapper.deserialize<SalmonResults>(data, _serializeOptions));
+    return _provider.get('/coop_results', _options).then((String data) => JsonMapper.deserialize<SalmonResults>(data, DEFAULT_SERIALIZE_OPTIONS));
   }
 
   Future<String> fetchResult(int jobId) => _provider.get('/coop_results/$jobId', _options);
