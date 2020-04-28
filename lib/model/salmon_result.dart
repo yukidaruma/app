@@ -78,5 +78,5 @@ class ResultDetails {
   // player_type: { style: 'girl' | 'boy'; species: 'inklings' | 'octolings'; };
   IdEntity special;
   List<int> specialCounts;
-  List<IdEntity> weaopnLsit;
+  List<IdEntity> weaponList;
 }

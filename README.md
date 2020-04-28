@@ -3,5 +3,5 @@
 ## Generating code
 
 ```sh
-pub run build_runner watch
+flutter pub pub run build_runner watch
 ```

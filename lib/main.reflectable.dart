@@ -375,7 +375,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[8],
             const []),
         r.VariableMirrorImpl(
-            r'weaopnLsit',
+            r'weaponList',
             2129925,
             5,
             const prefix0.JsonSerializable(),
@@ -861,7 +861,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null,
             null),
         r.ParameterMirrorImpl(
-            r'_weaopnLsit',
+            r'_weaponList',
             2130022,
             93,
             const prefix0.JsonSerializable(),
@@ -931,7 +931,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'helpCount': (dynamic instance) => instance.helpCount,
         r'special': (dynamic instance) => instance.special,
         r'specialCounts': (dynamic instance) => instance.specialCounts,
-        r'weaopnLsit': (dynamic instance) => instance.weaopnLsit,
+        r'weaponList': (dynamic instance) => instance.weaponList,
         r'bossKillCounts': (dynamic instance) => instance.bossKillCounts
       },
       {
@@ -968,7 +968,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'special=': (dynamic instance, value) => instance.special = value,
         r'specialCounts=': (dynamic instance, value) =>
             instance.specialCounts = value,
-        r'weaopnLsit=': (dynamic instance, value) => instance.weaopnLsit = value
+        r'weaponList=': (dynamic instance, value) => instance.weaponList = value
       },
       null,
       [])
