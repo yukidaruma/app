@@ -1,10 +1,7 @@
 import 'package:salmonia_android/model/all.dart';
 import 'package:salmonia_android/store/database/all.dart';
 
-class UserProfileDao extends Dao<UserProfile> with JsonMapperDaoMixin<UserProfile> {
-  @override
-  String get tableName => 'user_profiles';
-
+class UserProfileDao extends Dao<UserProfile> with ClassNameTableNameMixin, JsonMapperDaoMixin<UserProfile> {
   @override
   String get createTableQuery => '''
   CREATE TABLE $tableName (
