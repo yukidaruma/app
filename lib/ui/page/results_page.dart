@@ -37,19 +37,31 @@ class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClient
             itemBuilder: (_, int i) {
               final SalmonResult result = results.results[i];
 
-              return Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Text('${result.jobId}'),
-                      Text(result.jobResult.isClear ? S.of(context).clear : S.of(context).fail),
-                      IconButton(
-                        icon: Icon(Icons.file_upload),
-                        onPressed: () => _uploadSalmonResult(result.jobId),
-                      ),
-                    ],
-                  ),
-                ],
+              return InkWell(
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ResultPage(result))),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Text('${result.jobId}'),
+                        if (result.jobResult.isClear)
+                          Text(
+                            S.of(context).clear,
+                            style: successTextStyle,
+                          )
+                        else
+                          Text(
+                            S.of(context).fail,
+                            style: failTextStyle,
+                          ),
+                        IconButton(
+                          icon: Icon(Icons.file_upload),
+                          onPressed: () => _uploadSalmonResult(result.jobId),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               );
             },
             itemCount: results.results.length,
@@ -61,7 +73,7 @@ class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClient
   }
 
   Future<void> _uploadSalmonResult(int jobId) async {
-    final Map<String, dynamic> result = json.decode(await SplatnetAPIRepository(GlobalStore.cookieJar).fetchResult(jobId));
+    final Map<String, dynamic> result = json.decode(await SplatnetAPIRepository(GlobalStore.cookieJar).fetchResultAsString(jobId));
     final Map<String, dynamic> payload = <String, dynamic>{
       'results': <dynamic>[result],
     };

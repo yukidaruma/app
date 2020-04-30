@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dart_json_mapper/dart_json_mapper.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:salmonia_android/config.dart';
 import 'package:salmonia_android/generated/l10n.dart';
 import 'package:salmonia_android/main.reflectable.dart' show initializeReflectable;
@@ -26,6 +25,7 @@ Future<void> main() async {
     JsonMapperAdapter(
       valueDecorators: {
         typeOf<List<IdEntity>>(): (dynamic value) => value.cast<IdEntity>(),
+        typeOf<List<ResultDetails>>(): (dynamic value) => value.cast<ResultDetails>(),
       },
     ),
   );

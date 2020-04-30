@@ -56,6 +56,7 @@ class SalmonResult {
   JobResult jobResult;
   int playTime;
   ResultDetails myResult;
+  List<ResultDetails> otherResults;
 }
 
 @jsonSerializable

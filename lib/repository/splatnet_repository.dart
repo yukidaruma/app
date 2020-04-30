@@ -24,9 +24,18 @@ class SplatnetAPIRepository {
 
   final SplatnetAPIProvider _provider;
 
-  Future<SalmonResults> fetchResults() {
-    return _provider.get('/coop_results', _options).then((String data) => JsonMapper.deserialize<SalmonResults>(data, DEFAULT_SERIALIZE_OPTIONS));
+  Future<SalmonResults> fetchResults() async {
+    final String response = await _provider.get('/coop_results', _options);
+    return JsonMapper.deserialize<SalmonResults>(response, DEFAULT_SERIALIZE_OPTIONS);
   }
 
-  Future<String> fetchResult(int jobId) => _provider.get('/coop_results/$jobId', _options);
+  Future<String> fetchResultAsString(int jobId) async {
+    final String response = await _provider.get('/coop_results/$jobId', _options);
+    return response;
+  }
+
+  Future<SalmonResult> fetchResult(int jobId) async {
+    final String response = await fetchResultAsString(jobId);
+    return JsonMapper.deserialize<SalmonResult>(response, DEFAULT_SERIALIZE_OPTIONS);
+  }
 }
