@@ -21,7 +21,7 @@ class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClient
   void initState() {
     super.initState();
 
-    _resultsFuture = SplatnetAPIRepository(GlobalStore.cookieJar).fetchResults();
+    _resultsFuture = SplatnetAPIRepository(context.read<GlobalStore>().cookieJar).fetchResults();
   }
 
   @override
@@ -73,7 +73,8 @@ class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClient
   }
 
   Future<void> _uploadSalmonResult(int jobId) async {
-    final Map<String, dynamic> result = json.decode(await SplatnetAPIRepository(GlobalStore.cookieJar).fetchResultAsString(jobId));
+    final String response = await SplatnetAPIRepository(context.read<GlobalStore>().cookieJar).fetchResultAsString(jobId);
+    final Map<String, dynamic> result = json.decode(response);
     final Map<String, dynamic> payload = <String, dynamic>{
       'results': <dynamic>[result],
     };

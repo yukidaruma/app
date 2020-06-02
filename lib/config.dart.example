@@ -10,6 +10,7 @@ class Config {
   static const String SALMON_IMAGE_BASE_PATH = 'https://splatoon-stats-api.yuki.games/static/images';
 
   // Splatnet related configurations
-  static const String SPLATNET_API_ORIGIN = 'https://app.splatoon2.nintendo.net/api';
+  static const String SPLATNET_ORIGIN = 'https://app.splatoon2.nintendo.net';
+  static const String SPLATNET_API_ORIGIN = '$SPLATNET_ORIGIN/api';
   static const String SPLATNET_USER_AGENT = 'OnlineLounge/1.6.1.2 NASDKAPI Android';
 }

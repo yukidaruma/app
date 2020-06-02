@@ -16,12 +16,8 @@ mixin JsonMapperDaoMixin<T> {
         final String key = entry.key;
         final dynamic value = entry.value;
 
-        if (key.endsWith('bool') && value is String) {
-          if (entry.value == 'FALSE') {
-            return MapEntry<String, dynamic>(key, false);
-          } else if (entry.value == 'TRUE') {
-            return MapEntry<String, dynamic>(key, true);
-          }
+        if (key.endsWith('bool') && value is int) {
+          return MapEntry<String, dynamic>(key, value == 1);
         }
 
         return entry;
@@ -32,6 +28,18 @@ mixin JsonMapperDaoMixin<T> {
   }
 
   Map<String, dynamic> toMap(T entity) {
-    return JsonMapper.toMap(entity, DEFAULT_SERIALIZE_OPTIONS);
+    final Map<String, dynamic> map = JsonMapper.toMap(entity, DEFAULT_SERIALIZE_OPTIONS);
+    return Map<String, dynamic>.fromEntries(
+      map.entries.map((MapEntry<String, dynamic> entry) {
+        final String key = entry.key;
+        final dynamic value = entry.value;
+
+        if (key.endsWith('bool')) {
+          return MapEntry<String, dynamic>(key, value ? 1 : 0);
+        }
+
+        return entry;
+      }),
+    );
   }
 }

@@ -22,8 +22,13 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "clear" : MessageLookupByLibrary.simpleMessage("Clear"),
+    "errorDialogTitle" : MessageLookupByLibrary.simpleMessage("Error"),
     "fail" : MessageLookupByLibrary.simpleMessage("Fail"),
+    "iksmSession" : MessageLookupByLibrary.simpleMessage("iksm_session"),
+    "iksmSessionPromptText" : MessageLookupByLibrary.simpleMessage("Enter your iksm_session"),
+    "invalidIksmSession" : MessageLookupByLibrary.simpleMessage("Invalid iksm_session. Please make sure you enter correct iksm_session and try again."),
     "navResults" : MessageLookupByLibrary.simpleMessage("Results"),
+    "ok" : MessageLookupByLibrary.simpleMessage("OK"),
     "resultsFetchingError" : MessageLookupByLibrary.simpleMessage("Failed to fetch results from Splatnet."),
     "salmonStats" : MessageLookupByLibrary.simpleMessage("Salmon Stats"),
     "salmonStatsApiToken" : MessageLookupByLibrary.simpleMessage("Salmon Stats\nAPI Token"),

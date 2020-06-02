@@ -1,3 +1,5 @@
+import 'package:salmonia_android/model/all.dart';
+import 'package:salmonia_android/store/global.dart';
 import 'package:salmonia_android/ui/all.dart';
 
 class PrimaryDrawer extends StatelessWidget {
@@ -5,14 +7,16 @@ class PrimaryDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final UserProfile profile = context.select<GlobalStore, UserProfile>((GlobalStore store) => store.profile);
+
     return Drawer(
       child: ListView(
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Text('@Yukinkling', style: boldTextStyle(context)),
-            accountEmail: Text('Yuki', style: weakTextStyle(context)),
+            accountName: Text(profile.name, style: boldTextStyle(context)),
+            accountEmail: Text(profile.pid, style: weakTextStyle(context)),
             currentAccountPicture: CircleAvatar(
-              child: Text('❄'),
+              backgroundImage: MemoryImage(profile.avatar),
             ),
           ),
           ListTile(

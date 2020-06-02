@@ -1,8 +1,12 @@
+import 'dart:typed_data';
+
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/widgets.dart' show mustCallSuper;
 import 'package:salmonia_android/config.dart';
+
+final RequestOptions _defaultRequestOptions = RequestOptions();
 
 abstract class _APIProvider<T, U> {
   _APIProvider([this.cookieJar]) {
@@ -24,6 +28,15 @@ abstract class _APIProvider<T, U> {
   Future<U> get(String url, [RequestOptions options]) async {
     final Response<T> response = await _dio.get<T>(url, options: options);
     return parseResponse(response);
+  }
+
+  @mustCallSuper
+  Future<Uint8List> getBytes(String url, [RequestOptions options]) async {
+    final Response<List<int>> response = await _dio.get<List<int>>(
+      url,
+      options: (options ?? _defaultRequestOptions).merge(responseType: ResponseType.bytes),
+    );
+    return Uint8List.fromList(response.data);
   }
 
   @mustCallSuper
@@ -63,6 +76,10 @@ class SplatnetAPIProvider extends _APIProvider<String, String> {
   @override
   // ignore: avoid_renaming_method_parameters
   Future<String> get(String path, [RequestOptions options]) => super.get(Config.SPLATNET_API_ORIGIN + path, options);
+
+  Future<String> getWeb(String path, [RequestOptions options]) => super.get(Config.SPLATNET_ORIGIN + path, options);
+
+  Future<Uint8List> getWebBytes(String url, [RequestOptions options]) => super.getBytes(url, options);
 
   @override
   String parseResponse(Response<String> response) {

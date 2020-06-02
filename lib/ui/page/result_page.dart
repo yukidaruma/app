@@ -19,7 +19,7 @@ class _ResultPageState extends State<ResultPage> {
   void initState() {
     super.initState();
 
-    _resultFuture = SplatnetAPIRepository(GlobalStore.cookieJar).fetchResult(widget.summary.jobId);
+    _resultFuture = SplatnetAPIRepository(context.read<GlobalStore>().cookieJar).fetchResult(widget.summary.jobId);
   }
 
   @override

@@ -7,9 +7,11 @@ class UserProfileDao extends Dao<UserProfile> with ClassNameTableNameMixin, Json
   CREATE TABLE $tableName (
     pid            TEXT PRIMARY KEY,
     name           TEXT NOT NULL,
-    is_active_bool BOOLEAN NOT NULL DEFAULT FALSE,
+    is_active_bool INTEGER NOT NULL DEFAULT FALSE,
     iksm_session   TEXT NOT NULL,
-    session_token  TEXT NOT NULL
+    job_id         INTEGER NOT NULL,
+    session_token  TEXT,
+    avatar         BLOB
   );
   ''';
 

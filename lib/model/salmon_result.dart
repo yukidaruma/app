@@ -1,6 +1,18 @@
 import 'package:dart_json_mapper/dart_json_mapper.dart';
 
 @jsonSerializable
+class NicknameAndIconsResponse {
+  List<NicknameAndIcon> nicknameAndIcons;
+}
+
+@jsonSerializable
+class NicknameAndIcon {
+  String nickname;
+  String nsaId;
+  String thumbnailUrl;
+}
+
+@jsonSerializable
 class IdEntity {
   @JsonProperty(ignore: true)
   int get id => int.parse(idStr);

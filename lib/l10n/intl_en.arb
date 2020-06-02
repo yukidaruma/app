@@ -1,13 +1,20 @@
 {
-  "$comment1": "Error messages",
+  "iksmSessionPromptText": "Enter your iksm_session",
+
+  "$comment": "Error messages",
+  "errorDialogTitle": "Error",
+  "invalidIksmSession": "Invalid iksm_session. Please make sure you enter correct iksm_session and try again.",
   "resultsFetchingError": "Failed to fetch results from Splatnet.",
   "settings": "Settings",
 
-  "$todo": "TODO: Use comment instead of $comment",
-  "$comment2": "These values are used globally. DO NOT TRANSLATE.",
+  "$comment": "These values are used globally. DO NOT TRANSLATE.",
   "clear": "Clear",
   "fail": "Fail",
+  "iksmSession": "iksm_session",
   "navResults": "Results",
+  "ok": "OK",
   "salmonStats": "Salmon Stats",
-  "salmonStatsApiToken": "Salmon Stats\nAPI Token"
+  "salmonStatsApiToken": "Salmon Stats\nAPI Token",
+
+  "$comment": "This line exists to allow comma dangle"
 }

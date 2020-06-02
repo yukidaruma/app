@@ -9,17 +9,17 @@ import 'intl/messages_all.dart';
 // **************************************************************************
 
 class S {
-  S(this.localeName);
+  S();
   
   static const AppLocalizationDelegate delegate =
     AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final String name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
-    final String localeName = Intl.canonicalizedLocale(name);
+    final name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
+    final localeName = Intl.canonicalizedLocale(name); 
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
-      return S(localeName);
+      return S();
     });
   } 
 
@@ -27,9 +27,34 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  final String localeName;
+  String get iksmSessionPromptText {
+    return Intl.message(
+      'Enter your iksm_session',
+      name: 'iksmSessionPromptText',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the '\$comment1' key
+  // skipped getter for the '\$comment' key
+
+  String get errorDialogTitle {
+    return Intl.message(
+      'Error',
+      name: 'errorDialogTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get invalidIksmSession {
+    return Intl.message(
+      'Invalid iksm_session. Please make sure you enter correct iksm_session and try again.',
+      name: 'invalidIksmSession',
+      desc: '',
+      args: [],
+    );
+  }
 
   String get resultsFetchingError {
     return Intl.message(
@@ -49,10 +74,6 @@ class S {
     );
   }
 
-  // skipped getter for the '\$todo' key
-
-  // skipped getter for the '\$comment2' key
-
   String get clear {
     return Intl.message(
       'Clear',
@@ -71,10 +92,28 @@ class S {
     );
   }
 
+  String get iksmSession {
+    return Intl.message(
+      'iksm_session',
+      name: 'iksmSession',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get navResults {
     return Intl.message(
       'Results',
       name: 'navResults',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get ok {
+    return Intl.message(
+      'OK',
+      name: 'ok',
       desc: '',
       args: [],
     );
@@ -104,7 +143,8 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
 
   List<Locale> get supportedLocales {
     return const <Locale>[
-      Locale.fromSubtags(languageCode: 'en'), Locale.fromSubtags(languageCode: 'ja'),
+      Locale.fromSubtags(languageCode: 'en'),
+      Locale.fromSubtags(languageCode: 'ja'),
     ];
   }
 
@@ -117,7 +157,7 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
 
   bool _isSupported(Locale locale) {
     if (locale != null) {
-      for (Locale supportedLocale in supportedLocales) {
+      for (var supportedLocale in supportedLocales) {
         if (supportedLocale.languageCode == locale.languageCode) {
           return true;
         }
