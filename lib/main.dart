@@ -1,7 +1,6 @@
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dart_json_mapper/dart_json_mapper.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:salmonia_android/config.dart';
 import 'package:salmonia_android/generated/l10n.dart';
 import 'package:salmonia_android/main.reflectable.dart' show initializeReflectable;
 import 'package:salmonia_android/model/all.dart';
@@ -24,7 +23,7 @@ Future<void> main() async {
     <String, dynamic>{'is_active_bool': 1},
   );
 
-  final String iksmSession = profile?.iksmSession ?? Config.DEV_IKSM_SESSION;
+  final String iksmSession = profile?.iksmSession;
   if (iksmSession != null) {
     cookieJar = createCookieJar(iksmSession);
   }

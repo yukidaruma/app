@@ -6,7 +6,9 @@ import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/widgets.dart' show mustCallSuper;
 import 'package:salmonia_android/config.dart';
 
-final RequestOptions _defaultRequestOptions = RequestOptions();
+final RequestOptions defaultRequestOptions = RequestOptions(
+  connectTimeout: 5000,
+);
 
 abstract class _APIProvider<T, U> {
   _APIProvider([this.cookieJar]) {
@@ -34,7 +36,7 @@ abstract class _APIProvider<T, U> {
   Future<Uint8List> getBytes(String url, [RequestOptions options]) async {
     final Response<List<int>> response = await _dio.get<List<int>>(
       url,
-      options: (options ?? _defaultRequestOptions).merge(responseType: ResponseType.bytes),
+      options: (options ?? defaultRequestOptions).merge(responseType: ResponseType.bytes),
     );
     return Uint8List.fromList(response.data);
   }

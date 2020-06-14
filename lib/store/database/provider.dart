@@ -11,6 +11,7 @@ const int DB_SCHEMA_VERSION = 1;
 final migrations = <int, List<Dao<dynamic>>>{
   1: [
     UserProfileDao(),
+    SalmonResultDao(),
   ],
   // TODO
 };

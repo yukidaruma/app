@@ -1,5 +1,12 @@
 {
+  "cancel": "キャンセル",
+  "goBack": "戻る",
+  "yes": "はい",
+
+  "confirmCancelUploading": "本当にアップロードを中断してもよろしいですか?",
+  "confirmCancelUploadingYes": "中断する",
   "iksmSessionPromptText": "iksm_session を入力してください",
+  "startUploading": "アップロードを開始",
 
   "$comment": "Error messages",
   "errorDialogTitle": "エラー",

@@ -21,9 +21,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "cancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
     "clear" : MessageLookupByLibrary.simpleMessage("Clear"),
+    "confirmCancelUploading" : MessageLookupByLibrary.simpleMessage("Are you sure you want to stop uploading?"),
+    "confirmCancelUploadingYes" : MessageLookupByLibrary.simpleMessage("Yes, stop uploading"),
     "errorDialogTitle" : MessageLookupByLibrary.simpleMessage("Error"),
     "fail" : MessageLookupByLibrary.simpleMessage("Fail"),
+    "goBack" : MessageLookupByLibrary.simpleMessage("Go back"),
     "iksmSession" : MessageLookupByLibrary.simpleMessage("iksm_session"),
     "iksmSessionPromptText" : MessageLookupByLibrary.simpleMessage("Enter your iksm_session"),
     "invalidIksmSession" : MessageLookupByLibrary.simpleMessage("Invalid iksm_session. Please make sure you enter correct iksm_session and try again."),
@@ -32,6 +36,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "resultsFetchingError" : MessageLookupByLibrary.simpleMessage("Failed to fetch results from Splatnet."),
     "salmonStats" : MessageLookupByLibrary.simpleMessage("Salmon Stats"),
     "salmonStatsApiToken" : MessageLookupByLibrary.simpleMessage("Salmon Stats\nAPI Token"),
-    "settings" : MessageLookupByLibrary.simpleMessage("Settings")
+    "settings" : MessageLookupByLibrary.simpleMessage("Settings"),
+    "startUploading" : MessageLookupByLibrary.simpleMessage("Start Uploading"),
+    "yes" : MessageLookupByLibrary.simpleMessage("Yes")
   };
 }

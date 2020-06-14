@@ -14,6 +14,17 @@ abstract class AbstractCRUDRepository<E, T extends Dao<E>> extends AbstractRepos
 
   String get singleWhereClause => '${dao.primaryKey} = ?';
 
+  List<E> _mapRows(List<Map<String, dynamic>> rows) {
+    return rows.map(dao.fromMap).toList();
+  }
+
+  Future<List<E>> all() async {
+    final Database db = await databaseProvider.db();
+    final List<Map<String, dynamic>> rows = await db.query(dao.tableName);
+
+    return _mapRows(rows);
+  }
+
   @override
   Future<void> deleteById(dynamic id) async {
     final Database db = await databaseProvider.db();
@@ -28,13 +39,13 @@ abstract class AbstractCRUDRepository<E, T extends Dao<E>> extends AbstractRepos
   @override
   Future<List<E>> find(Map<String, dynamic> criteria) async {
     final Database db = await databaseProvider.db();
-    final List<Map<String, dynamic>> result = await db.query(
+    final List<Map<String, dynamic>> rows = await db.query(
       dao.tableName,
       where: criteria.keys.map((String key) => '$key = ?').join(' AND '),
       whereArgs: criteria.values.toList(),
     );
 
-    return result.map(dao.fromMap).toList();
+    return _mapRows(rows);
   }
 
   @override
@@ -47,13 +58,13 @@ abstract class AbstractCRUDRepository<E, T extends Dao<E>> extends AbstractRepos
   Future<E> get(dynamic id) async {
     final Database db = await databaseProvider.db();
 
-    final List<Map<String, dynamic>> result = await db.query(
+    final List<Map<String, dynamic>> rows = await db.query(
       dao.tableName,
       where: singleWhereClause,
       whereArgs: <dynamic>[id],
     );
 
-    return result.isNotEmpty ? dao.fromMap(result.first) : null;
+    return rows.isNotEmpty ? dao.fromMap(rows.first) : null;
   }
 
   @override

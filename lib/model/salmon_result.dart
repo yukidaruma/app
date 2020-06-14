@@ -69,6 +69,10 @@ class SalmonResult {
   int playTime;
   ResultDetails myResult;
   List<ResultDetails> otherResults;
+
+  // These values are not from Splatnet API
+  @JsonProperty(ignore: true)
+  int salmonStatsId;
 }
 
 @jsonSerializable

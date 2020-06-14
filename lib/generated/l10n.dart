@@ -27,10 +27,64 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get goBack {
+    return Intl.message(
+      'Go back',
+      name: 'goBack',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get yes {
+    return Intl.message(
+      'Yes',
+      name: 'yes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get confirmCancelUploading {
+    return Intl.message(
+      'Are you sure you want to stop uploading?',
+      name: 'confirmCancelUploading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get confirmCancelUploadingYes {
+    return Intl.message(
+      'Yes, stop uploading',
+      name: 'confirmCancelUploadingYes',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get iksmSessionPromptText {
     return Intl.message(
       'Enter your iksm_session',
       name: 'iksmSessionPromptText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get startUploading {
+    return Intl.message(
+      'Start Uploading',
+      name: 'startUploading',
       desc: '',
       args: [],
     );

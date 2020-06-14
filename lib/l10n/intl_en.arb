@@ -1,5 +1,12 @@
 {
+  "cancel": "Cancel",
+  "goBack": "Go back",
+  "yes": "Yes",
+
+  "confirmCancelUploading": "Are you sure you want to stop uploading?",
+  "confirmCancelUploadingYes": "Yes, stop uploading",
   "iksmSessionPromptText": "Enter your iksm_session",
+  "startUploading": "Start Uploading",
 
   "$comment": "Error messages",
   "errorDialogTitle": "Error",
