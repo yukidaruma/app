@@ -110,23 +110,23 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
     _logController.value = '$message\n' + _logController.value;
   }
 
-  Future<String> _uploadSalmonResult(int jobId) async {
+  Future<UploadSalmonResultsResponse> _uploadSalmonResult(int jobId) async {
     final String resultResponse = await SplatnetAPIRepository(context.read<GlobalStore>().cookieJar).fetchResultAsString(jobId);
     final Map<String, dynamic> resultMap = json.decode(resultResponse);
     final Map<String, dynamic> payload = <String, dynamic>{
       'results': <dynamic>[resultMap],
     };
 
-    final String uploadResponse = await SalmonStatsRepository().upload(payload);
-
-    final InternalSalmonResult result = InternalSalmonResult.fromString(resultResponse);
+    final String rawUploadResponse = await SalmonStatsRepository().upload(payload);
+    final UploadSalmonResultsResponse uploadResult = JsonMapper.deserialize<UploadSalmonResultsResponse>(rawUploadResponse, DEFAULT_SERIALIZE_OPTIONS);
+    final InternalSalmonResult result = InternalSalmonResult.fromSplatnetResponse(resultResponse, uploadResult.uploadResults.first.salmonId);
     await SalmonResultRepository(DatabaseProvider.instance).save(result);
 
     final UserProfile profile = context.read<GlobalStore>().profile;
     context.read<GlobalStore>().profile = profile..jobId = _progressionController.value;
     await UserProfileRepository(DatabaseProvider.instance).save(profile);
 
-    return uploadResponse;
+    return uploadResult;
   }
 
   Future<void> _startUploading() async {
@@ -136,13 +136,12 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
       _addLog('Uploading ${_progressionController.value}...');
 
       try {
-        final String response = await _uploadSalmonResult(_progressionController.value);
-        final UploadSalmonResultsResponse result = JsonMapper.deserialize<UploadSalmonResultsResponse>(response, DEFAULT_SERIALIZE_OPTIONS);
+        final UploadSalmonResultsResponse uploadResult = await _uploadSalmonResult(_progressionController.value);
 
         _progressionController.value += 1;
 
-        if (!result.uploadResults.first.created) {
-          _addLog('${result.uploadResults.first.jobId} is already on Salmon Stats.');
+        if (!uploadResult.uploadResults.first.created) {
+          _addLog('${uploadResult.uploadResults.first.jobId} is already on Salmon Stats.');
         }
       } on DioError catch (e) {
         _addLog((e.response?.data ?? e.toString()) as String);
