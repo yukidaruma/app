@@ -32,7 +32,7 @@ class HomePageState extends State<HomePage> {
       return EnterIksmPage();
     }
 
-    return Scaffold(
+    final Widget scaffold = Scaffold(
       drawer: const PrimaryDrawer(),
       body: PageView.builder(
         physics: const NeverScrollableScrollPhysics(),
@@ -59,9 +59,21 @@ class HomePageState extends State<HomePage> {
         ),
       ),
     );
+
+    return WillPopScope(
+      onWillPop: () {
+        if (_destinationPageIndex == 0) {
+          return Future<bool>.value(true);
+        }
+
+        _pageController.defaultAnimateToPage(0);
+        return Future<bool>.value(false);
+      },
+      child: scaffold,
+    );
   }
 
   void setPage<T extends StatefulWidget>() {
-    _pageController.jumpToPage(_pages.indexWhere((Widget element) => element.runtimeType == T));
+    _pageController.defaultAnimateToPage(_pages.indexWhere((Widget element) => element.runtimeType == T));
   }
 }
