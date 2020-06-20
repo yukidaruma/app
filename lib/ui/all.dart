@@ -7,6 +7,7 @@ export 'package:salmonia_android/ui/component/all.dart';
 export 'package:salmonia_android/ui/constants.dart';
 export 'package:salmonia_android/ui/dialogs.dart';
 export 'package:salmonia_android/ui/extension.dart';
+export 'package:salmonia_android/ui/home_page.dart';
 export 'package:salmonia_android/ui/page/all.dart';
 export 'package:salmonia_android/ui/styles.dart';
 export 'package:salmonia_android/ui/typedefs.dart';
