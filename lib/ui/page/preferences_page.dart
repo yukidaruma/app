@@ -174,14 +174,16 @@ class _PreferencesPageState extends State<PreferencesPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Widget body = ListView.builder(
+      itemBuilder: (BuildContext context, int i) => _buildPrefItem(context, _options[i]),
+      itemCount: _options.length,
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text(S.of(context).settings),
       ),
-      body: ListView.builder(
-        itemBuilder: (BuildContext context, int i) => _buildPrefItem(context, _options[i]),
-        itemCount: _options.length,
-      ),
+      body: PagePadding(child: body),
     );
   }
 

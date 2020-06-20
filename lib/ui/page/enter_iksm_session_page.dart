@@ -30,32 +30,34 @@ class _EnterIksmPageState extends State<EnterIksmPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(S.of(context).iksmSessionPromptText),
-            TextField(
-              decoration: InputDecoration(
-                labelText: S.of(context).iksmSession,
-              ),
-              controller: _iksmTextFieldController,
-              maxLength: IKSM_SESSION_LENGTH,
+    final Widget body = SafeArea(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(S.of(context).iksmSessionPromptText),
+          TextField(
+            decoration: InputDecoration(
+              labelText: S.of(context).iksmSession,
             ),
-            ValueListenableBuilder<TextEditingValue>(
-              valueListenable: _iksmTextFieldController,
-              builder: (_, __, ___) => Center(
-                child: RaisedButton(
-                  child: Text('Continue'),
-                  onPressed: _isIksmSessionValid ? () => _setIksmSession(context) : null,
-                ),
+            controller: _iksmTextFieldController,
+            maxLength: IKSM_SESSION_LENGTH,
+          ),
+          ValueListenableBuilder<TextEditingValue>(
+            valueListenable: _iksmTextFieldController,
+            builder: (_, __, ___) => Center(
+              child: RaisedButton(
+                child: Text('Continue'),
+                onPressed: _isIksmSessionValid ? () => _setIksmSession(context) : null,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
+    );
+
+    return Scaffold(
+      body: PagePadding(child: body),
     );
   }
 

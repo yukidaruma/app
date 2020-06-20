@@ -24,19 +24,21 @@ class _ResultPageState extends State<ResultPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: FutureBuilderWrapper<SalmonResult>(
-          future: _resultFuture,
-          initialData: widget.summary,
-          builder: (_, SalmonResult result) {
-            return SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              child: Text(JsonMapper.serialize(result)),
-            );
-          },
-        ),
+    final Widget body = SafeArea(
+      child: FutureBuilderWrapper<SalmonResult>(
+        future: _resultFuture,
+        initialData: widget.summary,
+        builder: (_, SalmonResult result) {
+          return SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Text(JsonMapper.serialize(result)),
+          );
+        },
       ),
+    );
+
+    return Scaffold(
+      body: PagePadding(child: body),
     );
   }
 }

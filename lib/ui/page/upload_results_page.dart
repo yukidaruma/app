@@ -44,63 +44,65 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: WillPopScope(
-        onWillPop: () {
-          if (_uploadState != _UploadState.uploading) {
-            return Future<bool>.value(true);
-          }
+    final Widget body = WillPopScope(
+      onWillPop: () {
+        if (_uploadState != _UploadState.uploading) {
+          return Future<bool>.value(true);
+        }
 
-          return showConfirmationDialog(
-            context: context,
-            message: S.of(context).confirmCancelUploading,
-            isDestructive: true,
-            destructiveMessage: S.of(context).confirmCancelUploadingYes,
-          );
-        },
-        child: ScrollColumnExpandable(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            if (_uploadState == _UploadState.waiting)
-              Expanded(
-                child: Center(
-                  child: RaisedButton(
-                    child: Text(S.of(context).startUploading),
-                    onPressed: _startUploading,
-                  ),
-                ),
-              )
-            else ...<Widget>[
-              const Padding(padding: EdgeInsets.only(bottom: 24.0)),
-              Center(
-                child: ValueListenableBuilder<int>(
-                  valueListenable: _progressionController,
-                  builder: (_, __, ___) => Column(
-                    children: <Widget>[
-                      SizedBox.fromSize(
-                        size: const Size.square(128.0),
-                        child: CircularProgressIndicator(
-                          strokeWidth: 12.0,
-                          backgroundColor: Theme.of(context).unselectedWidgetColor,
-                          value: _progressionPercentage,
-                        ),
-                      ),
-                      const Padding(padding: EdgeInsets.only(bottom: 24.0)),
-                      Center(child: Text('$_currentIndex / $_count')),
-                    ],
-                  ),
+        return showConfirmationDialog(
+          context: context,
+          message: S.of(context).confirmCancelUploading,
+          isDestructive: true,
+          destructiveMessage: S.of(context).confirmCancelUploadingYes,
+        );
+      },
+      child: ScrollColumnExpandable(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          if (_uploadState == _UploadState.waiting)
+            Expanded(
+              child: Center(
+                child: RaisedButton(
+                  child: Text(S.of(context).startUploading),
+                  onPressed: _startUploading,
                 ),
               ),
-              const Padding(padding: EdgeInsets.only(bottom: 16.0)),
-            ],
-            ValueListenableBuilder<String>(
-              valueListenable: _logController,
-              builder: (_, String log, ___) => Text(log),
+            )
+          else ...<Widget>[
+            const Padding(padding: EdgeInsets.only(bottom: 24.0)),
+            Center(
+              child: ValueListenableBuilder<int>(
+                valueListenable: _progressionController,
+                builder: (_, __, ___) => Column(
+                  children: <Widget>[
+                    SizedBox.fromSize(
+                      size: const Size.square(128.0),
+                      child: CircularProgressIndicator(
+                        strokeWidth: 12.0,
+                        backgroundColor: Theme.of(context).unselectedWidgetColor,
+                        value: _progressionPercentage,
+                      ),
+                    ),
+                    const Padding(padding: EdgeInsets.only(bottom: 24.0)),
+                    Center(child: Text('$_currentIndex / $_count')),
+                  ],
+                ),
+              ),
             ),
+            const Padding(padding: EdgeInsets.only(bottom: 16.0)),
           ],
-        ),
+          ValueListenableBuilder<String>(
+            valueListenable: _logController,
+            builder: (_, String log, ___) => Text(log),
+          ),
+        ],
       ),
+    );
+
+    return Scaffold(
+      appBar: AppBar(),
+      body: PagePadding(child: body),
     );
   }
 
