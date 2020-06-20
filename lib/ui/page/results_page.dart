@@ -20,12 +20,25 @@ class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClient
   void initState() {
     super.initState();
 
-    _resultsFuture = SplatnetAPIRepository(context.read<GlobalStore>().cookieJar).fetchResults();
+    _resultsFuture = _fetchResults();
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
+    Widget makeRefreshable(Widget child) {
+      return RefreshIndicator(
+        onRefresh: () async {
+          setState(() {
+            _resultsFuture = _fetchResults();
+          });
+
+          return _resultsFuture;
+        },
+        child: child,
+      );
+    }
 
     return FutureBuilder<SalmonResults>(
       future: _resultsFuture,
@@ -37,9 +50,18 @@ class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClient
 
         Widget body;
         if (snapshot.hasError) {
-          body = ErrorText(S.of(context).resultsFetchingError);
+          body = makeRefreshable(
+            PagePadding(
+              child: ScrollColumnExpandable(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  ErrorText(S.of(context).resultsFetchingError),
+                ],
+              ),
+            ),
+          );
         } else if (snapshot.hasData) {
-          body = _buildListView(context, results, latestUploadedJobId);
+          body = makeRefreshable(_buildListView(context, results, latestUploadedJobId));
         } else {
           body = const Center(child: CircularProgressIndicator());
         }
@@ -74,6 +96,7 @@ class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClient
 
   Widget _buildListView(BuildContext context, List<SalmonResult> results, int latestUploadedJobId) {
     return ListView.builder(
+      padding: EdgeInsets.only(top: 8.0),
       itemBuilder: (_, int i) {
         final SalmonResult result = results[i];
         final bool hasUploaded = latestUploadedJobId >= result.jobId;
@@ -141,6 +164,10 @@ class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClient
       },
       itemCount: results.length,
     );
+  }
+
+  Future<void> _fetchResults() {
+    return SplatnetAPIRepository(context.read<GlobalStore>().cookieJar).fetchResults();
   }
 
   Future<void> _openInSalmonStats(SalmonResult result) async {

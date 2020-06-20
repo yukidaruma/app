@@ -1,3 +1,6 @@
+// This code is based on https://stackoverflow.com/questions/56326005/how-to-use-expanded-in-singlechildscrollview/56327933#56327933.
+// Added AlwaysScrollableScrollPhysics so it can work with RefreshIndicator.
+
 import 'package:flutter/widgets.dart';
 
 class ScrollColumnExpandable extends StatelessWidget {
@@ -35,6 +38,7 @@ class ScrollColumnExpandable extends StatelessWidget {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraint) {
         return SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Padding(
             padding: padding,
             child: ConstrainedBox(
