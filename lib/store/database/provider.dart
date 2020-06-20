@@ -54,8 +54,7 @@ class DatabaseProvider {
     }
 
     final String databasesPath = await getDatabasesPath();
-    // TODO
-    final String path = join(databasesPath, 'salmonia-test.db');
+    final String path = join(databasesPath, 'salmonia.db');
 
     _db = await openDatabase(
       path,
