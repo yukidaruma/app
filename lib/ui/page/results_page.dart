@@ -136,7 +136,7 @@ class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClient
                   icon: const Icon(FontAwesomeIcons.snowflake),
                   onPressed: () => _openInSalmonStats(result),
                 )
-              : const Icon(Icons.file_upload),
+              : IconButton(icon: const Icon(Icons.file_upload), disabledColor: Theme.of(context).iconTheme.color, onPressed: null),
         );
       },
       itemCount: results.length,
