@@ -104,6 +104,33 @@ class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClient
               ],
             ),
           ),
+          title: Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  SpecialWeapon(result.myResult.special.id),
+                  const Padding(padding: EdgeInsets.only(right: 8.0)),
+                  ...result.myResult.weaponList.map((IdEntity i) => MainWeapon(i.id)),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  ConstrainedBox(
+                    constraints: const BoxConstraints.tightFor(width: 30.0),
+                    child: Text('${result.gradePoint}'),
+                  ),
+                  ConstrainedBox(
+                    constraints: const BoxConstraints.tightFor(width: 20.0),
+                    child: Text(result.myResult.goldenIkuraNum.toString(), style: const TextStyle(color: SalmoniaColors.goldEgg)),
+                  ),
+                  ConstrainedBox(
+                    constraints: const BoxConstraints.tightFor(width: 40.0),
+                    child: Text(result.myResult.ikuraNum.toString(), style: const TextStyle(color: SalmoniaColors.powerEgg)),
+                  ),
+                ].gapWith(const Padding(padding: EdgeInsets.only(right: 8.0))),
+              ),
+            ],
+          ),
           trailing: hasUploaded
               ? IconButton(
                   icon: const Icon(FontAwesomeIcons.snowflake),

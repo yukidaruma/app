@@ -3,6 +3,8 @@ import 'package:salmonia_android/ui/all.dart';
 class SalmoniaColors {
   static const Color successColor = Color(0xffadff2f);
   static const Color failColor = Color(0xffffa500);
+  static const Color goldEgg = Color(0xfff1c40f);
+  static const Color powerEgg = Color(0xffe67e22);
 }
 
 const TextStyle failTextStyle = TextStyle(color: SalmoniaColors.failColor);

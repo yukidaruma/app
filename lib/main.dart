@@ -85,6 +85,9 @@ class MyApp extends StatelessWidget {
         buttonColor: Colors.deepOrange,
         textTheme: ButtonTextTheme.primary,
       ),
+      textTheme: const TextTheme(
+        subtitle1: TextStyle(fontSize: 14.0),
+      ),
     );
   }
 }
