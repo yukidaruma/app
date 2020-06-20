@@ -39,15 +39,19 @@ Future<void> main() async {
     ),
   );
 
+  final GlobalStore globalStore = GlobalStore(
+    cookieJar: cookieJar,
+    profile: profile,
+  );
+
+  _createGlobalKeys(globalStore);
+
   runApp(
     MultiProvider(
       // ignore: always_specify_types
       providers: [
         ChangeNotifierProvider<GlobalStore>(
-          create: (BuildContext context) => GlobalStore(
-            cookieJar: cookieJar,
-            profile: profile,
-          ),
+          create: (_) => globalStore,
         ),
       ],
       child: MyApp(),
@@ -69,7 +73,7 @@ class MyApp extends StatelessWidget {
       title: 'Salmonia',
       theme: _makeThemeData(brightness: Brightness.dark),
 //      darkTheme: _makeThemeData(brightness: Brightness.dark),
-      home: const MyHomePage(),
+      home: MyHomePage(key: Provider.of<GlobalStore>(context, listen: false).getGlobalKey<MyHomePageState>()),
     );
   }
 
@@ -90,18 +94,24 @@ class MyHomePage extends StatefulWidget {
   const MyHomePage({Key key}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  MyHomePageState createState() => MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePageState extends State<MyHomePage> {
   final PageController _pageController = PageController();
   int _destinationPageIndex;
+  List<Widget> _pages;
 
   @override
   void initState() {
     super.initState();
 
     _destinationPageIndex = _pageController.initialPage;
+
+    _pages = <Widget>[
+      ResultsPage(),
+      SalmonStatsPage(key: context.read<GlobalStore>().getGlobalKey<SalmonStatsPageState>()),
+    ];
   }
 
   @override
@@ -112,14 +122,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       drawer: const PrimaryDrawer(),
-      body: PageView(
+      body: PageView.builder(
         physics: const NeverScrollableScrollPhysics(),
         onPageChanged: (int newPage) => _destinationPageIndex = newPage,
         controller: _pageController,
-        children: <Widget>[
-          ResultsPage(),
-          const SalmonStatsPage(),
-        ],
+        itemCount: _pages.length,
+        itemBuilder: (_, int i) => _pages[i],
       ),
       bottomNavigationBar: AnimatedBuilder(
         animation: _pageController,
@@ -140,4 +148,13 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+
+  void setPage<T extends StatefulWidget>() {
+    _pageController.jumpToPage(_pages.indexWhere((Widget element) => element.runtimeType == T));
+  }
+}
+
+void _createGlobalKeys(GlobalStore globalStore) {
+  globalStore.createGlobalKey<MyHomePageState>();
+  globalStore.createGlobalKey<SalmonStatsPageState>();
 }

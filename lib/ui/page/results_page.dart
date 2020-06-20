@@ -1,4 +1,5 @@
 import 'package:salmonia_android/api.dart';
+import 'package:salmonia_android/main.dart';
 import 'package:salmonia_android/model/all.dart';
 import 'package:salmonia_android/store/database/all.dart';
 import 'package:salmonia_android/store/database/salmon_result.dart';
@@ -117,8 +118,9 @@ class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClient
   }
 
   Future<void> _openInSalmonStats(SalmonResult result) async {
-    // TODO
-    final int salmonStatsId = result.salmonStatsId ?? await SalmonResultRepository(DatabaseProvider.instance).getOrFail(result.jobId);
-    print(salmonStatsId);
+    final int salmonStatsId = (await SalmonResultRepository(DatabaseProvider.instance).getOrFail(result.jobId)).salmonStatsId;
+    final GlobalStore store = context.read<GlobalStore>();
+    store.getGlobalKey<MyHomePageState>().currentState.setPage<SalmonStatsPage>();
+    store.getGlobalKey<SalmonStatsPageState>().currentState.showResult(salmonStatsId);
   }
 }

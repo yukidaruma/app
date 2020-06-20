@@ -3,13 +3,15 @@ import 'package:salmonia_android/ui/all.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class SalmonStatsPage extends StatefulWidget {
-  const SalmonStatsPage();
+  const SalmonStatsPage({Key key}) : super(key: key);
 
   @override
-  _SalmonStatsPageState createState() => _SalmonStatsPageState();
+  SalmonStatsPageState createState() => SalmonStatsPageState();
 }
 
-class _SalmonStatsPageState extends State<SalmonStatsPage> with AutomaticKeepAliveClientMixin<SalmonStatsPage> {
+class SalmonStatsPageState extends State<SalmonStatsPage> with AutomaticKeepAliveClientMixin<SalmonStatsPage> {
+  WebViewController _controller;
+
   @override
   bool get wantKeepAlive => true;
 
@@ -19,9 +21,14 @@ class _SalmonStatsPageState extends State<SalmonStatsPage> with AutomaticKeepAli
 
     return SafeArea(
       child: WebView(
+        onWebViewCreated: (WebViewController controller) => _controller = controller,
         initialUrl: Config.SALMON_STATS_URL,
         javascriptMode: JavascriptMode.unrestricted,
       ),
     );
+  }
+
+  Future<void> showResult(int id) {
+    return _controller.loadUrl('${Config.SALMON_STATS_URL}/results/$id');
   }
 }
