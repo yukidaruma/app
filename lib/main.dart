@@ -67,11 +67,20 @@ class MyApp extends StatelessWidget {
       ],
       supportedLocales: S.delegate.supportedLocales,
       title: 'Salmonia',
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
-      ),
-      darkTheme: ThemeData.dark(),
+      theme: _makeThemeData(brightness: Brightness.dark),
+//      darkTheme: _makeThemeData(brightness: Brightness.dark),
       home: const MyHomePage(),
+    );
+  }
+
+  ThemeData _makeThemeData({@required Brightness brightness}) {
+    return ThemeData(
+      brightness: brightness,
+      primarySwatch: Colors.orange,
+      buttonTheme: const ButtonThemeData(
+        buttonColor: Colors.deepOrange,
+        textTheme: ButtonTextTheme.primary,
+      ),
     );
   }
 }
