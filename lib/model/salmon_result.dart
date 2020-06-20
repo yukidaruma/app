@@ -49,7 +49,7 @@ class SalmonResults {
 @jsonSerializable
 class SalmonResult {
   @JsonProperty(ignore: true)
-  DateTime get playDate => DateTime.fromMillisecondsSinceEpoch(playTime * 1000);
+  DateTime get playDate => DateTime.fromMillisecondsSinceEpoch((playTime ?? 0) * 1000);
 
   @JsonProperty(ignore: true)
   Map<String, CountEntity> get bossCounts => _bossCounts == null
