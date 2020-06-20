@@ -1,6 +1,18 @@
 import 'package:dart_json_mapper/dart_json_mapper.dart';
 
 @jsonSerializable
+class NicknameAndIconsResponse {
+  List<NicknameAndIcon> nicknameAndIcons;
+}
+
+@jsonSerializable
+class NicknameAndIcon {
+  String nickname;
+  String nsaId;
+  String thumbnailUrl;
+}
+
+@jsonSerializable
 class IdEntity {
   @JsonProperty(ignore: true)
   int get id => int.parse(idStr);
@@ -56,6 +68,11 @@ class SalmonResult {
   JobResult jobResult;
   int playTime;
   ResultDetails myResult;
+  List<ResultDetails> otherResults;
+
+  // These values are not from Splatnet API
+  @JsonProperty(ignore: true)
+  int salmonStatsId;
 }
 
 @jsonSerializable
@@ -78,5 +95,5 @@ class ResultDetails {
   // player_type: { style: 'girl' | 'boy'; species: 'inklings' | 'octolings'; };
   IdEntity special;
   List<int> specialCounts;
-  List<IdEntity> weaopnLsit;
+  List<IdEntity> weaponList;
 }

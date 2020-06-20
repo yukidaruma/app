@@ -1,2 +1,18 @@
 {
+  "cancel": "キャンセル",
+  "goBack": "戻る",
+  "yes": "はい",
+
+  "confirmCancelUploading": "本当にアップロードを中断してもよろしいですか?",
+  "confirmCancelUploadingYes": "中断する",
+  "iksmSessionPromptText": "iksm_session を入力してください",
+  "startUploading": "アップロードを開始",
+
+  "$comment": "Error messages",
+  "errorDialogTitle": "エラー",
+  "invalidIksmSession": "iksm_session が正しくありません。入力内容を確認の上、もう一度やり直してください。",
+  "resultsFetchingError": "Splatnetからリザルトを取得できませんでした。",
+  "settings": "設定",
+
+  "$comment": "This line exists to allow comma dangle"
 }

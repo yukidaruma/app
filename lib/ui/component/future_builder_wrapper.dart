@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:salmonia_android/ui/all.dart';
 
 typedef _AsyncBuilder<T> = Widget Function(BuildContext context, T response);
 typedef ErrorMessageBuilder = Widget Function(BuildContext context, Object error);
@@ -6,20 +6,25 @@ typedef ErrorMessageBuilder = Widget Function(BuildContext context, Object error
 class FutureBuilderWrapper<T> extends StatelessWidget {
   const FutureBuilderWrapper({
     @required this.builder,
-    @required this.errorBuilder,
+    this.errorBuilder,
     @required this.future,
+    T this.initialData,
   });
 
   final _AsyncBuilder<T> builder;
   final ErrorMessageBuilder errorBuilder;
   final Future<T> future;
+  final T initialData;
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return FutureBuilder<T>(
+      initialData: initialData,
       builder: (BuildContext context, AsyncSnapshot<T> snapshot) {
         if (snapshot.hasError) {
-          return Center(child: errorBuilder(context, snapshot.error));
+          return Center(
+            child: (errorBuilder ?? _defaultErrorBuilder)(context, snapshot.error),
+          );
         } else if (snapshot.hasData) {
           return builder(context, snapshot.data);
         }
@@ -28,5 +33,9 @@ class FutureBuilderWrapper<T> extends StatelessWidget {
       },
       future: future,
     );
+  }
+
+  Widget _defaultErrorBuilder(BuildContext context, Object error) {
+    return ErrorText(error.toString());
   }
 }

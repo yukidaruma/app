@@ -21,6 +21,16 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-
+    "cancel" : MessageLookupByLibrary.simpleMessage("キャンセル"),
+    "confirmCancelUploading" : MessageLookupByLibrary.simpleMessage("本当にアップロードを中断してもよろしいですか?"),
+    "confirmCancelUploadingYes" : MessageLookupByLibrary.simpleMessage("中断する"),
+    "errorDialogTitle" : MessageLookupByLibrary.simpleMessage("エラー"),
+    "goBack" : MessageLookupByLibrary.simpleMessage("戻る"),
+    "iksmSessionPromptText" : MessageLookupByLibrary.simpleMessage("iksm_session を入力してください"),
+    "invalidIksmSession" : MessageLookupByLibrary.simpleMessage("iksm_session が正しくありません。入力内容を確認の上、もう一度やり直してください。"),
+    "resultsFetchingError" : MessageLookupByLibrary.simpleMessage("Splatnetからリザルトを取得できませんでした。"),
+    "settings" : MessageLookupByLibrary.simpleMessage("設定"),
+    "startUploading" : MessageLookupByLibrary.simpleMessage("アップロードを開始"),
+    "yes" : MessageLookupByLibrary.simpleMessage("はい")
   };
 }

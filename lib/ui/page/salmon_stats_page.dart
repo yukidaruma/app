@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:salmonia_android/config.dart';
+import 'package:salmonia_android/ui/all.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class SalmonStatsPage extends StatefulWidget {

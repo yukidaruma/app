@@ -1,43 +1,57 @@
-import 'dart:io';
-
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dart_json_mapper/dart_json_mapper.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:salmonia_android/config.dart';
 import 'package:salmonia_android/generated/l10n.dart';
 import 'package:salmonia_android/main.reflectable.dart' show initializeReflectable;
 import 'package:salmonia_android/model/all.dart';
+import 'package:salmonia_android/store/database/all.dart';
 import 'package:salmonia_android/store/global.dart';
+import 'package:salmonia_android/store/shared_prefs.dart';
 import 'package:salmonia_android/ui/all.dart';
+import 'package:salmonia_android/util/all.dart';
 
 Future<void> main() async {
+  CookieJar cookieJar;
+
+  WidgetsFlutterBinding.ensureInitialized();
+
   initializeReflectable();
+  await AppSharedPrefs.load();
+  await DatabaseProvider.instance.db(); // Ensure Database is initialized
 
+  final UserProfile profile = await UserProfileRepository(DatabaseProvider.instance).findOne(
+    <String, dynamic>{'is_active_bool': 1},
+  );
 
-  GlobalStore.cookieJar = await _loadCookieJar();
+  final String iksmSession = profile?.iksmSession;
+  if (iksmSession != null) {
+    cookieJar = createCookieJar(iksmSession);
+  }
 
   JsonMapper().useAdapter(
     JsonMapperAdapter(
       valueDecorators: {
         typeOf<List<IdEntity>>(): (dynamic value) => value.cast<IdEntity>(),
+        typeOf<List<NicknameAndIcon>>(): (dynamic value) => value.cast<NicknameAndIcon>(),
+        typeOf<List<ResultDetails>>(): (dynamic value) => value.cast<ResultDetails>(),
       },
     ),
   );
 
-  runApp(MyApp());
-}
-
-Future<CookieJar> _loadCookieJar() async {
-  // TODO: load from persistent storage
-
-  final CookieJar cookieJar = CookieJar();
-  cookieJar.saveFromResponse(Uri.parse(Config.SPLATNET_API_ORIGIN), <Cookie>[
-    Cookie('iksm_session', Config.DEV_IKSM_SESSION),
-  ]);
-
-  return cookieJar;
+  runApp(
+    MultiProvider(
+      // ignore: always_specify_types
+      providers: [
+        ChangeNotifierProvider<GlobalStore>(
+          create: (BuildContext context) => GlobalStore(
+            cookieJar: cookieJar,
+            profile: profile,
+          ),
+        ),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -82,7 +96,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    if (Provider.of<GlobalStore>(context).cookieJar == null) {
+      return EnterIksmPage();
+    }
+
     return Scaffold(
+      drawer: const PrimaryDrawer(),
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         onPageChanged: (int newPage) => _destinationPageIndex = newPage,

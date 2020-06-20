@@ -1,12 +1,27 @@
 {
-  "navResults": "Results",
+  "cancel": "Cancel",
+  "goBack": "Go back",
+  "yes": "Yes",
 
-  "$comment1": "Error messages",
+  "confirmCancelUploading": "Are you sure you want to stop uploading?",
+  "confirmCancelUploadingYes": "Yes, stop uploading",
+  "iksmSessionPromptText": "Enter your iksm_session",
+  "startUploading": "Start Uploading",
+
+  "$comment": "Error messages",
+  "errorDialogTitle": "Error",
+  "invalidIksmSession": "Invalid iksm_session. Please make sure you enter correct iksm_session and try again.",
   "resultsFetchingError": "Failed to fetch results from Splatnet.",
+  "settings": "Settings",
 
-  "$todo": "TODO: Use comment instead of $comment",
-  "$comment2": "These values are used globally. DO NOT TRANSLATE.",
-  "salmonStats": "Salmon Stats",
+  "$comment": "These values are used globally. DO NOT TRANSLATE.",
   "clear": "Clear",
-  "fail": "Fail"
+  "fail": "Fail",
+  "iksmSession": "iksm_session",
+  "navResults": "Results",
+  "ok": "OK",
+  "salmonStats": "Salmon Stats",
+  "salmonStatsApiToken": "Salmon Stats\nAPI Token",
+
+  "$comment": "This line exists to allow comma dangle"
 }
