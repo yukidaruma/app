@@ -34,6 +34,7 @@ Future<void> main() async {
         typeOf<List<IdEntity>>(): (dynamic value) => value.cast<IdEntity>(),
         typeOf<List<NicknameAndIcon>>(): (dynamic value) => value.cast<NicknameAndIcon>(),
         typeOf<List<ResultDetails>>(): (dynamic value) => value.cast<ResultDetails>(),
+        typeOf<List<UploadResult>>(): (dynamic value) => value.cast<UploadResult>(),
       },
     ),
   );

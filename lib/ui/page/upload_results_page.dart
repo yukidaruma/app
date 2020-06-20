@@ -134,9 +134,14 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
       _addLog('Uploading ${_progressionController.value}...');
 
       try {
-        final String log = await _uploadSalmonResult(_progressionController.value);
+        final String response = await _uploadSalmonResult(_progressionController.value);
+        final UploadSalmonResultsResponse result = JsonMapper.deserialize<UploadSalmonResultsResponse>(response, DEFAULT_SERIALIZE_OPTIONS);
+
         _progressionController.value += 1;
-        _addLog(log);
+
+        if (!result.uploadResults.first.created) {
+          _addLog('${result.uploadResults.first.jobId} is already on Salmon Stats.');
+        }
       } on DioError catch (e) {
         _addLog((e.response?.data ?? e.toString()) as String);
         break;
