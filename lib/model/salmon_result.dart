@@ -84,7 +84,7 @@ class ResultDetails {
           _bossKillCounts.entries.map(CountEntity.mapper),
         );
 
-  @JsonProperty(name: 'boss_lill_counts')
+  @JsonProperty(name: 'boss_kill_counts')
   Map<String, dynamic> _bossKillCounts;
   int deadCount;
   int goldenIkuraNum;
