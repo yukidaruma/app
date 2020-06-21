@@ -19,6 +19,8 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ja';
 
+  static m0(pageName) => "${pageName}を開く";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "cancel" : MessageLookupByLibrary.simpleMessage("キャンセル"),
@@ -28,7 +30,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "goBack" : MessageLookupByLibrary.simpleMessage("戻る"),
     "iksmSessionPromptText" : MessageLookupByLibrary.simpleMessage("iksm_session を入力してください"),
     "invalidIksmSession" : MessageLookupByLibrary.simpleMessage("iksm_session が正しくありません。入力内容を確認の上、もう一度やり直してください。"),
+    "openOtherPage" : m0,
     "resultsFetchingError" : MessageLookupByLibrary.simpleMessage("Splatnetからリザルトを取得できませんでした。"),
+    "salmonStatsApiTokenNotSet" : MessageLookupByLibrary.simpleMessage("Salmon StatsのAPI Tokenが設定されていません。"),
     "settings" : MessageLookupByLibrary.simpleMessage("設定"),
     "startUploading" : MessageLookupByLibrary.simpleMessage("アップロードを開始"),
     "yes" : MessageLookupByLibrary.simpleMessage("はい")

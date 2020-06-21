@@ -19,6 +19,8 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static m0(pageName) => "Open ${pageName}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "cancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
@@ -33,9 +35,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "invalidIksmSession" : MessageLookupByLibrary.simpleMessage("Invalid iksm_session. Please make sure you enter correct iksm_session and try again."),
     "navResults" : MessageLookupByLibrary.simpleMessage("Results"),
     "ok" : MessageLookupByLibrary.simpleMessage("OK"),
+    "openOtherPage" : m0,
     "resultsFetchingError" : MessageLookupByLibrary.simpleMessage("Failed to fetch results from Splatnet."),
     "salmonStats" : MessageLookupByLibrary.simpleMessage("Salmon Stats"),
     "salmonStatsApiToken" : MessageLookupByLibrary.simpleMessage("Salmon Stats\nAPI Token"),
+    "salmonStatsApiTokenNotSet" : MessageLookupByLibrary.simpleMessage("Salmon Stats API Token is not set."),
     "settings" : MessageLookupByLibrary.simpleMessage("Settings"),
     "startUploading" : MessageLookupByLibrary.simpleMessage("Start Uploading"),
     "yes" : MessageLookupByLibrary.simpleMessage("Yes")

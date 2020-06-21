@@ -44,6 +44,22 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Widget startUploadButton = (salmonStatsAPIToken?.isEmpty ?? true)
+        ? Column(
+            children: <Widget>[
+              Text(S.of(context).salmonStatsApiTokenNotSet),
+              const Padding(padding: EdgeInsets.only(bottom: 8.0)),
+              RaisedButton(
+                child: Text(S.of(context).openOtherPage(S.of(context).settings)),
+                onPressed: () => PreferencesPage.push(context),
+              ),
+            ],
+          )
+        : RaisedButton(
+            child: Text(S.of(context).startUploading),
+            onPressed: _startUploading,
+          );
+
     final Widget body = WillPopScope(
       onWillPop: () {
         if (_uploadState != _UploadState.uploading) {
@@ -63,10 +79,7 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
           if (_uploadState == _UploadState.waiting)
             Expanded(
               child: Center(
-                child: RaisedButton(
-                  child: Text(S.of(context).startUploading),
-                  onPressed: _startUploading,
-                ),
+                child: startUploadButton,
               ),
             )
           else ...<Widget>[

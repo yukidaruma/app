@@ -81,6 +81,24 @@ class S {
     );
   }
 
+  String openOtherPage(Object pageName) {
+    return Intl.message(
+      'Open $pageName',
+      name: 'openOtherPage',
+      desc: '',
+      args: [pageName],
+    );
+  }
+
+  String get salmonStatsApiTokenNotSet {
+    return Intl.message(
+      'Salmon Stats API Token is not set.',
+      name: 'salmonStatsApiTokenNotSet',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get startUploading {
     return Intl.message(
       'Start Uploading',
