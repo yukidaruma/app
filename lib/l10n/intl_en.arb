@@ -10,6 +10,10 @@
   "salmonStatsApiTokenNotSet": "Salmon Stats API Token is not set.",
   "startUploading": "Start Uploading",
 
+  "$comment": "Preferences Page",
+  "getApiToken": "Get API Token",
+  "updateApiToken": "Update API Token",
+
   "$comment": "Error messages",
   "errorDialogTitle": "Error",
   "invalidIksmSession": "Invalid iksm_session. Please make sure you enter correct iksm_session and try again.",

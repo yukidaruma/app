@@ -29,6 +29,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "confirmCancelUploadingYes" : MessageLookupByLibrary.simpleMessage("Yes, stop uploading"),
     "errorDialogTitle" : MessageLookupByLibrary.simpleMessage("Error"),
     "fail" : MessageLookupByLibrary.simpleMessage("Fail"),
+    "getApiToken" : MessageLookupByLibrary.simpleMessage("Get API Token"),
     "goBack" : MessageLookupByLibrary.simpleMessage("Go back"),
     "iksmSession" : MessageLookupByLibrary.simpleMessage("iksm_session"),
     "iksmSessionPromptText" : MessageLookupByLibrary.simpleMessage("Enter your iksm_session"),
@@ -42,6 +43,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "salmonStatsApiTokenNotSet" : MessageLookupByLibrary.simpleMessage("Salmon Stats API Token is not set."),
     "settings" : MessageLookupByLibrary.simpleMessage("Settings"),
     "startUploading" : MessageLookupByLibrary.simpleMessage("Start Uploading"),
+    "updateApiToken" : MessageLookupByLibrary.simpleMessage("Update API Token"),
     "yes" : MessageLookupByLibrary.simpleMessage("Yes")
   };
 }

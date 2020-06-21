@@ -1,6 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:salmonia_android/api.dart';
+import 'package:salmonia_android/config.dart';
+import 'package:salmonia_android/exceptions.dart';
 import 'package:salmonia_android/store/shared_prefs.dart';
 import 'package:salmonia_android/ui/all.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 final AppSharedPrefs _sharedPrefs = AppSharedPrefs();
 
@@ -100,39 +106,59 @@ class StringPreferenceItem extends PreferenceItem<String> {
         );
 }
 
-final List<PreferenceItem> _options = <PreferenceItem>[
-  StringPreferenceItem(
-    readOnly: true,
-    key: SharedPrefsKeys.SALMON_STATS_TOKEN,
-    labelBuilder: (BuildContext context) => S.of(context).salmonStatsApiToken,
-  ),
-  BoolPreferenceItem(
-    key: SharedPrefsKeys.TEST_BOOL,
-    labelBuilder: (BuildContext context) => S.of(context).salmonStatsApiToken,
-  ),
-  IntPreferenceItem(
-    key: SharedPrefsKeys.TEST_INT,
-    labelBuilder: (BuildContext context) => S.of(context).salmonStatsApiToken,
-  ),
-  DoublePreferenceItem(
-    key: SharedPrefsKeys.TEST_DOUBLE,
-    labelBuilder: (BuildContext context) => S.of(context).salmonStatsApiToken,
-  ),
-];
+class WidgetPreferenceItem extends PreferenceItem<void> {
+  WidgetPreferenceItem({@required this.builder});
+
+  final WidgetBuilder builder;
+
+  @override
+  void restore() {
+    throw InvalidOperationException('restore');
+  }
+
+  @override
+  Future<void> save(void value) {
+    throw InvalidOperationException('save');
+  }
+}
 
 class PreferencesPage extends StatefulWidget {
   const PreferencesPage();
 
   @override
   _PreferencesPageState createState() => _PreferencesPageState();
+
+  static Future<void> push(BuildContext context) {
+    return Navigator.push(
+      context,
+      MaterialPageRoute<void>(builder: (_) => const PreferencesPage()),
+    );
+  }
 }
 
 class _PreferencesPageState extends State<PreferencesPage> {
-  Map<SharedPrefsKeys, ValueNotifier> _controllers = <SharedPrefsKeys, ValueNotifier>{};
+  final Map<SharedPrefsKeys, ValueNotifier<dynamic>> _controllers = <SharedPrefsKeys, ValueNotifier<dynamic>>{};
+  List<PreferenceItem> _options;
 
   @override
   void initState() {
     super.initState();
+
+    _options = <PreferenceItem>[
+      StringPreferenceItem(
+        readOnly: true,
+        key: SharedPrefsKeys.SALMON_STATS_TOKEN,
+        labelBuilder: (BuildContext context) => S.of(context).salmonStatsApiToken,
+      ),
+      WidgetPreferenceItem(
+        builder: (BuildContext context) => Center(
+          child: RaisedButton(
+            child: Text((salmonStatsAPIToken?.isEmpty ?? true) ? S.of(context).getApiToken : S.of(context).updateApiToken),
+            onPressed: () => _getSalmonStatsAPIToken(context),
+          ),
+        ),
+      ),
+    ];
 
     for (final PreferenceItem option in _options) {
       ValueNotifier<dynamic> controller;
@@ -159,7 +185,9 @@ class _PreferencesPageState extends State<PreferencesPage> {
           break;
       }
 
-      _controllers[option.key] = controller;
+      if (controller != null) {
+        _controllers[option.key] = controller;
+      }
     }
   }
 
@@ -188,8 +216,6 @@ class _PreferencesPageState extends State<PreferencesPage> {
   }
 
   Widget _buildPrefItem(BuildContext context, PreferenceItem option) {
-    final Widget label = Text(option.labelBuilder(context));
-
     // ignore: missing_return
     final Widget control = (() {
       final bool readOnly = option.readOnly;
@@ -224,15 +250,85 @@ class _PreferencesPageState extends State<PreferencesPage> {
       }
     })();
 
+    if (option is WidgetPreferenceItem) {
+      return option.builder(context);
+    }
+
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         SizedBox(
-          child: label,
+          child: Text(option.labelBuilder(context)),
           width: 160,
         ),
         Expanded(child: control),
       ],
+    );
+  }
+
+  Future<void> _getSalmonStatsAPIToken(BuildContext context) async {
+    final String token = await Navigator.push(
+      context,
+      MaterialPageRoute<String>(
+        builder: (_) => _GetAPITokenPage(),
+      ),
+    );
+
+    return _options
+        .whereType<StringPreferenceItem>()
+        .firstWhere(
+          (PreferenceItem option) => option.key == SharedPrefsKeys.SALMON_STATS_TOKEN,
+        )
+        .save(token);
+  }
+}
+
+class _GetAPITokenPage extends StatefulWidget {
+  @override
+  _GetAPITokenPageState createState() => _GetAPITokenPageState();
+}
+
+class _GetAPITokenPageState extends State<_GetAPITokenPage> {
+  WebViewController _controller;
+  Timer _timer;
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    _timer?.cancel();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final String settingsPageUrl = '${Config.SALMON_STATS_URL}/settings#app-request-api-token';
+    final RegExp tokenUrlPattern = RegExp(r'#token=(.+)$');
+
+    return Scaffold(
+      appBar: AppBar(),
+      body: WebView(
+        initialUrl: settingsPageUrl,
+        javascriptMode: JavascriptMode.unrestricted,
+        onWebViewCreated: (WebViewController controller) {
+          _controller = controller;
+
+          // https://github.com/flutter/flutter/issues/27729
+          // navigationDelegate doesn't work with History API, so we watch url periodically.
+          _timer = Timer.periodic(
+            const Duration(milliseconds: 100),
+            (_) async {
+              final String url = await _controller.currentUrl();
+              final Match match = tokenUrlPattern.firstMatch(url);
+
+              if (match != null) {
+                final String token = match.group(1);
+
+                _timer.cancel();
+                Navigator.pop(context, token);
+              }
+            },
+          );
+        },
+      ),
     );
   }
 }

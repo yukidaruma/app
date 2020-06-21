@@ -2,9 +2,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 enum SharedPrefsKeys {
   SALMON_STATS_TOKEN,
-  TEST_DOUBLE,
-  TEST_INT,
-  TEST_BOOL,
 }
 
 enum SharedPrefsTypes {

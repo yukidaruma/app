@@ -110,6 +110,24 @@ class S {
 
   // skipped getter for the '\$comment' key
 
+  String get getApiToken {
+    return Intl.message(
+      'Get API Token',
+      name: 'getApiToken',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get updateApiToken {
+    return Intl.message(
+      'Update API Token',
+      name: 'updateApiToken',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get errorDialogTitle {
     return Intl.message(
       'Error',

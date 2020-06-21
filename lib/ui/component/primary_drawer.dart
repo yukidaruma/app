@@ -22,10 +22,7 @@ class PrimaryDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.settings),
             title: Text(S.of(context).settings),
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute<void>(builder: (_) => PreferencesPage()),
-            ),
+            onTap: () => PreferencesPage.push(context),
           ),
         ],
       ),

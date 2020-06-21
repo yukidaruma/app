@@ -10,6 +10,10 @@
   "salmonStatsApiTokenNotSet": "Salmon StatsのAPI Tokenが設定されていません。",
   "startUploading": "アップロードを開始",
 
+  "$comment": "Preferences Page",
+  "getApiToken": "API Tokenを取得",
+  "updateApiToken": "API Tokenを更新",
+
   "$comment": "Error messages",
   "errorDialogTitle": "エラー",
   "invalidIksmSession": "iksm_session が正しくありません。入力内容を確認の上、もう一度やり直してください。",

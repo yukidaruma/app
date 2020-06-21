@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "confirmCancelUploading" : MessageLookupByLibrary.simpleMessage("本当にアップロードを中断してもよろしいですか?"),
     "confirmCancelUploadingYes" : MessageLookupByLibrary.simpleMessage("中断する"),
     "errorDialogTitle" : MessageLookupByLibrary.simpleMessage("エラー"),
+    "getApiToken" : MessageLookupByLibrary.simpleMessage("API Tokenを取得"),
     "goBack" : MessageLookupByLibrary.simpleMessage("戻る"),
     "iksmSessionPromptText" : MessageLookupByLibrary.simpleMessage("iksm_session を入力してください"),
     "invalidIksmSession" : MessageLookupByLibrary.simpleMessage("iksm_session が正しくありません。入力内容を確認の上、もう一度やり直してください。"),
@@ -35,6 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "salmonStatsApiTokenNotSet" : MessageLookupByLibrary.simpleMessage("Salmon StatsのAPI Tokenが設定されていません。"),
     "settings" : MessageLookupByLibrary.simpleMessage("設定"),
     "startUploading" : MessageLookupByLibrary.simpleMessage("アップロードを開始"),
+    "updateApiToken" : MessageLookupByLibrary.simpleMessage("API Tokenを更新"),
     "yes" : MessageLookupByLibrary.simpleMessage("はい")
   };
 }
