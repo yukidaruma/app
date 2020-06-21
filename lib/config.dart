@@ -2,11 +2,13 @@
 
 // ignore: avoid_classes_with_only_static_members
 class Config {
-  static const String DEV_IKSM_SESSION = '';
-  static const String DEV_SALMON_STATS_API_TOKEN = '';
+  static Map<String, dynamic> env;
 
-  static const String SALMON_STATS_API_ORIGIN = 'https://salmon-stats-api.yuki.games';
-  static const String SALMON_STATS_URL = 'https://salmon-stats.yuki.games';
+  static String get DEV_IKSM_SESSION => env['DEV_IKSM_SESSION'];
+  static String get DEV_SALMON_STATS_API_TOKEN => env['DEV_SALMON_STATS_API_TOKEN'];
+
+  static String get SALMON_STATS_API_ORIGIN => env['SALMON_STATS_API_ORIGIN'];
+  static String get SALMON_STATS_URL => env['SALMON_STATS_URL'];
   static const String SALMON_IMAGE_BASE_PATH = 'https://splatoon-stats-api.yuki.games/static/images';
 
   // Splatnet related configurations

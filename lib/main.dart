@@ -1,6 +1,7 @@
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dart_json_mapper/dart_json_mapper.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:salmonia_android/config.dart';
 import 'package:salmonia_android/generated/l10n.dart';
 import 'package:salmonia_android/main.reflectable.dart' show initializeReflectable;
 import 'package:salmonia_android/model/all.dart';
@@ -16,6 +17,17 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   initializeReflectable();
+  JsonMapper().useAdapter(
+    JsonMapperAdapter(
+      valueDecorators: {
+        typeOf<List<IdEntity>>(): (dynamic value) => value.cast<IdEntity>(),
+        typeOf<List<NicknameAndIcon>>(): (dynamic value) => value.cast<NicknameAndIcon>(),
+        typeOf<List<ResultDetails>>(): (dynamic value) => value.cast<ResultDetails>(),
+        typeOf<List<UploadResult>>(): (dynamic value) => value.cast<UploadResult>(),
+      },
+    ),
+  );
+
   await AppSharedPrefs.load();
   await DatabaseProvider.instance.db(); // Ensure Database is initialized
 
@@ -28,16 +40,7 @@ Future<void> main() async {
     cookieJar = createCookieJar(iksmSession);
   }
 
-  JsonMapper().useAdapter(
-    JsonMapperAdapter(
-      valueDecorators: {
-        typeOf<List<IdEntity>>(): (dynamic value) => value.cast<IdEntity>(),
-        typeOf<List<NicknameAndIcon>>(): (dynamic value) => value.cast<NicknameAndIcon>(),
-        typeOf<List<ResultDetails>>(): (dynamic value) => value.cast<ResultDetails>(),
-        typeOf<List<UploadResult>>(): (dynamic value) => value.cast<UploadResult>(),
-      },
-    ),
-  );
+  Config.env = await loadEnv('.env');
 
   final GlobalStore globalStore = GlobalStore(
     cookieJar: cookieJar,

@@ -1,4 +1,5 @@
-lib/config.dart
+assets/*.env
+.dev_override.env
 
 # Miscellaneous
 *.class
