@@ -1,2 +1,2 @@
-export 'list_extension.dart';
+export 'iterable_extension.dart';
 export 'page_controller_extension.dart';

@@ -1,4 +1,4 @@
-extension ListExtension<E> on List<E> {
+extension IterableExtension<E> on Iterable<E> {
   List<E> gapWith(E filler) {
     final List<E> result = <E>[];
 
