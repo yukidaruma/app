@@ -300,13 +300,13 @@ class _GetAPITokenPageState extends State<_GetAPITokenPage> {
 
   @override
   Widget build(BuildContext context) {
-    final String settingsPageUrl = '${Config.SALMON_STATS_URL}/settings#app-request-api-token';
+    final String initialUrl = '${Config.SALMON_STATS_API_ORIGIN}/app-request-api-token';
     final RegExp tokenUrlPattern = RegExp(r'#token=(.+)$');
 
     return Scaffold(
       appBar: AppBar(),
       body: WebView(
-        initialUrl: settingsPageUrl,
+        initialUrl: initialUrl,
         javascriptMode: JavascriptMode.unrestricted,
         onWebViewCreated: (WebViewController controller) {
           _controller = controller;
