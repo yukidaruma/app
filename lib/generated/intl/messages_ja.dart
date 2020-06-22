@@ -34,6 +34,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "openOtherPage" : m0,
     "resultsFetchingError" : MessageLookupByLibrary.simpleMessage("Splatnetからリザルトを取得できませんでした。"),
     "salmonStatsApiTokenNotSet" : MessageLookupByLibrary.simpleMessage("Salmon StatsのAPI Tokenが設定されていません。"),
+    "salmonStatsProfile" : MessageLookupByLibrary.simpleMessage("プロフィール"),
     "settings" : MessageLookupByLibrary.simpleMessage("設定"),
     "startUploading" : MessageLookupByLibrary.simpleMessage("アップロードを開始"),
     "updateApiToken" : MessageLookupByLibrary.simpleMessage("API Tokenを更新"),

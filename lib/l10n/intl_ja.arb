@@ -8,6 +8,7 @@
   "iksmSessionPromptText": "iksm_session を入力してください",
   "openOtherPage": "{pageName}を開く",
   "salmonStatsApiTokenNotSet": "Salmon StatsのAPI Tokenが設定されていません。",
+  "salmonStatsProfile": "プロフィール",
   "startUploading": "アップロードを開始",
 
   "$comment": "Preferences Page",

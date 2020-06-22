@@ -99,6 +99,15 @@ class S {
     );
   }
 
+  String get salmonStatsProfile {
+    return Intl.message(
+      'profile',
+      name: 'salmonStatsProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get startUploading {
     return Intl.message(
       'Start Uploading',

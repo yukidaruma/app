@@ -41,6 +41,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "salmonStats" : MessageLookupByLibrary.simpleMessage("Salmon Stats"),
     "salmonStatsApiToken" : MessageLookupByLibrary.simpleMessage("Salmon Stats\nAPI Token"),
     "salmonStatsApiTokenNotSet" : MessageLookupByLibrary.simpleMessage("Salmon Stats API Token is not set."),
+    "salmonStatsProfile" : MessageLookupByLibrary.simpleMessage("profile"),
     "settings" : MessageLookupByLibrary.simpleMessage("Settings"),
     "startUploading" : MessageLookupByLibrary.simpleMessage("Start Uploading"),
     "updateApiToken" : MessageLookupByLibrary.simpleMessage("Update API Token"),

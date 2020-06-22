@@ -7,7 +7,8 @@ class PrimaryDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UserProfile profile = context.select<GlobalStore, UserProfile>((GlobalStore store) => store.profile);
+    final GlobalStore store = context.select((GlobalStore store) => store);
+    final UserProfile profile = store.profile;
 
     return Drawer(
       child: ListView(
@@ -20,10 +21,20 @@ class PrimaryDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.settings),
+            leading: const Icon(Icons.settings),
             title: Text(S.of(context).settings),
             onTap: () => PreferencesPage.push(context),
           ),
+          ListTile(
+            leading: const Icon(FontAwesomeIcons.snowflake),
+            title: Text(S.of(context).openOtherPage(S.of(context).salmonStatsProfile)),
+            onTap: () {
+              Navigator.pop(context);
+              store.getGlobalKey<HomePageState>().currentState.setPage<SalmonStatsPage>();
+              return store.getGlobalKey<SalmonStatsPageState>().currentState.showUserPage(profile.pid);
+            },
+          ),
+          if (context.select((GlobalStore store) => store.isInDebugMode)) ..._buildDebugInfo(),
         ],
       ),
     );
