@@ -28,6 +28,13 @@ class SalmonStatsPageState extends State<SalmonStatsPage> with AutomaticKeepAliv
     );
   }
 
+  Future<bool> requestGoBack() {
+    final Future<bool> didGoBack = _controller.canGoBack();
+    _controller.goBack();
+
+    return didGoBack;
+  }
+
   Future<void> showUserPage(String pid) {
     return _controller.loadUrl('${Config.SALMON_STATS_URL}/players/$pid');
   }

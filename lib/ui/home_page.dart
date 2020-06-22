@@ -66,6 +66,14 @@ class HomePageState extends State<HomePage> {
           return Future<bool>.value(true);
         }
 
+        if (_pages[_destinationPageIndex] is SalmonStatsPage) {
+          return context.read<GlobalStore>().getGlobalKey<SalmonStatsPageState>().currentState.requestGoBack().then((bool didGoBack) {
+            if (!didGoBack) {
+              _pageController.defaultAnimateToPage(0);
+            }
+          }).then((_) => false);
+        }
+
         _pageController.defaultAnimateToPage(0);
         return Future<bool>.value(false);
       },
