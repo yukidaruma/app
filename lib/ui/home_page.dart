@@ -10,7 +10,8 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  final PageController _pageController = PageController();
+  // Workaround to preload second page. https://github.com/flutter/flutter/issues/31191
+  final PageController _pageController = PageController(viewportFraction: 0.99);
   int _destinationPageIndex;
   List<Widget> _pages;
 
@@ -34,12 +35,11 @@ class HomePageState extends State<HomePage> {
 
     final Widget scaffold = Scaffold(
       drawer: const PrimaryDrawer(),
-      body: PageView.builder(
+      body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         onPageChanged: (int newPage) => _destinationPageIndex = newPage,
         controller: _pageController,
-        itemCount: _pages.length,
-        itemBuilder: (_, int i) => _pages[i],
+        children: _pages,
       ),
       bottomNavigationBar: AnimatedBuilder(
         animation: _pageController,
