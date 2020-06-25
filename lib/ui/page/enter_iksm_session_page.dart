@@ -63,7 +63,7 @@ class _EnterIksmPageState extends State<EnterIksmPage> {
 
   Future<void> _setIksmSession(BuildContext context) async {
     final String iksmSession = _iksmTextFieldController.text;
-    final CookieJar cookieJar = await createCookieJar(iksmSession);
+    final CookieJar cookieJar = createCookieJar(iksmSession);
 
     try {
       final SplatnetAPIRepository repository = SplatnetAPIRepository(cookieJar);

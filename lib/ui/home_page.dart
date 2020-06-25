@@ -48,11 +48,11 @@ class HomePageState extends State<HomePage> {
           onTap: (int newPage) => _pageController.defaultAnimateToPage(newPage),
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.list),
+              icon: const Icon(FontAwesomeIcons.list),
               title: Text(S.of(context).navResults),
             ),
             BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.snowflake),
+              icon: const Icon(FontAwesomeIcons.snowflake),
               title: Text(S.of(context).salmonStats),
             ),
           ],

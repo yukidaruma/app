@@ -8,7 +8,7 @@ class FutureBuilderWrapper<T> extends StatelessWidget {
     @required this.builder,
     this.errorBuilder,
     @required this.future,
-    T this.initialData,
+    this.initialData,
   });
 
   final _AsyncBuilder<T> builder;

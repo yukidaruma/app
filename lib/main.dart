@@ -19,7 +19,7 @@ Future<void> main() async {
   initializeReflectable();
   JsonMapper().useAdapter(
     JsonMapperAdapter(
-      valueDecorators: {
+      valueDecorators: <Type, ValueDecoratorFunction>{
         typeOf<List<IdEntity>>(): (dynamic value) => value.cast<IdEntity>(),
         typeOf<List<NicknameAndIcon>>(): (dynamic value) => value.cast<NicknameAndIcon>(),
         typeOf<List<ResultDetails>>(): (dynamic value) => value.cast<ResultDetails>(),
@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      localizationsDelegates: <LocalizationsDelegate<dynamic>>[
+      localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
