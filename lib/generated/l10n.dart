@@ -108,10 +108,37 @@ class S {
     );
   }
 
-  String get startUploading {
+  String get startUploadingButtonText {
     return Intl.message(
       'Start Uploading',
-      name: 'startUploading',
+      name: 'startUploadingButtonText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get uploadCancellingButtonText {
+    return Intl.message(
+      'Stopping upload...',
+      name: 'uploadCancellingButtonText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get uploadCanceledButtonText {
+    return Intl.message(
+      'Successfully stopped ',
+      name: 'uploadCanceledButtonText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get uploadCompletedButtonText {
+    return Intl.message(
+      'アップロード完了',
+      name: 'uploadCompletedButtonText',
       desc: '',
       args: [],
     );

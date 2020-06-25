@@ -9,7 +9,10 @@
   "openOtherPage": "{pageName}を開く",
   "salmonStatsApiTokenNotSet": "Salmon StatsのAPI Tokenが設定されていません。",
   "salmonStatsProfile": "プロフィール",
-  "startUploading": "アップロードを開始",
+  "startUploadingButtonText": "アップロードを開始",
+  "uploadCancellingButtonText": "アップロードを停止中...",
+  "uploadCanceledButtonText": "アップロードを中断しました",
+  "uploadCompletedButtonText": "アップロード完了",
 
   "$comment": "Preferences Page",
   "getApiToken": "API Tokenを取得",
