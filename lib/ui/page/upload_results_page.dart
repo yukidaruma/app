@@ -10,6 +10,8 @@ import 'package:salmonia_android/ui/all.dart';
 enum _UploadState {
   waiting,
   uploading,
+  cancelling,
+  canceled,
   done,
 }
 
@@ -44,6 +46,12 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Map<_UploadState, String> uploadStateMessagesMap = <_UploadState, String>{
+      _UploadState.cancelling: S.of(context).uploadCancellingButtonText,
+      _UploadState.canceled: S.of(context).uploadCanceledButtonText,
+      _UploadState.done: S.of(context).uploadCompletedButtonText,
+    };
+
     final Widget startUploadButton = (salmonStatsAPIToken?.isEmpty ?? true)
         ? Column(
             children: <Widget>[
@@ -56,22 +64,31 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
             ],
           )
         : RaisedButton(
-            child: Text(S.of(context).startUploading),
+            child: Text(S.of(context).startUploadingButtonText),
             onPressed: _startUploading,
           );
 
     final Widget body = WillPopScope(
-      onWillPop: () {
-        if (_uploadState != _UploadState.uploading) {
-          return Future<bool>.value(true);
+      onWillPop: () async {
+        if (_uploadState == _UploadState.cancelling) {
+          return false;
+        } else if (_uploadState != _UploadState.uploading) {
+          return true;
         }
 
-        return showConfirmationDialog(
-          context: context,
-          message: S.of(context).confirmCancelUploading,
-          isDestructive: true,
-          destructiveMessage: S.of(context).confirmCancelUploadingYes,
-        );
+        final bool shouldCancel = await showConfirmationDialog(
+              context: context,
+              message: S.of(context).confirmCancelUploading,
+              isDestructive: true,
+              destructiveMessage: S.of(context).confirmCancelUploadingYes,
+            ) ??
+            false;
+
+        if (shouldCancel) {
+          _setUploadState(_UploadState.cancelling);
+        }
+
+        return false;
       },
       child: ScrollColumnExpandable(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,6 +97,15 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
             Expanded(
               child: Center(
                 child: startUploadButton,
+              ),
+            )
+          else if (uploadStateMessagesMap.containsKey(_uploadState))
+            Expanded(
+              child: Center(
+                child: RaisedButton(
+                  child: Text(uploadStateMessagesMap[_uploadState]),
+                  onPressed: _uploadState == _UploadState.cancelling ? null : () => Navigator.pop(context),
+                ),
               ),
             )
           else ...<Widget>[
@@ -143,7 +169,7 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
   }
 
   Future<void> _startUploading() async {
-    setState(() => _uploadState = _UploadState.uploading);
+    _setUploadState(_UploadState.uploading);
 
     while (_currentIndex < _count) {
       _addLog('Uploading ${_progressionController.value}...');
@@ -164,9 +190,18 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
         break;
       }
 
+      if (_uploadState == _UploadState.cancelling) {
+        _setUploadState(_UploadState.canceled);
+
+        _addLog('Upload cancelled');
+        return;
+      }
+
       _addLog('Done');
     }
 
-    setState(() => _uploadState = _UploadState.done);
+    _setUploadState(_UploadState.done);
   }
+
+  void _setUploadState(_UploadState newState) => setState(() => _uploadState = newState);
 }

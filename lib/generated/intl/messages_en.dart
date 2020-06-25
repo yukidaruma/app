@@ -43,8 +43,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "salmonStatsApiTokenNotSet" : MessageLookupByLibrary.simpleMessage("Salmon Stats API Token is not set."),
     "salmonStatsProfile" : MessageLookupByLibrary.simpleMessage("profile"),
     "settings" : MessageLookupByLibrary.simpleMessage("Settings"),
-    "startUploading" : MessageLookupByLibrary.simpleMessage("Start Uploading"),
+    "startUploadingButtonText" : MessageLookupByLibrary.simpleMessage("Start Uploading"),
     "updateApiToken" : MessageLookupByLibrary.simpleMessage("Update API Token"),
+    "uploadCanceledButtonText" : MessageLookupByLibrary.simpleMessage("Successfully stopped "),
+    "uploadCancellingButtonText" : MessageLookupByLibrary.simpleMessage("Stopping upload..."),
+    "uploadCompletedButtonText" : MessageLookupByLibrary.simpleMessage("アップロード完了"),
     "yes" : MessageLookupByLibrary.simpleMessage("Yes")
   };
 }
