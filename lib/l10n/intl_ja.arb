@@ -5,6 +5,7 @@
 
   "confirmCancelUploading": "本当にアップロードを中断してもよろしいですか?",
   "confirmCancelUploadingYes": "中断する",
+  "continueButtonText": "続ける",
   "iksmSessionPromptText": "iksm_session を入力してください",
   "openOtherPage": "{pageName}を開く",
   "salmonStatsApiTokenNotSet": "Salmon StatsのAPI Tokenが設定されていません。",

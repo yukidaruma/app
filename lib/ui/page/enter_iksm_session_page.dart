@@ -47,7 +47,7 @@ class _EnterIksmPageState extends State<EnterIksmPage> {
             valueListenable: _iksmTextFieldController,
             builder: (_, __, ___) => Center(
               child: RaisedButton(
-                child: Text('Continue'),
+                child: Text(S.of(context).continueButtonText),
                 onPressed: _isIksmSessionValid ? () => _setIksmSession(context) : null,
               ),
             ),

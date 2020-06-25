@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "clear" : MessageLookupByLibrary.simpleMessage("Clear"),
     "confirmCancelUploading" : MessageLookupByLibrary.simpleMessage("Are you sure you want to stop uploading?"),
     "confirmCancelUploadingYes" : MessageLookupByLibrary.simpleMessage("Yes, stop uploading"),
+    "continueButtonText" : MessageLookupByLibrary.simpleMessage("Continue"),
     "errorDialogTitle" : MessageLookupByLibrary.simpleMessage("Error"),
     "fail" : MessageLookupByLibrary.simpleMessage("Fail"),
     "getApiToken" : MessageLookupByLibrary.simpleMessage("Get API Token"),

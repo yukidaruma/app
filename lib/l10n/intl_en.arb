@@ -5,6 +5,7 @@
 
   "confirmCancelUploading": "Are you sure you want to stop uploading?",
   "confirmCancelUploadingYes": "Yes, stop uploading",
+  "continueButtonText": "Continue",
   "iksmSessionPromptText": "Enter your iksm_session",
   "openOtherPage": "Open {pageName}",
   "salmonStatsApiTokenNotSet": "Salmon Stats API Token is not set.",

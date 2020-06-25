@@ -72,6 +72,15 @@ class S {
     );
   }
 
+  String get continueButtonText {
+    return Intl.message(
+      'Continue',
+      name: 'continueButtonText',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get iksmSessionPromptText {
     return Intl.message(
       'Enter your iksm_session',
