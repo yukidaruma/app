@@ -77,7 +77,7 @@ class _EnterIksmPageState extends State<EnterIksmPage> {
         ..isActiveBool = true
         ..iksmSession = iksmSession
         ..avatar = avatar;
-      await UserProfileRepository(DatabaseProvider.instance).save(profile);
+      await UserProfileRepository(DatabaseProvider.instance).create(profile);
 
       final GlobalStore store = context.read<GlobalStore>();
       store

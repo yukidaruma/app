@@ -55,6 +55,17 @@ abstract class AbstractCRUDRepository<E, T extends Dao<E>> extends AbstractRepos
   }
 
   @override
+  Future<E> findOneOrFail(Map<String, dynamic> criteria) async {
+    final List<E> rows = await find(criteria);
+
+    if (rows.isEmpty) {
+      throw Exception('Entity meets criteria: $criteria was not found.');
+    }
+
+    return rows.first;
+  }
+
+  @override
   Future<E> get(dynamic id) async {
     final Database db = await databaseProvider.db();
 
@@ -79,13 +90,18 @@ abstract class AbstractCRUDRepository<E, T extends Dao<E>> extends AbstractRepos
   }
 
   @override
-  Future<int> save(E entity) async {
+  Future<int> create(E entity) async {
+    return save(entity, conflictAlgorithm: ConflictAlgorithm.fail);
+  }
+
+  @override
+  Future<int> save(E entity, {ConflictAlgorithm conflictAlgorithm = ConflictAlgorithm.replace}) async {
     final Database db = await databaseProvider.db();
 
     return db.insert(
       dao.tableName,
       dao.toMap(entity),
-      conflictAlgorithm: ConflictAlgorithm.replace,
+      conflictAlgorithm: conflictAlgorithm,
     );
   }
 }
@@ -97,6 +113,7 @@ abstract class Deletable<E> {
 abstract class Findable<E> {
   Future<List<E>> find(Map<String, dynamic> criteria);
   Future<E> findOne(Map<String, dynamic> criteria);
+  Future<E> findOneOrFail(Map<String, dynamic> criteria);
 }
 
 abstract class Gettable<E> {
@@ -105,5 +122,6 @@ abstract class Gettable<E> {
 }
 
 abstract class Savable<E> {
+  Future<int> create(E entity);
   Future<int> save(E entity);
 }

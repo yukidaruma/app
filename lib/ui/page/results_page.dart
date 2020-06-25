@@ -171,8 +171,14 @@ class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClient
   }
 
   Future<void> _openInSalmonStats(SalmonResult result) async {
-    final int salmonStatsId = (await SalmonResultRepository(DatabaseProvider.instance).getOrFail(result.jobId)).salmonStatsId;
     final GlobalStore store = context.read<GlobalStore>();
+    final SalmonResultRepository repository = SalmonResultRepository(DatabaseProvider.instance);
+    final int salmonStatsId = (await repository.findOneOrFail(<String, dynamic>{
+      'job_id': result.jobId,
+      'pid': store.profile.pid,
+    }))
+        .salmonStatsId;
+
     store.getGlobalKey<HomePageState>().currentState.setPage<SalmonStatsPage>();
     store.getGlobalKey<SalmonStatsPageState>().currentState.showResult(salmonStatsId);
   }

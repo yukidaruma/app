@@ -130,12 +130,12 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
       'results': <dynamic>[resultMap],
     };
 
+    final UserProfile profile = context.read<GlobalStore>().profile;
     final String rawUploadResponse = await SalmonStatsRepository().upload(payload);
     final UploadSalmonResultsResponse uploadResult = JsonMapper.deserialize<UploadSalmonResultsResponse>(rawUploadResponse, DEFAULT_SERIALIZE_OPTIONS);
-    final InternalSalmonResult result = InternalSalmonResult.fromSplatnetResponse(resultResponse, uploadResult.uploadResults.first.salmonId);
-    await SalmonResultRepository(DatabaseProvider.instance).save(result);
+    final InternalSalmonResult result = InternalSalmonResult.fromSplatnetResponse(resultResponse, profile.pid, uploadResult.uploadResults.first.salmonId);
+    await SalmonResultRepository(DatabaseProvider.instance).create(result);
 
-    final UserProfile profile = context.read<GlobalStore>().profile;
     context.read<GlobalStore>().profile = profile..jobId = _progressionController.value;
     await UserProfileRepository(DatabaseProvider.instance).save(profile);
 

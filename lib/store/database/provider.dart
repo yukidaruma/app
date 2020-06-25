@@ -22,18 +22,15 @@ class DatabaseProvider {
   static final DatabaseProvider _instance = DatabaseProvider._();
   static DatabaseProvider get instance => _instance;
 
-  bool isInitialized = false;
   Database _db;
 
   Future<Database> db() async {
-    if (!isInitialized) {
-      await _init();
-    }
+    _db ??= await _init();
 
     return _db;
   }
 
-  Future<void> _init() async {
+  Future<Database> _init() async {
     Future<void> runMigrations(Database db, bool Function(int migratingVersion) runPredicate) async {
       for (final MapEntry<int, List<Dao>> entry in migrations.entries) {
         final int migratingVersion = entry.key;
@@ -56,7 +53,7 @@ class DatabaseProvider {
     final String databasesPath = await getDatabasesPath();
     final String path = join(databasesPath, 'salmonia.db');
 
-    _db = await openDatabase(
+    return openDatabase(
       path,
       version: DB_SCHEMA_VERSION,
       onCreate: (Database db, int version) async {
