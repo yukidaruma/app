@@ -96,7 +96,7 @@ class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClient
 
   Widget _buildListView(BuildContext context, List<SalmonResult> results, int latestUploadedJobId) {
     return ListView.builder(
-      padding: EdgeInsets.only(top: 8.0),
+      padding: listTopPadding,
       itemBuilder: (_, int i) {
         final SalmonResult result = results[i];
         final bool hasUploaded = latestUploadedJobId >= result.jobId;
