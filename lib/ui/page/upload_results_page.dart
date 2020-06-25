@@ -157,7 +157,7 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
           _addLog('${uploadResult.uploadResults.first.jobId} is already on Salmon Stats.');
         }
       } on DioError catch (e) {
-        _addLog((e.response?.data ?? e.toString()) as String);
+        _addLog('Error ${e.response.statusCode}:\n' + (e.response?.data ?? e.toString()));
         break;
       } catch (e) {
         _addLog(e.toString());
