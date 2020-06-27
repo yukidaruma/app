@@ -11,3 +11,4 @@ export 'package:salmonia_android/ui/home_page.dart';
 export 'package:salmonia_android/ui/page/all.dart';
 export 'package:salmonia_android/ui/styles.dart';
 export 'package:salmonia_android/ui/typedefs.dart';
+export 'package:url_launcher/url_launcher.dart';

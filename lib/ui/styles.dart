@@ -17,6 +17,12 @@ TextStyle boldTextStyle(BuildContext context) {
   );
 }
 
+TextStyle linkTextStyle(BuildContext context) {
+  return const TextStyle(
+    color: Colors.lightBlueAccent,
+  );
+}
+
 TextStyle errorTextStyle(BuildContext context) {
   return TextStyle(
     color: Theme.of(context).errorColor,
