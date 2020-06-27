@@ -54,6 +54,15 @@ class S {
     );
   }
 
+  String get aboutThisApp {
+    return Intl.message(
+      'About this app',
+      name: 'aboutThisApp',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get confirmCancelUploading {
     return Intl.message(
       'Are you sure you want to stop uploading?',

@@ -122,7 +122,7 @@ class WidgetPreferenceItem extends PreferenceItem<void> {
   }
 }
 
-class PreferencesPage extends StatefulWidget {
+class PreferencesPage extends StatefulWidget implements PushablePage<PreferencesPage> {
   const PreferencesPage();
 
   @override

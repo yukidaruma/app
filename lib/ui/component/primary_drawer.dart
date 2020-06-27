@@ -35,6 +35,11 @@ class PrimaryDrawer extends StatelessWidget {
               return store.getGlobalKey<SalmonStatsPageState>().currentState.showUserPage(profile.pid);
             },
           ),
+          ListTile(
+            leading: const Icon(FontAwesomeIcons.infoCircle),
+            title: Text(S.of(context).aboutThisApp),
+            onTap: () => AboutThisAppPage.push(context),
+          ),
           if (context.select((GlobalStore store) => store.isInDebugMode)) ..._buildDebugInfo(),
         ],
       ),
