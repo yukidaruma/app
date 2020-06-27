@@ -26,6 +26,9 @@
   "resultsFetchingError": "Failed to fetch results from Splatnet.",
   "settings": "Settings",
 
+  "$comment": "Temporary messages",
+  "resultPageUnderConstruction": "Result page is under construction. For the time being, please upload result to Salmon Stats and visit Salmon Stats.",
+
   "$comment": "These values are used globally. DO NOT TRANSLATE.",
   "clear": "Clear",
   "fail": "Fail",

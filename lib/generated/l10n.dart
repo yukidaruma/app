@@ -218,6 +218,15 @@ class S {
     );
   }
 
+  String get resultPageUnderConstruction {
+    return Intl.message(
+      'Result page is under construction. For the time being, please upload result to Salmon Stats and visit Salmon Stats.',
+      name: 'resultPageUnderConstruction',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get clear {
     return Intl.message(
       'Clear',

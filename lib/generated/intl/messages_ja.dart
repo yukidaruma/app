@@ -34,6 +34,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "iksmSessionPromptText" : MessageLookupByLibrary.simpleMessage("iksm_session を入力してください"),
     "invalidIksmSession" : MessageLookupByLibrary.simpleMessage("iksm_session が正しくありません。入力内容を確認の上、もう一度やり直してください。"),
     "openOtherPage" : m0,
+    "resultPageUnderConstruction" : MessageLookupByLibrary.simpleMessage("リザルトページは現在開発中です。リザルトを確認するには、Salmon Statsにアップロードしてご確認ください。"),
     "resultsFetchingError" : MessageLookupByLibrary.simpleMessage("Splatnetからリザルトを取得できませんでした。"),
     "salmonStatsApiTokenNotSet" : MessageLookupByLibrary.simpleMessage("Salmon StatsのAPI Tokenが設定されていません。"),
     "salmonStatsProfile" : MessageLookupByLibrary.simpleMessage("プロフィール"),
