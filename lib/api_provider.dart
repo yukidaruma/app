@@ -4,7 +4,7 @@ import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/widgets.dart' show mustCallSuper;
-import 'package:salmonia_android/config.dart';
+import 'package:salmon_stats_app/config.dart';
 
 final RequestOptions defaultRequestOptions = RequestOptions(
   connectTimeout: 5000,

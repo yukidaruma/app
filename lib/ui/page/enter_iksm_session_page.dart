@@ -1,13 +1,13 @@
 import 'dart:typed_data';
 
 import 'package:cookie_jar/cookie_jar.dart';
-import 'package:salmonia_android/api.dart';
-import 'package:salmonia_android/config.dart';
-import 'package:salmonia_android/model/all.dart';
-import 'package:salmonia_android/store/database/all.dart';
-import 'package:salmonia_android/store/global.dart';
-import 'package:salmonia_android/ui/all.dart';
-import 'package:salmonia_android/util/all.dart';
+import 'package:salmon_stats_app/api.dart';
+import 'package:salmon_stats_app/config.dart';
+import 'package:salmon_stats_app/model/all.dart';
+import 'package:salmon_stats_app/store/database/all.dart';
+import 'package:salmon_stats_app/store/global.dart';
+import 'package:salmon_stats_app/ui/all.dart';
+import 'package:salmon_stats_app/util/all.dart';
 
 class EnterIksmPage extends StatefulWidget {
   @override

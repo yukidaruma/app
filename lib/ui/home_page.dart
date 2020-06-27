@@ -1,5 +1,5 @@
-import 'package:salmonia_android/store/global.dart';
-import 'package:salmonia_android/ui/all.dart';
+import 'package:salmon_stats_app/store/global.dart';
+import 'package:salmon_stats_app/ui/all.dart';
 
 @immutable
 class HomePage extends StatefulWidget {

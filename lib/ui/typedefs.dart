@@ -1,4 +1,4 @@
-import 'package:salmonia_android/ui/all.dart';
+import 'package:salmon_stats_app/ui/all.dart';
 
 typedef LabelBuilder = String Function(BuildContext context);
 

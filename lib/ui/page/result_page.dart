@@ -1,7 +1,7 @@
-import 'package:salmonia_android/api.dart';
-import 'package:salmonia_android/model/all.dart';
-import 'package:salmonia_android/store/global.dart';
-import 'package:salmonia_android/ui/all.dart';
+import 'package:salmon_stats_app/api.dart';
+import 'package:salmon_stats_app/model/all.dart';
+import 'package:salmon_stats_app/store/global.dart';
+import 'package:salmon_stats_app/ui/all.dart';
 
 class ResultPage extends StatefulWidget {
   const ResultPage(this.summary);

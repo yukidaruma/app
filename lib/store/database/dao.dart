@@ -1,4 +1,4 @@
-import 'package:salmonia_android/model/all.dart';
+import 'package:salmon_stats_app/model/all.dart';
 
 abstract class Dao<T> {
   String get tableName;

@@ -3,9 +3,9 @@ import 'dart:typed_data';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dart_json_mapper/dart_json_mapper.dart';
 import 'package:dio/dio.dart';
-import 'package:salmonia_android/api_provider.dart';
-import 'package:salmonia_android/config.dart';
-import 'package:salmonia_android/model/all.dart';
+import 'package:salmon_stats_app/api_provider.dart';
+import 'package:salmon_stats_app/config.dart';
+import 'package:salmon_stats_app/model/all.dart';
 
 final RequestOptions _options = RequestOptions(
   headers: <String, String>{

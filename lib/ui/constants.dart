@@ -1,4 +1,4 @@
-import 'package:salmonia_android/ui/all.dart';
+import 'package:salmon_stats_app/ui/all.dart';
 
 const int IKSM_SESSION_LENGTH = 40;
 const Duration NAVIGATION_ANIMATE_DURATION = Duration(milliseconds: 500);

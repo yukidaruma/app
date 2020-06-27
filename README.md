@@ -1,4 +1,4 @@
-# Salmonia for Android
+# Salmon Stats Android
 
 ## Configuration
 

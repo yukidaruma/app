@@ -1,4 +1,4 @@
-package games.yuki.salmonia_android
+package games.yuki.salmon_stats_android
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

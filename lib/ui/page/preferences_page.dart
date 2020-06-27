@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:salmonia_android/api.dart';
-import 'package:salmonia_android/config.dart';
-import 'package:salmonia_android/exceptions.dart';
-import 'package:salmonia_android/store/shared_prefs.dart';
-import 'package:salmonia_android/ui/all.dart';
+import 'package:salmon_stats_app/api.dart';
+import 'package:salmon_stats_app/config.dart';
+import 'package:salmon_stats_app/exceptions.dart';
+import 'package:salmon_stats_app/store/shared_prefs.dart';
+import 'package:salmon_stats_app/ui/all.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 final AppSharedPrefs _sharedPrefs = AppSharedPrefs();

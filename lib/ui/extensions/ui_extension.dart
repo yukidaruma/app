@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:salmonia_android/ui/constants.dart';
+import 'package:salmon_stats_app/ui/constants.dart';
 
 extension CustomPageController on PageController {
   Future<void> defaultAnimateToPage(int page) {

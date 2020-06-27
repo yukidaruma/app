@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:salmonia_android/config.dart';
-import 'package:salmonia_android/ui/all.dart';
+import 'package:salmon_stats_app/config.dart';
+import 'package:salmon_stats_app/ui/all.dart';
 
 const Size _defaultMainWeaponImageSize = Size.square(24.0);
 const Size _defaultSpecialWeaponImageSize = Size.square(32.0);

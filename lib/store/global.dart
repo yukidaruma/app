@@ -1,8 +1,8 @@
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:flutter/foundation.dart';
-import 'package:salmonia_android/model/all.dart';
-import 'package:salmonia_android/model/user_profile.dart';
-import 'package:salmonia_android/ui/all.dart';
+import 'package:salmon_stats_app/model/all.dart';
+import 'package:salmon_stats_app/model/user_profile.dart';
+import 'package:salmon_stats_app/ui/all.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class GlobalStore with ChangeNotifier {

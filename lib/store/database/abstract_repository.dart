@@ -1,4 +1,4 @@
-import 'package:salmonia_android/store/database/all.dart';
+import 'package:salmon_stats_app/store/database/all.dart';
 
 abstract class AbstractRepository<T extends Dao<dynamic>> {
   const AbstractRepository(this._databaseProvider);

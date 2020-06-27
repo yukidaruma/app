@@ -1,15 +1,15 @@
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dart_json_mapper/dart_json_mapper.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:salmonia_android/config.dart';
-import 'package:salmonia_android/generated/l10n.dart';
-import 'package:salmonia_android/main.reflectable.dart' show initializeReflectable;
-import 'package:salmonia_android/model/all.dart';
-import 'package:salmonia_android/store/database/all.dart';
-import 'package:salmonia_android/store/global.dart';
-import 'package:salmonia_android/store/shared_prefs.dart';
-import 'package:salmonia_android/ui/all.dart';
-import 'package:salmonia_android/util/all.dart';
+import 'package:salmon_stats_app/config.dart';
+import 'package:salmon_stats_app/generated/l10n.dart';
+import 'package:salmon_stats_app/main.reflectable.dart' show initializeReflectable;
+import 'package:salmon_stats_app/model/all.dart';
+import 'package:salmon_stats_app/store/database/all.dart';
+import 'package:salmon_stats_app/store/global.dart';
+import 'package:salmon_stats_app/store/shared_prefs.dart';
+import 'package:salmon_stats_app/ui/all.dart';
+import 'package:salmon_stats_app/util/all.dart';
 
 Future<void> main() async {
   CookieJar cookieJar;
@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
         S.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      title: 'Salmonia',
+      title: 'Salmon Stats',
       theme: _makeThemeData(brightness: Brightness.dark),
 //      darkTheme: _makeThemeData(brightness: Brightness.dark),
       home: HomePage(key: Provider.of<GlobalStore>(context, listen: false).getGlobalKey<HomePageState>()),

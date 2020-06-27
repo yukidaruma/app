@@ -1,9 +1,9 @@
-import 'package:salmonia_android/api.dart';
-import 'package:salmonia_android/model/all.dart';
-import 'package:salmonia_android/store/database/all.dart';
-import 'package:salmonia_android/store/database/salmon_result.dart';
-import 'package:salmonia_android/store/global.dart';
-import 'package:salmonia_android/ui/all.dart';
+import 'package:salmon_stats_app/api.dart';
+import 'package:salmon_stats_app/model/all.dart';
+import 'package:salmon_stats_app/store/database/all.dart';
+import 'package:salmon_stats_app/store/database/salmon_result.dart';
+import 'package:salmon_stats_app/store/global.dart';
+import 'package:salmon_stats_app/ui/all.dart';
 
 class ResultsPage extends StatefulWidget {
   @override
@@ -145,11 +145,11 @@ class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClient
                   ),
                   ConstrainedBox(
                     constraints: const BoxConstraints.tightFor(width: 20.0),
-                    child: Text(result.myResult.goldenIkuraNum.toString(), style: const TextStyle(color: SalmoniaColors.goldEgg)),
+                    child: Text(result.myResult.goldenIkuraNum.toString(), style: const TextStyle(color: SalmonStatsColors.goldEgg)),
                   ),
                   ConstrainedBox(
                     constraints: const BoxConstraints.tightFor(width: 40.0),
-                    child: Text(result.myResult.ikuraNum.toString(), style: const TextStyle(color: SalmoniaColors.powerEgg)),
+                    child: Text(result.myResult.ikuraNum.toString(), style: const TextStyle(color: SalmonStatsColors.powerEgg)),
                   ),
                 ].gapWith(const Padding(padding: EdgeInsets.only(right: 8.0))),
               ),

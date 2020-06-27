@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:salmonia_android/model/all.dart';
+import 'package:salmon_stats_app/model/all.dart';
 
 @jsonSerializable
 class InternalSalmonResult {

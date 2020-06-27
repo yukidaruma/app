@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:salmonia_android/api.dart';
-import 'package:salmonia_android/model/all.dart';
-import 'package:salmonia_android/store/database/all.dart';
-import 'package:salmonia_android/store/global.dart';
-import 'package:salmonia_android/ui/all.dart';
+import 'package:salmon_stats_app/api.dart';
+import 'package:salmon_stats_app/model/all.dart';
+import 'package:salmon_stats_app/store/database/all.dart';
+import 'package:salmon_stats_app/store/global.dart';
+import 'package:salmon_stats_app/ui/all.dart';
 
 enum _UploadState {
   waiting,

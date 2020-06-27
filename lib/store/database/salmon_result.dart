@@ -1,5 +1,5 @@
-import 'package:salmonia_android/model/all.dart';
-import 'package:salmonia_android/store/database/all.dart';
+import 'package:salmon_stats_app/model/all.dart';
+import 'package:salmon_stats_app/store/database/all.dart';
 
 class SalmonResultDao extends Dao<InternalSalmonResult> with ClassNameTableNameMixin, JsonMapperDaoMixin<InternalSalmonResult> {
   @override

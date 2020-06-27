@@ -1,7 +1,7 @@
 import 'package:path/path.dart';
-import 'package:salmonia_android/logger.dart';
-import 'package:salmonia_android/store/database/all.dart';
-import 'package:salmonia_android/store/database/user_profile.dart';
+import 'package:salmon_stats_app/logger.dart';
+import 'package:salmon_stats_app/store/database/all.dart';
+import 'package:salmon_stats_app/store/database/user_profile.dart';
 
 // ignore_for_file: always_specify_types
 
@@ -51,7 +51,7 @@ class DatabaseProvider {
     }
 
     final String databasesPath = await getDatabasesPath();
-    final String path = join(databasesPath, 'salmonia.db');
+    final String path = join(databasesPath, 'salmon-stats.db');
 
     return openDatabase(
       path,
