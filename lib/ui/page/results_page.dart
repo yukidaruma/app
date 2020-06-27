@@ -174,7 +174,7 @@ class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClient
     final GlobalStore store = context.read<GlobalStore>();
     final SalmonResultRepository repository = SalmonResultRepository(DatabaseProvider.instance);
     final int salmonStatsId = (await repository.findOneOrFail(<String, dynamic>{
-      'job_id': result.jobId,
+      'id': result.jobId,
       'pid': store.profile.pid,
     }))
         .salmonStatsId;
