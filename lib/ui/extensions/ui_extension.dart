@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:salmonia_android/ui/constants.dart';
 
 extension CustomPageController on PageController {
@@ -9,4 +9,9 @@ extension CustomPageController on PageController {
       curve: Curves.fastLinearToSlowEaseIn,
     );
   }
+}
+
+extension BuildContextExtension on BuildContext {
+  ThemeData get theme => Theme.of(this);
+  TextTheme get textTheme => Theme.of(this).textTheme;
 }

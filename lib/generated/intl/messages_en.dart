@@ -23,6 +23,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "aboutThisApp" : MessageLookupByLibrary.simpleMessage("About this app"),
     "cancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
     "clear" : MessageLookupByLibrary.simpleMessage("Clear"),
     "confirmCancelUploading" : MessageLookupByLibrary.simpleMessage("Are you sure you want to stop uploading?"),
