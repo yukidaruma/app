@@ -102,6 +102,7 @@ class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClient
         final bool hasUploaded = latestUploadedJobId >= result.jobId;
 
         return ListTile(
+          contentPadding: const EdgeInsets.only(left: 8.0),
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute<void>(
