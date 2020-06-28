@@ -12,7 +12,8 @@ class SalmonStatsRepository {
 
     return defaultRequestOptions.merge(
       headers: <String, String>{
-        'authorization': 'Bearer $token',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
       },
     );
   }
