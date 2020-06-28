@@ -17,6 +17,7 @@
   "uploadCompletedButtonText": "アップロード完了",
 
   "$comment": "Preferences Page",
+  "enterApiTokenManually": "手動でAPI Tokenを入力する",
   "getApiToken": "API Tokenを取得",
   "updateApiToken": "API Tokenを更新",
 

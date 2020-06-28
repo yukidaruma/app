@@ -29,6 +29,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "confirmCancelUploading" : MessageLookupByLibrary.simpleMessage("Are you sure you want to stop uploading?"),
     "confirmCancelUploadingYes" : MessageLookupByLibrary.simpleMessage("Yes, stop uploading"),
     "continueButtonText" : MessageLookupByLibrary.simpleMessage("Continue"),
+    "enterApiTokenManually" : MessageLookupByLibrary.simpleMessage("Enter API Token manually"),
     "errorDialogTitle" : MessageLookupByLibrary.simpleMessage("Error"),
     "fail" : MessageLookupByLibrary.simpleMessage("Fail"),
     "getApiToken" : MessageLookupByLibrary.simpleMessage("Get API Token"),
@@ -50,7 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "updateApiToken" : MessageLookupByLibrary.simpleMessage("Update API Token"),
     "uploadCanceledButtonText" : MessageLookupByLibrary.simpleMessage("Successfully stopped "),
     "uploadCancellingButtonText" : MessageLookupByLibrary.simpleMessage("Stopping upload..."),
-    "uploadCompletedButtonText" : MessageLookupByLibrary.simpleMessage("アップロード完了"),
+    "uploadCompletedButtonText" : MessageLookupByLibrary.simpleMessage("Upload completed."),
     "yes" : MessageLookupByLibrary.simpleMessage("Yes")
   };
 }

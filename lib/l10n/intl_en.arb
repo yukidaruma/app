@@ -14,9 +14,10 @@
   "startUploadingButtonText": "Start Uploading",
   "uploadCancellingButtonText": "Stopping upload...",
   "uploadCanceledButtonText": "Successfully stopped ",
-  "uploadCompletedButtonText": "アップロード完了",
+  "uploadCompletedButtonText": "Upload completed.",
 
   "$comment": "Preferences Page",
+  "enterApiTokenManually": "Enter API Token manually",
   "getApiToken": "Get API Token",
   "updateApiToken": "Update API Token",
 

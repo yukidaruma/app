@@ -28,6 +28,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "confirmCancelUploading" : MessageLookupByLibrary.simpleMessage("本当にアップロードを中断してもよろしいですか?"),
     "confirmCancelUploadingYes" : MessageLookupByLibrary.simpleMessage("中断する"),
     "continueButtonText" : MessageLookupByLibrary.simpleMessage("続ける"),
+    "enterApiTokenManually" : MessageLookupByLibrary.simpleMessage("手動でAPI Tokenを入力する"),
     "errorDialogTitle" : MessageLookupByLibrary.simpleMessage("エラー"),
     "getApiToken" : MessageLookupByLibrary.simpleMessage("API Tokenを取得"),
     "goBack" : MessageLookupByLibrary.simpleMessage("戻る"),

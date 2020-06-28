@@ -6,7 +6,6 @@ import 'package:salmon_stats_app/config.dart';
 import 'package:salmon_stats_app/exceptions.dart';
 import 'package:salmon_stats_app/store/shared_prefs.dart';
 import 'package:salmon_stats_app/ui/all.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 final AppSharedPrefs _sharedPrefs = AppSharedPrefs();
 
@@ -14,15 +13,15 @@ final AppSharedPrefs _sharedPrefs = AppSharedPrefs();
 @optionalTypeArgs
 abstract class PreferenceItem<T> {
   const PreferenceItem({
-    bool readOnly,
     this.key,
     this.labelBuilder,
+    this.readOnly,
     this.type,
-  }) : readOnly = readOnly ?? false;
+  });
 
-  final bool readOnly;
   final SharedPrefsKeys key;
   final LabelBuilder labelBuilder;
+  final bool Function() readOnly;
   final SharedPrefsTypes type;
 
   // ignore: missing_return
@@ -56,7 +55,7 @@ abstract class PreferenceItem<T> {
 
 class BoolPreferenceItem extends PreferenceItem<bool> {
   const BoolPreferenceItem({
-    bool readOnly,
+    bool Function() readOnly,
     @required SharedPrefsKeys key,
     @required LabelBuilder labelBuilder,
   }) : super(
@@ -69,7 +68,7 @@ class BoolPreferenceItem extends PreferenceItem<bool> {
 
 class DoublePreferenceItem extends PreferenceItem<double> {
   const DoublePreferenceItem({
-    bool readOnly,
+    bool Function() readOnly,
     @required SharedPrefsKeys key,
     @required LabelBuilder labelBuilder,
   }) : super(
@@ -82,7 +81,7 @@ class DoublePreferenceItem extends PreferenceItem<double> {
 
 class IntPreferenceItem extends PreferenceItem<int> {
   const IntPreferenceItem({
-    bool readOnly,
+    bool Function() readOnly,
     @required SharedPrefsKeys key,
     @required LabelBuilder labelBuilder,
   }) : super(
@@ -95,7 +94,7 @@ class IntPreferenceItem extends PreferenceItem<int> {
 
 class StringPreferenceItem extends PreferenceItem<String> {
   const StringPreferenceItem({
-    bool readOnly,
+    bool Function() readOnly,
     @required SharedPrefsKeys key,
     @required LabelBuilder labelBuilder,
   }) : super(
@@ -107,9 +106,10 @@ class StringPreferenceItem extends PreferenceItem<String> {
 }
 
 class WidgetPreferenceItem extends PreferenceItem<void> {
-  WidgetPreferenceItem({@required this.builder});
+  WidgetPreferenceItem({@required this.builder, this.visibility});
 
   final WidgetBuilder builder;
+  final bool Function() visibility;
 
   @override
   void restore() {
@@ -139,6 +139,7 @@ class PreferencesPage extends StatefulWidget implements PushablePage<Preferences
 class _PreferencesPageState extends State<PreferencesPage> {
   final Map<SharedPrefsKeys, ValueNotifier<dynamic>> _controllers = <SharedPrefsKeys, ValueNotifier<dynamic>>{};
   List<PreferenceItem> _options;
+  bool _enterApiTokenManually = false;
 
   @override
   void initState() {
@@ -146,16 +147,29 @@ class _PreferencesPageState extends State<PreferencesPage> {
 
     _options = <PreferenceItem>[
       StringPreferenceItem(
-        readOnly: true,
+        readOnly: () => !_enterApiTokenManually,
         key: SharedPrefsKeys.SALMON_STATS_TOKEN,
         labelBuilder: (BuildContext context) => S.of(context).salmonStatsApiToken,
       ),
       WidgetPreferenceItem(
+        visibility: () => !_enterApiTokenManually,
         builder: (BuildContext context) => Center(
           child: RaisedButton(
             child: Text((salmonStatsAPIToken?.isEmpty ?? true) ? S.of(context).getApiToken : S.of(context).updateApiToken),
             onPressed: () => _getSalmonStatsAPIToken(context),
           ),
+        ),
+      ),
+      WidgetPreferenceItem(
+        visibility: () => !_enterApiTokenManually,
+        builder: (_) => Column(
+          children: <Widget>[
+            const Padding(padding: EdgeInsets.only(bottom: 16.0)),
+            FlatButton(
+              child: Text(S.of(context).enterApiTokenManually),
+              onPressed: () => setState(() => _enterApiTokenManually = true),
+            ),
+          ],
         ),
       ),
     ];
@@ -203,7 +217,15 @@ class _PreferencesPageState extends State<PreferencesPage> {
   @override
   Widget build(BuildContext context) {
     final Widget body = ListView.builder(
-      itemBuilder: (BuildContext context, int i) => _buildPrefItem(context, _options[i]),
+      itemBuilder: (BuildContext context, int i) {
+        final item = _options[i];
+
+        if (item is WidgetPreferenceItem && !item.visibility()) {
+          return Container();
+        }
+
+        return _buildPrefItem(context, _options[i]);
+      },
       itemCount: _options.length,
     );
 
@@ -218,7 +240,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
   Widget _buildPrefItem(BuildContext context, PreferenceItem option) {
     // ignore: missing_return
     final Widget control = (() {
-      final bool readOnly = option.readOnly;
+      final bool readOnly = option.readOnly != null && option.readOnly();
       final ValueNotifier<dynamic> listenable = _controllers[option.key];
       switch (option.type) {
         case SharedPrefsTypes.bool:

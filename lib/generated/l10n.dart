@@ -155,7 +155,7 @@ class S {
 
   String get uploadCompletedButtonText {
     return Intl.message(
-      'アップロード完了',
+      'Upload completed.',
       name: 'uploadCompletedButtonText',
       desc: '',
       args: [],
@@ -163,6 +163,15 @@ class S {
   }
 
   // skipped getter for the '\$comment' key
+
+  String get enterApiTokenManually {
+    return Intl.message(
+      'Enter API Token manually',
+      name: 'enterApiTokenManually',
+      desc: '',
+      args: [],
+    );
+  }
 
   String get getApiToken {
     return Intl.message(

@@ -1,6 +1,5 @@
 import 'package:salmon_stats_app/config.dart';
 import 'package:salmon_stats_app/ui/all.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class SalmonStatsPage extends StatefulWidget {
   const SalmonStatsPage({Key key}) : super(key: key);
