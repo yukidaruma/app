@@ -35,6 +35,7 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
 
   int get _count => widget.untilId - widget.sinceId + 1;
   int get _currentIndex => _progressionController.value - widget.sinceId;
+  bool get _hasSalmonStatsAPIToken => salmonStatsAPIToken?.isNotEmpty ?? false;
   double get _progressionPercentage => _currentIndex / _count;
 
   @override
@@ -52,14 +53,21 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
       _UploadState.done: S.of(context).uploadCompletedButtonText,
     };
 
-    final Widget startUploadButton = (salmonStatsAPIToken?.isEmpty ?? true)
+    final Widget startUploadButton = !_hasSalmonStatsAPIToken
         ? Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(S.of(context).salmonStatsApiTokenNotSet),
               const Padding(padding: EdgeInsets.only(bottom: 8.0)),
               RaisedButton(
                 child: Text(S.of(context).openOtherPage(S.of(context).settings)),
-                onPressed: () => PreferencesPage.push(context),
+                onPressed: () async {
+                  await PreferencesPage.push(context);
+
+                  if (_hasSalmonStatsAPIToken) {
+                    setState(() {});
+                  }
+                },
               ),
             ],
           )
@@ -91,6 +99,7 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
         return false;
       },
       child: ScrollColumnExpandable(
+        padding: listTopPadding,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           if (_uploadState == _UploadState.waiting)
