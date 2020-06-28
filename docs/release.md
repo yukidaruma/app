@@ -20,5 +20,13 @@
 ### Build for release
 
 ```
-flutter build appbundle --target-platform android-arm,android-arm64,android-x64
+# Running the `build-release.sh` will
+# 1. Increment version field in `pubspec.yaml`.
+# 2. Runs `flutter build`.
+./scripts/build-release.sh
+
+# When you do not want to update version field: Use `-V` option.
+./scripts/build-release.sh -V
+
+# When incrementing major / minor version: Use -M / -m option respectively.
 ```

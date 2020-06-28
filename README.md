@@ -17,7 +17,8 @@ flutter run
 
 ## Building for release
 
-Make sure to build with `./scripts/build-release.sh` (to discard changes made by `.dev_override.env`).
+Make sure to build with `./scripts/build-release.sh` (to discard changes made by `.dev_override.env`).  
+[Read more about "Building for release"](./docs/release.md)
 
 ## Generating code
 
