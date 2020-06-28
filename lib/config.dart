@@ -2,6 +2,8 @@
 
 // ignore: avoid_classes_with_only_static_members
 class Config {
+  static bool _boolField(String key) => env[key] == 'true';
+
   static Map<String, dynamic> env;
 
   static String get DEV_IKSM_SESSION => env['DEV_IKSM_SESSION'];
@@ -10,6 +12,8 @@ class Config {
   static String get SALMON_STATS_API_ORIGIN => env['SALMON_STATS_API_ORIGIN'];
   static String get SALMON_STATS_URL => env['SALMON_STATS_URL'];
   static const String SALMON_IMAGE_BASE_PATH = 'https://splatoon-stats-api.yuki.games/static/images';
+
+  static bool get HIDE_DEBUG_LABEL => _boolField('HIDE_DEBUG_LABEL');
 
   // Splatnet related configurations
   static const String SPLATNET_ORIGIN = 'https://app.splatoon2.nintendo.net';

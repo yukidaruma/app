@@ -68,7 +68,8 @@ class PrimaryDrawer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(entry.key, style: const TextStyle(fontWeight: FontWeight.bold)),
-                    Text(entry.value),
+                    if (entry.value is! String) Text('${entry.value} (${entry.value.runtimeType})')
+                    else Text(entry.value),
                   ],
                 ),
               )
