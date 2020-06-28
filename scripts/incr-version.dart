@@ -14,7 +14,7 @@ void main(List<String> args) {
   final String cwd = Directory.current.path;
   final File pubspec = File(join(cwd, 'pubspec.yaml'));
   if (!pubspec.existsSync()) {
-    print('No pubspec.yaml found in current working directory.');
+    print('Error: No pubspec.yaml found in current working directory.');
     exit(1);
   }
 
@@ -58,7 +58,7 @@ void main(List<String> args) {
       final String newSemver = '$major.$minor.$patch+${build + 1}';
       buffer.write('version: $newSemver');
 
-      print('Updated version to $newSemver');
+      stdout.write(newSemver);
     }
 
     buffer.write('\n');
