@@ -1,6 +1,7 @@
 {
   "cancel": "Cancel",
   "goBack": "Go back",
+  "refresh": "Refresh",
   "yes": "Yes",
 
   "aboutThisApp": "About this app",
@@ -9,6 +10,7 @@
   "continueButtonText": "Continue",
   "iksmSessionPromptText": "Enter your iksm_session",
   "openOtherPage": "Open {pageName}",
+  "noResultsFound": "No results were found. Please play some Salmon Run and refresh the page.",
   "salmonStatsApiTokenNotSet": "Salmon Stats API Token is not set.",
   "salmonStatsProfile": "profile",
   "startUploadingButtonText": "Start Uploading",

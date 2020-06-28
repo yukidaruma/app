@@ -45,6 +45,15 @@ class S {
     );
   }
 
+  String get refresh {
+    return Intl.message(
+      'Refresh',
+      name: 'refresh',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get yes {
     return Intl.message(
       'Yes',
@@ -105,6 +114,15 @@ class S {
       name: 'openOtherPage',
       desc: '',
       args: [pageName],
+    );
+  }
+
+  String get noResultsFound {
+    return Intl.message(
+      'No results were found. Please play some Salmon Run and refresh the page.',
+      name: 'noResultsFound',
+      desc: '',
+      args: [],
     );
   }
 

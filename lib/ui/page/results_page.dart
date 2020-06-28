@@ -11,6 +11,7 @@ class ResultsPage extends StatefulWidget {
 }
 
 class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClientMixin<ResultsPage> {
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   Future<SalmonResults> _resultsFuture;
 
   @override
@@ -29,6 +30,7 @@ class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClient
 
     Widget makeRefreshable(Widget child) {
       return RefreshIndicator(
+        key: _refreshIndicatorKey,
         onRefresh: () async {
           setState(() {
             _resultsFuture = _fetchResults();
@@ -44,9 +46,11 @@ class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClient
       future: _resultsFuture,
       builder: (BuildContext context, AsyncSnapshot<SalmonResults> snapshot) {
         final List<SalmonResult> results = snapshot.data?.results;
+
+        final bool isEmpty = !snapshot.hasData || results.isEmpty;
         final int latestUploadedJobId = context.select((GlobalStore store) => store.profile.jobId) ?? 0;
-        final int latestJobId = results?.first?.jobId ?? 0;
-        final int oldestJobId = results?.last?.jobId ?? 0;
+        final int latestJobId = isEmpty ? 0 : results?.first?.jobId ?? 0;
+        final int oldestJobId = isEmpty ? 0 : results?.last?.jobId ?? 0;
 
         Widget body;
         if (snapshot.hasError) {
@@ -61,7 +65,23 @@ class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClient
             ),
           );
         } else if (snapshot.hasData) {
-          body = makeRefreshable(_buildListView(context, results, latestUploadedJobId));
+          body = isEmpty
+              ? makeRefreshable(
+                  PagePadding(
+                    child: ScrollColumnExpandable(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(S.of(context).noResultsFound),
+                        const Padding(padding: EdgeInsets.only(bottom: 16.0)),
+                        RaisedButton(
+                          onPressed: () => _refreshIndicatorKey.currentState.show(),
+                          child: Text(S.of(context).refresh),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              : makeRefreshable(_buildListView(context, results, latestUploadedJobId));
         } else {
           body = const Center(child: CircularProgressIndicator());
         }
