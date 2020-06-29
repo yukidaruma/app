@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "aboutThisApp" : MessageLookupByLibrary.simpleMessage("About this app"),
+    "addAccount" : MessageLookupByLibrary.simpleMessage("Add account"),
     "cancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
     "clear" : MessageLookupByLibrary.simpleMessage("Clear"),
     "confirmCancelUploading" : MessageLookupByLibrary.simpleMessage("Are you sure you want to stop uploading?"),
@@ -35,6 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "getApiToken" : MessageLookupByLibrary.simpleMessage("Get API Token"),
     "goBack" : MessageLookupByLibrary.simpleMessage("Go back"),
     "iksmSession" : MessageLookupByLibrary.simpleMessage("iksm_session"),
+    "iksmSessionAlreadyUsed" : MessageLookupByLibrary.simpleMessage("You already have added this iksm_session."),
     "iksmSessionPromptText" : MessageLookupByLibrary.simpleMessage("Enter your iksm_session"),
     "invalidIksmSession" : MessageLookupByLibrary.simpleMessage("Invalid iksm_session. Please make sure you enter correct iksm_session and try again."),
     "navResults" : MessageLookupByLibrary.simpleMessage("Results"),

@@ -10,6 +10,10 @@ import 'package:salmon_stats_app/ui/all.dart';
 import 'package:salmon_stats_app/util/all.dart';
 
 class EnterIksmPage extends StatefulWidget {
+  const EnterIksmPage({this.restartOnComplete = false});
+
+  final bool restartOnComplete;
+
   @override
   _EnterIksmPageState createState() => _EnterIksmPageState();
 }
@@ -48,7 +52,7 @@ class _EnterIksmPageState extends State<EnterIksmPage> {
             builder: (_, __, ___) => Center(
               child: RaisedButton(
                 child: Text(S.of(context).continueButtonText),
-                onPressed: _isIksmSessionValid ? () => _setIksmSession(context) : null,
+                onPressed: _isIksmSessionValid ? () => _addAccount(context) : null,
               ),
             ),
           ),
@@ -61,7 +65,7 @@ class _EnterIksmPageState extends State<EnterIksmPage> {
     );
   }
 
-  Future<void> _setIksmSession(BuildContext context) async {
+  Future<void> _addAccount(BuildContext context) async {
     final String iksmSession = _iksmTextFieldController.text;
     final CookieJar cookieJar = createCookieJar(iksmSession);
 
@@ -77,12 +81,27 @@ class _EnterIksmPageState extends State<EnterIksmPage> {
         ..isActiveBool = true
         ..iksmSession = iksmSession
         ..avatar = avatar;
+
       await UserProfileRepository(DatabaseProvider.instance).create(profile);
 
       final GlobalStore store = context.read<GlobalStore>();
       store
-        ..profile = profile
+        ..addProfile(profile)
         ..cookieJar = cookieJar;
+
+      if (widget.restartOnComplete) {
+        await store.switchProfile(profile);
+        Navigator.pop(context);
+      }
+    } on DatabaseException catch (e) {
+      if (!e.isUniqueConstraintError()) {
+        rethrow;
+      }
+
+      return showErrorMessageDialog(
+        context: context,
+        message: S.of(context).iksmSessionAlreadyUsed,
+      );
     } catch (_) {
       return showErrorMessageDialog(
         context: context,

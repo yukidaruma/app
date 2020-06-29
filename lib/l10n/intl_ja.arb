@@ -5,6 +5,7 @@
   "yes": "はい",
 
   "aboutThisApp": "このアプリについて",
+  "addAccount": "アカウントを追加する",
   "confirmCancelUploading": "本当にアップロードを中断してもよろしいですか?",
   "confirmCancelUploadingYes": "中断する",
   "continueButtonText": "続ける",
@@ -25,6 +26,7 @@
 
   "$comment": "Error messages",
   "errorDialogTitle": "エラー",
+  "iksmSessionAlreadyUsed": "この iksm_session はすでに追加されています。",
   "invalidIksmSession": "iksm_session が正しくありません。入力内容を確認の上、もう一度やり直してください。",
   "resultsFetchingError": "Splatnetからリザルトを取得できませんでした。",
   "settings": "設定",

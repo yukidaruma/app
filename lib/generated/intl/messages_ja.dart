@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "aboutThisApp" : MessageLookupByLibrary.simpleMessage("このアプリについて"),
+    "addAccount" : MessageLookupByLibrary.simpleMessage("アカウントを追加する"),
     "cancel" : MessageLookupByLibrary.simpleMessage("キャンセル"),
     "confirmCancelUploading" : MessageLookupByLibrary.simpleMessage("本当にアップロードを中断してもよろしいですか?"),
     "confirmCancelUploadingYes" : MessageLookupByLibrary.simpleMessage("中断する"),
@@ -32,6 +33,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "errorDialogTitle" : MessageLookupByLibrary.simpleMessage("エラー"),
     "getApiToken" : MessageLookupByLibrary.simpleMessage("API Tokenを取得"),
     "goBack" : MessageLookupByLibrary.simpleMessage("戻る"),
+    "iksmSessionAlreadyUsed" : MessageLookupByLibrary.simpleMessage("この iksm_session はすでに追加されています。"),
     "iksmSessionPromptText" : MessageLookupByLibrary.simpleMessage("iksm_session を入力してください"),
     "invalidIksmSession" : MessageLookupByLibrary.simpleMessage("iksm_session が正しくありません。入力内容を確認の上、もう一度やり直してください。"),
     "noResultsFound" : MessageLookupByLibrary.simpleMessage("リザルトが見つかりませんでした。サーモンランをプレイして、ページを更新してください。"),
