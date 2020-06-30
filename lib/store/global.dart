@@ -19,7 +19,7 @@ class GlobalStore with ChangeNotifier {
   }
 
   void createGlobalKey<T extends State<StatefulWidget>>() {
-    _globalKeys[T] = GlobalKey<T>(debugLabel: T.runtimeType.toString());
+    _globalKeys[T] = GlobalKey<T>(debugLabel: T.toString());
   }
 
   CookieJar _cookieJar;
