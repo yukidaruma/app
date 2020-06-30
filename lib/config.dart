@@ -10,6 +10,7 @@ class Config {
 
   static String get DEV_IKSM_SESSION => _stringField('DEV_IKSM_SESSION');
   static String get DEV_SALMON_STATS_API_TOKEN => _stringField('DEV_SALMON_STATS_API_TOKEN');
+  static bool get DEV_OBSCURE_IKSM_SESSION => _boolField('DEV_OBSCURE_IKSM_SESSION');
 
   static String get SALMON_STATS_API_ORIGIN => _stringField('SALMON_STATS_API_ORIGIN');
   static String get SALMON_STATS_URL => _stringField('SALMON_STATS_URL');

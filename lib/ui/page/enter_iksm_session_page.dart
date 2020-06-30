@@ -46,6 +46,7 @@ class _EnterIksmPageState extends State<EnterIksmPage> {
             ),
             controller: _iksmTextFieldController,
             maxLength: IKSM_SESSION_LENGTH,
+            obscureText: Config.DEV_OBSCURE_IKSM_SESSION,
           ),
           ValueListenableBuilder<TextEditingValue>(
             valueListenable: _iksmTextFieldController,

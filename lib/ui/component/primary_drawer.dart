@@ -125,7 +125,12 @@ class _PrimaryDrawerState extends State<PrimaryDrawer> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(entry.key, style: const TextStyle(fontWeight: FontWeight.bold)),
-                    if (entry.value is! String) Text('${entry.value} (${entry.value.runtimeType})') else Text(entry.value),
+                    if (entry.value is! String)
+                      Text('${entry.value} (${entry.value.runtimeType})')
+                    else
+                      Text(
+                        Config.DEV_OBSCURE_IKSM_SESSION && entry.key == 'DEV_IKSM_SESSION' ? ('*' * entry.value.length) : entry.value,
+                      ),
                   ],
                 ),
               )
