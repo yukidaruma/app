@@ -1,4 +1,5 @@
 import 'package:salmon_stats_app/store/database/all.dart';
+import 'package:salmon_stats_app/ui/all.dart';
 
 abstract class AbstractRepository<T extends Dao<dynamic>> {
   const AbstractRepository(this._databaseProvider);
@@ -26,11 +27,19 @@ abstract class AbstractCRUDRepository<E, T extends Dao<E>> extends AbstractRepos
   }
 
   @override
-  Future<void> deleteById(dynamic id) async {
+  Future<void> delete({@required String where, List<dynamic> whereArgs}) async {
     final Database db = await databaseProvider.db();
 
     return db.delete(
       dao.tableName,
+      where: where,
+      whereArgs: whereArgs,
+    );
+  }
+
+  @override
+  Future<void> deleteById(dynamic id) async {
+    return delete(
       where: singleWhereClause,
       whereArgs: <dynamic>[id],
     );
@@ -107,6 +116,7 @@ abstract class AbstractCRUDRepository<E, T extends Dao<E>> extends AbstractRepos
 }
 
 abstract class Deletable<E> {
+  Future<void> delete({@required String where, List<dynamic> whereArgs});
   Future<void> deleteById(dynamic id);
 }
 

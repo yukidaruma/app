@@ -1,5 +1,6 @@
 import 'package:salmon_stats_app/config.dart';
 import 'package:salmon_stats_app/model/all.dart';
+import 'package:salmon_stats_app/store/database/all.dart';
 import 'package:salmon_stats_app/store/global.dart';
 import 'package:salmon_stats_app/ui/all.dart';
 
@@ -56,7 +57,7 @@ class _PrimaryDrawerState extends State<PrimaryDrawer> {
               ? null
               : IconButton(
                   icon: const Icon(Icons.close),
-                  onPressed: () {},
+                  onPressed: () => _removeAccount(p),
                 ),
         ),
       ListTile(
@@ -138,5 +139,19 @@ class _PrimaryDrawerState extends State<PrimaryDrawer> {
         builder: (_) => const EnterIksmPage(restartOnComplete: true),
       ),
     );
+  }
+
+  Future<void> _removeAccount(UserProfile p) async {
+    final bool confirmation = await showConfirmationDialog(
+          context: context,
+          message: S.of(context).confirmRemoveAccount(p.name),
+        ) ??
+        false;
+
+    if (confirmation) {
+      final GlobalStore store = context.read<GlobalStore>();
+      await UserProfileRepository(DatabaseProvider.instance).deleteById(p.pid);
+      await store.loadProfiles();
+    }
   }
 }

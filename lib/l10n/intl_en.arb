@@ -8,6 +8,7 @@
   "addAccount": "Add account",
   "confirmCancelUploading": "Are you sure you want to stop uploading?",
   "confirmCancelUploadingYes": "Yes, stop uploading",
+  "confirmRemoveAccount": "Are you sure you want to remove account \"{name}\"?",
   "continueButtonText": "Continue",
   "iksmSessionPromptText": "Enter your iksm_session",
   "openOtherPage": "Open {pageName}",

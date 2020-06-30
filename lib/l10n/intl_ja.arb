@@ -8,6 +8,7 @@
   "addAccount": "アカウントを追加する",
   "confirmCancelUploading": "本当にアップロードを中断してもよろしいですか?",
   "confirmCancelUploadingYes": "中断する",
+  "confirmRemoveAccount": "本当に\"{name}\"のアカウントを削除しますか?",
   "continueButtonText": "続ける",
   "iksmSessionPromptText": "iksm_session を入力してください",
   "noResultsFound": "リザルトが見つかりませんでした。サーモンランをプレイして、ページを更新してください。",

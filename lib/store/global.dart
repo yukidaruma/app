@@ -51,6 +51,19 @@ class GlobalStore with ChangeNotifier {
     _profiles.add(profile);
   }
 
+  Future<void> loadProfiles({bool shouldNotifyListeners = true}) async {
+    final UserProfileRepository repository = UserProfileRepository(DatabaseProvider.instance);
+    profiles = await repository.all();
+
+    if (shouldNotifyListeners) {
+      notifyListeners();
+    }
+  }
+
+  void restartApp() {
+    getGlobalKey<RestartableState>().currentState.restart();
+  }
+
   Future<void> switchProfile(UserProfile newProfile) async {
     final UserProfile oldProfile = profile;
 
@@ -69,9 +82,9 @@ class GlobalStore with ChangeNotifier {
       await repository.save(profile);
     }
 
-    profiles = await repository.all();
+    await loadProfiles(shouldNotifyListeners: false);
 
-    getGlobalKey<RestartableState>().currentState.restart();
+    restartApp();
   }
 
   // TODO: make it const so tree-shaking can work.

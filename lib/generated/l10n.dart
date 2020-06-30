@@ -99,6 +99,15 @@ class S {
     );
   }
 
+  String confirmRemoveAccount(Object name) {
+    return Intl.message(
+      'Are you sure you want to remove account "$name"?',
+      name: 'confirmRemoveAccount',
+      desc: '',
+      args: [name],
+    );
+  }
+
   String get continueButtonText {
     return Intl.message(
       'Continue',
