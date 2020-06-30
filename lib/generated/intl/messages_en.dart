@@ -19,15 +19,19 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static m0(pageName) => "Open ${pageName}";
+  static m0(name) => "Are you sure you want to remove account \"${name}\"?";
+
+  static m1(pageName) => "Open ${pageName}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "aboutThisApp" : MessageLookupByLibrary.simpleMessage("About this app"),
+    "addAccount" : MessageLookupByLibrary.simpleMessage("Add account"),
     "cancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
     "clear" : MessageLookupByLibrary.simpleMessage("Clear"),
     "confirmCancelUploading" : MessageLookupByLibrary.simpleMessage("Are you sure you want to stop uploading?"),
     "confirmCancelUploadingYes" : MessageLookupByLibrary.simpleMessage("Yes, stop uploading"),
+    "confirmRemoveAccount" : m0,
     "continueButtonText" : MessageLookupByLibrary.simpleMessage("Continue"),
     "enterApiTokenManually" : MessageLookupByLibrary.simpleMessage("Enter API Token manually"),
     "errorDialogTitle" : MessageLookupByLibrary.simpleMessage("Error"),
@@ -35,12 +39,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "getApiToken" : MessageLookupByLibrary.simpleMessage("Get API Token"),
     "goBack" : MessageLookupByLibrary.simpleMessage("Go back"),
     "iksmSession" : MessageLookupByLibrary.simpleMessage("iksm_session"),
+    "iksmSessionAlreadyUsed" : MessageLookupByLibrary.simpleMessage("You already have added this iksm_session."),
     "iksmSessionPromptText" : MessageLookupByLibrary.simpleMessage("Enter your iksm_session"),
     "invalidIksmSession" : MessageLookupByLibrary.simpleMessage("Invalid iksm_session. Please make sure you enter correct iksm_session and try again."),
     "navResults" : MessageLookupByLibrary.simpleMessage("Results"),
     "noResultsFound" : MessageLookupByLibrary.simpleMessage("No results were found. Please play some Salmon Run and refresh the page."),
     "ok" : MessageLookupByLibrary.simpleMessage("OK"),
-    "openOtherPage" : m0,
+    "openOtherPage" : m1,
     "refresh" : MessageLookupByLibrary.simpleMessage("Refresh"),
     "resultPageUnderConstruction" : MessageLookupByLibrary.simpleMessage("Result page is under construction. For the time being, please upload result to Salmon Stats and visit Salmon Stats."),
     "resultsFetchingError" : MessageLookupByLibrary.simpleMessage("Failed to fetch results from Splatnet."),

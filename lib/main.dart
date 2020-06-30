@@ -31,9 +31,8 @@ Future<void> main() async {
   await AppSharedPrefs.load();
   await DatabaseProvider.instance.db(); // Ensure Database is initialized
 
-  final UserProfile profile = await UserProfileRepository(DatabaseProvider.instance).findOne(
-    <String, dynamic>{'is_active_bool': 1},
-  );
+  final List<UserProfile> profiles = await UserProfileRepository(DatabaseProvider.instance).all();
+  final UserProfile profile = profiles.firstWhere((UserProfile p) => p.isActiveBool, orElse: () => null);
 
   final String iksmSession = profile?.iksmSession;
   if (iksmSession != null) {
@@ -44,10 +43,10 @@ Future<void> main() async {
 
   final GlobalStore globalStore = GlobalStore(
     cookieJar: cookieJar,
-    profile: profile,
+    profiles: profiles,
   );
 
-  _createGlobalKeys(globalStore);
+  _createGlobalKeys(globalStore, isFirstTime: true);
 
   runApp(
     MultiProvider(
@@ -57,7 +56,10 @@ Future<void> main() async {
           create: (_) => globalStore,
         ),
       ],
-      child: MyApp(),
+      child: Restartable(
+        key: globalStore.getGlobalKey<RestartableState>(),
+        child: MyApp(),
+      ),
     ),
   );
 }
@@ -65,8 +67,10 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final GlobalStore store = Provider.of<GlobalStore>(context, listen: false);
+
     return MaterialApp(
-      debugShowCheckedModeBanner: Config.HIDE_DEBUG_LABEL,
+      debugShowCheckedModeBanner: !Config.HIDE_DEBUG_LABEL,
       localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -77,7 +81,7 @@ class MyApp extends StatelessWidget {
       title: 'Salmon Stats',
       theme: _makeThemeData(brightness: Brightness.dark),
 //      darkTheme: _makeThemeData(brightness: Brightness.dark),
-      home: HomePage(key: Provider.of<GlobalStore>(context, listen: false).getGlobalKey<HomePageState>()),
+      home: HomePage(key: store.getGlobalKey<HomePageState>()),
     );
   }
 
@@ -96,7 +100,39 @@ class MyApp extends StatelessWidget {
   }
 }
 
-void _createGlobalKeys(GlobalStore globalStore) {
+class Restartable extends StatefulWidget {
+  const Restartable({Key key, @required this.child}) : super(key: key);
+
+  final Widget child;
+
+  @override
+  RestartableState createState() => RestartableState();
+}
+
+class RestartableState extends State<Restartable> {
+  UniqueKey _key = UniqueKey();
+
+  @override
+  Widget build(BuildContext context) {
+    return KeyedSubtree(
+      key: _key,
+      child: widget.child,
+    );
+  }
+
+  void restart() {
+    setState(() {
+      _createGlobalKeys(context.read<GlobalStore>());
+      _key = UniqueKey();
+    });
+  }
+}
+
+void _createGlobalKeys(GlobalStore globalStore, {bool isFirstTime = false}) {
+  if (isFirstTime) {
+    globalStore.createGlobalKey<RestartableState>();
+  }
+
   globalStore.createGlobalKey<HomePageState>();
   globalStore.createGlobalKey<SalmonStatsPageState>();
 }

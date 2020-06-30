@@ -72,6 +72,15 @@ class S {
     );
   }
 
+  String get addAccount {
+    return Intl.message(
+      'Add account',
+      name: 'addAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get confirmCancelUploading {
     return Intl.message(
       'Are you sure you want to stop uploading?',
@@ -87,6 +96,15 @@ class S {
       name: 'confirmCancelUploadingYes',
       desc: '',
       args: [],
+    );
+  }
+
+  String confirmRemoveAccount(Object name) {
+    return Intl.message(
+      'Are you sure you want to remove account "$name"?',
+      name: 'confirmRemoveAccount',
+      desc: '',
+      args: [name],
     );
   }
 
@@ -213,6 +231,15 @@ class S {
     return Intl.message(
       'Error',
       name: 'errorDialogTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get iksmSessionAlreadyUsed {
+    return Intl.message(
+      'You already have added this iksm_session.',
+      name: 'iksmSessionAlreadyUsed',
       desc: '',
       args: [],
     );

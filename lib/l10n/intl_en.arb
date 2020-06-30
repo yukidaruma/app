@@ -5,8 +5,10 @@
   "yes": "Yes",
 
   "aboutThisApp": "About this app",
+  "addAccount": "Add account",
   "confirmCancelUploading": "Are you sure you want to stop uploading?",
   "confirmCancelUploadingYes": "Yes, stop uploading",
+  "confirmRemoveAccount": "Are you sure you want to remove account \"{name}\"?",
   "continueButtonText": "Continue",
   "iksmSessionPromptText": "Enter your iksm_session",
   "openOtherPage": "Open {pageName}",
@@ -25,6 +27,7 @@
 
   "$comment": "Error messages",
   "errorDialogTitle": "Error",
+  "iksmSessionAlreadyUsed": "You already have added this iksm_session.",
   "invalidIksmSession": "Invalid iksm_session. Please make sure you enter correct iksm_session and try again.",
   "resultsFetchingError": "Failed to fetch results from Splatnet.",
   "settings": "Settings",
