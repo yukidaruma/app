@@ -27,8 +27,11 @@ class _PrimaryDrawerState extends State<PrimaryDrawer> {
             onDetailsPressed: () => setState(() => _showDetails = !_showDetails),
             otherAccountsPictures: <Widget>[
               for (final UserProfile p in otherProfiles)
-                CircleAvatar(
-                  backgroundImage: MemoryImage(p.avatar),
+                InkWell(
+                  onTap: () => _switchAccount(p),
+                  child: CircleAvatar(
+                    backgroundImage: MemoryImage(p.avatar),
+                  ),
                 ),
             ],
             accountName: Text(profile.name, style: boldTextStyle(context)),
@@ -49,6 +52,7 @@ class _PrimaryDrawerState extends State<PrimaryDrawer> {
     return <Widget>[
       for (final UserProfile p in store.otherProfiles)
         ListTile(
+          onTap: () => _switchAccount(p),
           leading: CircleAvatar(
             backgroundImage: MemoryImage(p.avatar),
           ),
@@ -139,6 +143,11 @@ class _PrimaryDrawerState extends State<PrimaryDrawer> {
         builder: (_) => const EnterIksmPage(restartOnComplete: true),
       ),
     );
+  }
+
+  Future<void> _switchAccount(UserProfile profile) async {
+    final GlobalStore store = context.read<GlobalStore>();
+    return store.switchProfile(profile);
   }
 
   Future<void> _removeAccount(UserProfile p) async {
