@@ -20,6 +20,7 @@ class EnterIksmPage extends StatefulWidget {
 
 class _EnterIksmPageState extends State<EnterIksmPage> {
   final TextEditingController _iksmTextFieldController = TextEditingController();
+  bool _isConnecting = false;
 
   bool get _isIksmSessionValid => validIksmPattern.hasMatch(_iksmTextFieldController.text);
 
@@ -67,6 +68,12 @@ class _EnterIksmPageState extends State<EnterIksmPage> {
   }
 
   Future<void> _addAccount(BuildContext context) async {
+    if (_isConnecting) {
+      return;
+    }
+
+    _isConnecting = true;
+
     final String iksmSession = _iksmTextFieldController.text;
     final CookieJar cookieJar = createCookieJar(iksmSession);
 
@@ -108,6 +115,8 @@ class _EnterIksmPageState extends State<EnterIksmPage> {
         context: context,
         message: S.of(context).invalidIksmSession,
       );
+    } finally {
+      _isConnecting = false;
     }
   }
 }
