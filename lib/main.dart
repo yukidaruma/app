@@ -46,7 +46,7 @@ Future<void> main() async {
     profiles: profiles,
   );
 
-  _createGlobalKeys(globalStore);
+  _createGlobalKeys(globalStore, isFirstTime: true);
 
   runApp(
     MultiProvider(
@@ -128,8 +128,11 @@ class RestartableState extends State<Restartable> {
   }
 }
 
-void _createGlobalKeys(GlobalStore globalStore) {
-  globalStore.createGlobalKey<RestartableState>();
+void _createGlobalKeys(GlobalStore globalStore, {bool isFirstTime = false}) {
+  if (isFirstTime) {
+    globalStore.createGlobalKey<RestartableState>();
+  }
+
   globalStore.createGlobalKey<HomePageState>();
   globalStore.createGlobalKey<SalmonStatsPageState>();
 }
