@@ -5,6 +5,7 @@ import 'package:salmon_stats_app/model/all.dart';
 import 'package:salmon_stats_app/model/user_profile.dart';
 import 'package:salmon_stats_app/store/database/all.dart';
 import 'package:salmon_stats_app/ui/all.dart';
+import 'package:salmon_stats_app/util/all.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class GlobalStore with ChangeNotifier {
@@ -83,6 +84,7 @@ class GlobalStore with ChangeNotifier {
     }
 
     await loadProfiles(shouldNotifyListeners: false);
+    cookieJar = createCookieJar(profile.iksmSession);
 
     restartApp();
   }
