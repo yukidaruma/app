@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:path/path.dart';
 
-const List<String> validResolutions = <String>['major', 'minor', 'patch'];
+const List<String> validResolutions = <String>['major', 'minor', 'patch', 'build'];
 
 void main(List<String> args) {
   final String resolution = args.isEmpty ? validResolutions.last : args.first;
@@ -52,6 +52,10 @@ void main(List<String> args) {
 
         case 'patch':
           patch += 1;
+          break;
+
+        case 'build':
+          // Only touches build number.
           break;
       }
 
