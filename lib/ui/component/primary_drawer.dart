@@ -52,17 +52,19 @@ class _PrimaryDrawerState extends State<PrimaryDrawer> {
     return <Widget>[
       for (final UserProfile p in store.otherProfiles)
         ListTile(
+          contentPadding: const EdgeInsets.only(left: 16.0),
           onTap: () => _switchAccount(p),
           leading: CircleAvatar(
             backgroundImage: MemoryImage(p.avatar),
           ),
           title: Text(p.name),
-          trailing: p == store.profiles.last
-              ? null
-              : IconButton(
-                  icon: const Icon(Icons.close),
-                  onPressed: () => _removeAccount(p),
-                ),
+          trailing: IconButton(
+            constraints: BoxConstraints.tight(const Size.square(56.0)),
+            icon: const Icon(Icons.close),
+            onPressed: () => _removeAccount(p),
+            splashRadius: 24.0,
+            highlightColor: Colors.transparent,
+          ),
         ),
       ListTile(
         onTap: () => _onTapAddAccount(context),
