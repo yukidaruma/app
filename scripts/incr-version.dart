@@ -3,12 +3,12 @@ import 'dart:io';
 
 import 'package:path/path.dart';
 
-const List<String> validResolution = <String>['major', 'minor', 'patch'];
+const List<String> validResolutions = <String>['major', 'minor', 'patch'];
 
 void main(List<String> args) {
-  final String resolution = args.isEmpty ? validResolution.last : args.first;
-  if (!validResolution.contains(resolution)) {
-    throw ArgumentError('Segment must be one of: ${validResolution.join(', ')}');
+  final String resolution = args.isEmpty ? validResolutions.last : args.first;
+  if (!validResolutions.contains(resolution)) {
+    throw ArgumentError('Resolution must be one of: ${validResolutions.join(', ')}');
   }
 
   final String cwd = Directory.current.path;
