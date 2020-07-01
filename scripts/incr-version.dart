@@ -21,7 +21,7 @@ void main(List<String> args) {
   const LineSplitter splitter = LineSplitter();
   final StringBuffer buffer = StringBuffer();
   final List<String> lines = splitter.convert(pubspec.readAsStringSync());
-  final RegExp versionPattern = RegExp(r'^version:\s*(\d\.\d\.\d\+\d+)$');
+  final RegExp versionPattern = RegExp(r'^version:\s*(\d+\.\d+\.\d+\+\d+)$');
 
   for (final String line in lines) {
     final Match match = versionPattern.firstMatch(line);
