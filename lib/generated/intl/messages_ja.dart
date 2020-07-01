@@ -42,6 +42,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "noResultsFound" : MessageLookupByLibrary.simpleMessage("リザルトが見つかりませんでした。サーモンランをプレイして、ページを更新してください。"),
     "openOtherPage" : m1,
     "refresh" : MessageLookupByLibrary.simpleMessage("更新"),
+    "releaseNotes" : MessageLookupByLibrary.simpleMessage("リリースノート"),
     "resultPageUnderConstruction" : MessageLookupByLibrary.simpleMessage("リザルトページは現在開発中です。リザルトを確認するには、Salmon Statsにアップロードしてご確認ください。"),
     "resultsFetchingError" : MessageLookupByLibrary.simpleMessage("Splatnetからリザルトを取得できませんでした。"),
     "salmonStatsApiTokenNotSet" : MessageLookupByLibrary.simpleMessage("Salmon StatsのAPI Tokenが設定されていません。"),

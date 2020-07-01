@@ -13,6 +13,7 @@
   "iksmSessionPromptText": "iksm_session を入力してください",
   "noResultsFound": "リザルトが見つかりませんでした。サーモンランをプレイして、ページを更新してください。",
   "openOtherPage": "{pageName}を開く",
+  "releaseNotes": "リリースノート",
   "salmonStatsApiTokenNotSet": "Salmon StatsのAPI Tokenが設定されていません。",
   "salmonStatsProfile": "プロフィール",
   "startUploadingButtonText": "アップロードを開始",

@@ -97,6 +97,11 @@ class _PrimaryDrawerState extends State<PrimaryDrawer> {
         },
       ),
       ListTile(
+        leading: const Icon(FontAwesomeIcons.fileAlt),
+        title: Text(S.of(context).releaseNotes),
+        onTap: () => ReleaseNotesPage.push(context),
+      ),
+      ListTile(
         leading: const Icon(FontAwesomeIcons.infoCircle),
         title: Text(S.of(context).aboutThisApp),
         onTap: () => AboutThisAppPage.push(context),
