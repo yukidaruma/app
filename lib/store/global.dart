@@ -9,7 +9,7 @@ import 'package:salmon_stats_app/util/all.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class GlobalStore with ChangeNotifier {
-  GlobalStore({CookieJar cookieJar, List<UserProfile> profiles})
+  GlobalStore({CookieJar cookieJar, this.packageInfo, List<UserProfile> profiles})
       : _cookieJar = cookieJar,
         _profiles = profiles;
 
@@ -29,6 +29,8 @@ class GlobalStore with ChangeNotifier {
     _cookieJar = value;
     notifyListeners();
   }
+
+  final PackageInfo packageInfo;
 
   UserProfile get profile => _profiles.firstWhere((UserProfile p) => p.isActiveBool);
   // Updates current profile.

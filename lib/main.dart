@@ -43,6 +43,7 @@ Future<void> main() async {
 
   final GlobalStore globalStore = GlobalStore(
     cookieJar: cookieJar,
+    packageInfo: await PackageInfo.fromPlatform(),
     profiles: profiles,
   );
 
