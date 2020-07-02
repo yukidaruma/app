@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
     final GlobalStore store = Provider.of<GlobalStore>(context, listen: false);
 
     return MaterialApp(
-      debugShowCheckedModeBanner: !Config.HIDE_DEBUG_LABEL,
+      debugShowCheckedModeBanner: store.isInDebugMode && !Config.HIDE_DEBUG_LABEL,
       localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
