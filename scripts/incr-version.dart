@@ -3,12 +3,19 @@ import 'dart:io';
 
 import 'package:path/path.dart';
 
-const List<String> validResolution = <String>['major', 'minor', 'patch'];
+const List<String> validResolutions = <String>['major', 'minor', 'patch', 'build'];
 
 void main(List<String> args) {
-  final String resolution = args.isEmpty ? validResolution.last : args.first;
-  if (!validResolution.contains(resolution)) {
-    throw ArgumentError('Segment must be one of: ${validResolution.join(', ')}');
+  if (args.isEmpty) {
+    throw ArgumentError('dart incr-version.dart <resolution> [--dry-run]');
+  }
+
+  final String resolution = args.first;
+  final List<String> options = args.sublist(1);
+  final bool dryRun = options.contains('--dry-run');
+
+  if (!validResolutions.contains(resolution)) {
+    throw ArgumentError('resolution must be one of: ${validResolutions.join(', ')}');
   }
 
   final String cwd = Directory.current.path;
@@ -21,7 +28,7 @@ void main(List<String> args) {
   const LineSplitter splitter = LineSplitter();
   final StringBuffer buffer = StringBuffer();
   final List<String> lines = splitter.convert(pubspec.readAsStringSync());
-  final RegExp versionPattern = RegExp(r'^version:\s*(\d\.\d\.\d\+\d+)$');
+  final RegExp versionPattern = RegExp(r'^version:\s*(\d+\.\d+\.\d+\+\d+)$');
 
   for (final String line in lines) {
     final Match match = versionPattern.firstMatch(line);
@@ -53,6 +60,10 @@ void main(List<String> args) {
         case 'patch':
           patch += 1;
           break;
+
+        case 'build':
+          // Only touches build number.
+          break;
       }
 
       final String newSemver = '$major.$minor.$patch+${build + 1}';
@@ -64,5 +75,7 @@ void main(List<String> args) {
     buffer.write('\n');
   }
 
-  pubspec.writeAsStringSync(buffer.toString());
+  if (!dryRun) {
+    pubspec.writeAsStringSync(buffer.toString());
+  }
 }

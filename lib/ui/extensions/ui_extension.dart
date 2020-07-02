@@ -15,3 +15,7 @@ extension BuildContextExtension on BuildContext {
   ThemeData get theme => Theme.of(this);
   TextTheme get textTheme => Theme.of(this).textTheme;
 }
+
+extension ColorExtension on Color {
+  String toWebColor() => '#' + red.toRadixString(16) + green.toRadixString(16) + blue.toRadixString(16) + alpha.toRadixString(16);
+}

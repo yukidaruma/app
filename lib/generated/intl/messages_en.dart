@@ -47,6 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "ok" : MessageLookupByLibrary.simpleMessage("OK"),
     "openOtherPage" : m1,
     "refresh" : MessageLookupByLibrary.simpleMessage("Refresh"),
+    "releaseNotes" : MessageLookupByLibrary.simpleMessage("Release notes"),
     "resultPageUnderConstruction" : MessageLookupByLibrary.simpleMessage("Result page is under construction. For the time being, please upload result to Salmon Stats and visit Salmon Stats."),
     "resultsFetchingError" : MessageLookupByLibrary.simpleMessage("Failed to fetch results from Splatnet."),
     "salmonStats" : MessageLookupByLibrary.simpleMessage("Salmon Stats"),

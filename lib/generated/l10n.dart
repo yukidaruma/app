@@ -144,6 +144,15 @@ class S {
     );
   }
 
+  String get releaseNotes {
+    return Intl.message(
+      'Release notes',
+      name: 'releaseNotes',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get salmonStatsApiTokenNotSet {
     return Intl.message(
       'Salmon Stats API Token is not set.',

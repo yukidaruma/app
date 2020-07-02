@@ -50,7 +50,7 @@ class AboutThisAppPage extends StatelessWidget implements PushablePage<AboutThis
             child: Text('@$screenName', style: linkTextStyle(context)),
           ),
         const Padding(padding: EdgeInsets.only(bottom: 32.0)),
-        heading(FontAwesomeIcons.fileAlt, 'OSS Licenses'),
+        heading(FontAwesomeIcons.fileSignature, 'OSS Licenses'),
         GestureDetector(
           child: Text('View Open Source licenses', style: linkTextStyle(context)),
           onTap: () => showLicensePage(context: context),
