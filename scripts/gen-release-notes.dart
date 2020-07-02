@@ -65,7 +65,7 @@ CommitType commitClassifier(String summary) {
       return CommitType.chore;
     case 'docs':
       return CommitType.documentation;
-    case 'feature':
+    case 'feat':
       return CommitType.feature;
     case 'fix':
       return CommitType.fix;
