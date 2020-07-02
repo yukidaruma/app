@@ -55,6 +55,11 @@ CommitType commitClassifier(String summary) {
   final prefix = match.group(1);
   final scope = match.group(2);
 
+  if (scope == 'internal') {
+    // Treat commits like "chore(internal)" or "refactor(internal)" as internal commit
+    return CommitType.internal;
+  }
+
   switch (prefix) {
     case 'chore':
       return CommitType.chore;
@@ -66,11 +71,6 @@ CommitType commitClassifier(String summary) {
       return CommitType.fix;
     case 'refactor':
       return CommitType.internal;
-  }
-
-  if (scope == 'internal') {
-    // Treat chore(internal) as internal commit
-    return CommitType.internal;
   }
 
   return CommitType.chore;
