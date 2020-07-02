@@ -49,13 +49,34 @@ class _ReleaseNotesPageState extends State<ReleaseNotesPage> {
     return '''
 <html><head>
 <style>
+h1 { font-size: 150%; }
+h2 { font-size: 130%; }
+h3 { font-size: 115%; }
+h4, h5, h6 { font-size: 100%; }
+
 body {
+  padding: 1em;
   color: ${context.textTheme.bodyText2.color.toWebColor()};
   background-color: ${context.theme.scaffoldBackgroundColor.toWebColor()};
+  line-height: 1.25em;
 }
 
 a {
   color: ${linkTextStyle(context).color.toWebColor()};
+}
+
+ul {
+  margin: 0;
+  padding-left: 1em;
+}
+
+li:not(:last-child) {
+  margin-bottom: .75em;
+}
+
+hr {
+  border-color: ${context.textTheme.bodyText2.color.withAlpha(32).toWebColor()};
+  margin: 2em 0;
 }
 </style>
 </head>
