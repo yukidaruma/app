@@ -6,9 +6,16 @@ import 'package:path/path.dart';
 const List<String> validResolutions = <String>['major', 'minor', 'patch', 'build'];
 
 void main(List<String> args) {
-  final String resolution = args.isEmpty ? validResolutions.last : args.first;
+  if (args.isEmpty) {
+    throw ArgumentError('dart incr-version.dart <resolution> [--dry-run]');
+  }
+
+  final String resolution = args.first;
+  final List<String> options = args.sublist(1);
+  final bool dryRun = options.contains('--dry-run');
+
   if (!validResolutions.contains(resolution)) {
-    throw ArgumentError('Resolution must be one of: ${validResolutions.join(', ')}');
+    throw ArgumentError('resolution must be one of: ${validResolutions.join(', ')}');
   }
 
   final String cwd = Directory.current.path;
@@ -68,5 +75,7 @@ void main(List<String> args) {
     buffer.write('\n');
   }
 
-  pubspec.writeAsStringSync(buffer.toString());
+  if (!dryRun) {
+    pubspec.writeAsStringSync(buffer.toString());
+  }
 }
