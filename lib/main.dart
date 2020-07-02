@@ -89,6 +89,7 @@ class MyApp extends StatelessWidget {
     return ThemeData(
       brightness: brightness,
       primarySwatch: Colors.orange,
+      errorColor: Colors.red[400],
       buttonTheme: const ButtonThemeData(
         buttonColor: Colors.deepOrange,
         textTheme: ButtonTextTheme.primary,
