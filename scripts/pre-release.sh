@@ -2,6 +2,12 @@ SCRIPT_DIR=$(cd $(dirname "$0"); pwd)
 RESOLUTION="patch"
 DRY_RUN=0;
 
+CHANGED_FILES=$(git status --porcelain | wc -l)
+if [ "$CHANGED_FILES" -gt 0 ]; then
+  echo "Error: Please commit or stash uncommited changes before running pre-release script."
+  exit
+fi
+
 while getopts dMmV OPT
 do
   case $OPT in

@@ -4,7 +4,7 @@ cp .env assets/.env
 # Only changes to CHANGELOG.md is allowed
 CHANGED_FILES=$(git status --porcelain -- ':!CHANGELOG.md' | wc -l)
 if [ "$CHANGED_FILES" -gt 0 ]; then
-  echo "Error: Please commit or stash uncommited changes before running build script."
+  echo "Error: Please commit or stash uncommited changes before running release script."
   echo "Note: Changes to CHANGELOG.md are allowed."
   exit
 fi
