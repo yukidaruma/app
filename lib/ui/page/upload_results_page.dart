@@ -1,11 +1,10 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:salmon_stats_app/api.dart';
 import 'package:salmon_stats_app/model/all.dart';
 import 'package:salmon_stats_app/store/database/all.dart';
 import 'package:salmon_stats_app/store/global.dart';
 import 'package:salmon_stats_app/ui/all.dart';
+import 'package:salmon_stats_app/util/all.dart';
 
 enum _UploadState {
   waiting,
@@ -160,7 +159,7 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
 
   Future<UploadSalmonResultsResponse> _uploadSalmonResult(int jobId) async {
     final String resultResponse = await SplatnetAPIRepository(context.read<GlobalStore>().cookieJar).fetchResultAsString(jobId);
-    final Map<String, dynamic> resultMap = json.decode(resultResponse);
+    final Map<String, dynamic> resultMap = jsonDecodeMap(resultResponse);
     final Map<String, dynamic> payload = <String, dynamic>{
       'results': <dynamic>[resultMap],
     };
@@ -192,7 +191,7 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
           _addLog('${uploadResult.uploadResults.first.jobId} is already on Salmon Stats.');
         }
       } on DioError catch (e) {
-        _addLog('Error ${e.response.statusCode}:\n' + (e.response?.data ?? e.toString()));
+        _addLog('Error ${e.response.statusCode}:\n' + (e.response?.data.toString() ?? e.toString()));
         break;
       } catch (e) {
         _addLog(e.toString());

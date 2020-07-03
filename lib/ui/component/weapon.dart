@@ -5,14 +5,16 @@ import 'package:salmon_stats_app/ui/all.dart';
 const Size _defaultMainWeaponImageSize = Size.square(24.0);
 const Size _defaultSpecialWeaponImageSize = Size.square(32.0);
 
-String Function(int) _weaponImageUrl(String type) {
+typedef _URLBuilder = String Function(int id);
+
+_URLBuilder _weaponImageUrl(String type) {
   return (int id) {
     return '${Config.SALMON_IMAGE_BASE_PATH}/$type/$id.png';
   };
 }
 
-final Function(int) _mainWeaponImageUrl = _weaponImageUrl('weapon');
-final Function(int) _specialWeaponImageUrl = _weaponImageUrl('special');
+final _URLBuilder _mainWeaponImageUrl = _weaponImageUrl('weapon');
+final _URLBuilder _specialWeaponImageUrl = _weaponImageUrl('special');
 
 abstract class _WeaponImage extends StatelessWidget {
   const _WeaponImage(this.id, {@required this.size});

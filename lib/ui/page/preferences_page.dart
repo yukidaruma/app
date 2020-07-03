@@ -179,7 +179,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
 
       switch (option.type) {
         case SharedPrefsTypes.bool:
-          controller = ValueNotifier<bool>(option.restore() ?? false);
+          controller = ValueNotifier<bool>(option.restore() as bool ?? false);
           controller.addListener(() => option.save(controller.value));
           break;
 
@@ -194,7 +194,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
           break;
 
         case SharedPrefsTypes.string:
-          controller = TextEditingController(text: option.restore() ?? '');
+          controller = TextEditingController(text: option.restore() as String ?? '');
           controller.addListener(() => option.save((controller as TextEditingController).text));
           break;
       }
@@ -218,7 +218,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
   Widget build(BuildContext context) {
     final Widget body = ListView.builder(
       itemBuilder: (BuildContext context, int i) {
-        final item = _options[i];
+        final PreferenceItem item = _options[i];
 
         if (item is WidgetPreferenceItem && !item.visibility()) {
           return Container();
@@ -258,14 +258,14 @@ class _PreferencesPageState extends State<PreferencesPage> {
 
         case SharedPrefsTypes.string:
           return TextField(
-            controller: listenable,
+            controller: listenable as TextEditingController,
             readOnly: readOnly,
           );
 
         case SharedPrefsTypes.double:
         case SharedPrefsTypes.int:
           return TextField(
-            controller: listenable,
+            controller: listenable as TextEditingController,
             readOnly: readOnly,
             keyboardType: option.type == SharedPrefsTypes.int ? const TextInputType.numberWithOptions(decimal: false) : TextInputType.number,
           );
@@ -296,6 +296,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
     );
 
     final ValueNotifier<TextEditingValue> controller = _controllers.entries
+        .whereType<MapEntry<SharedPrefsKeys, ValueNotifier<TextEditingValue>>>()
         .firstWhere(
           (MapEntry<SharedPrefsKeys, ValueNotifier<dynamic>> controller) => controller.key == SharedPrefsKeys.SALMON_STATS_TOKEN,
         )

@@ -27,7 +27,7 @@ class CountEntity {
   final int count;
 
   static MapEntry<String, CountEntity> mapper(MapEntry<String, dynamic> entry) {
-    return MapEntry<String, CountEntity>(entry.key, CountEntity(entry.value['count']));
+    return MapEntry<String, CountEntity>(entry.key, CountEntity(entry.value['count'] as int));
   }
 }
 

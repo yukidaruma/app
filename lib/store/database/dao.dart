@@ -35,7 +35,7 @@ mixin JsonMapperDaoMixin<T> {
         final dynamic value = entry.value;
 
         if (key.endsWith('bool')) {
-          return MapEntry<String, dynamic>(key, value ? 1 : 0);
+          return MapEntry<String, dynamic>(key, value as bool ? 1 : 0);
         }
 
         return entry;

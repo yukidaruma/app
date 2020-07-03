@@ -187,7 +187,7 @@ class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClient
     );
   }
 
-  Future<void> _fetchResults() {
+  Future<SalmonResults> _fetchResults() {
     return SplatnetAPIRepository(context.read<GlobalStore>().cookieJar).fetchResults();
   }
 

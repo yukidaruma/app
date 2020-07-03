@@ -13,7 +13,6 @@ final migrations = <int, List<Dao<dynamic>>>{
     UserProfileDao(),
     SalmonResultDao(),
   ],
-  // TODO
 };
 
 class DatabaseProvider {

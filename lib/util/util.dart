@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:cookie_jar/cookie_jar.dart';
@@ -10,4 +11,8 @@ CookieJar createCookieJar(String iksmSession) {
   ]);
 
   return cookieJar;
+}
+
+Map<String, dynamic> jsonDecodeMap(String source) {
+  return jsonDecode(source) as Map<String, dynamic>;
 }
