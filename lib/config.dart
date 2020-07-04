@@ -1,5 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'dart:ui';
+
 // ignore: avoid_classes_with_only_static_members
 class Config {
   static String _stringField(String key) => env[key] as String;
@@ -22,4 +24,13 @@ class Config {
   static const String SPLATNET_ORIGIN = 'https://app.splatoon2.nintendo.net';
   static const String SPLATNET_API_ORIGIN = '$SPLATNET_ORIGIN/api';
   static const String SPLATNET_USER_AGENT = 'OnlineLounge/1.6.1.2 NASDKAPI Android';
+
+  static Locale get DEV_LOCALE {
+    final String languageCode = _stringField('DEV_LOCALE');
+    if (languageCode == null) {
+      return null;
+    }
+
+    return Locale(languageCode);
+  }
 }

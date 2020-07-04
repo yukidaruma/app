@@ -78,6 +78,7 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         S.delegate,
       ],
+      locale: Config.DEV_LOCALE,
       supportedLocales: S.delegate.supportedLocales,
       title: 'Salmon Stats',
       theme: _makeThemeData(brightness: Brightness.dark),
