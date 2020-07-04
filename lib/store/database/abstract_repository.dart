@@ -10,7 +10,7 @@ abstract class AbstractRepository<T extends Dao<dynamic>> {
   DatabaseProvider get databaseProvider => _databaseProvider;
 }
 
-abstract class AbstractCRUDRepository<E, T extends Dao<E>> extends AbstractRepository<T> implements Deletable<E>, Findable<E>, Gettable<E>, Savable<E> {
+abstract class AbstractCRUDRepository<E, T extends Dao<E>> extends AbstractRepository<T> implements Deletable<E>, Findable<E>, Gettable<E>, Queryable<E>, Savable<E> {
   AbstractCRUDRepository(DatabaseProvider databaseProvider) : super(databaseProvider);
 
   String get singleWhereClause => '${dao.primaryKey} = ?';
@@ -20,10 +20,7 @@ abstract class AbstractCRUDRepository<E, T extends Dao<E>> extends AbstractRepos
   }
 
   Future<List<E>> all() async {
-    final Database db = await databaseProvider.db();
-    final List<Map<String, dynamic>> rows = await db.query(dao.tableName);
-
-    return _mapRows(rows);
+    return query();
   }
 
   @override
@@ -46,45 +43,39 @@ abstract class AbstractCRUDRepository<E, T extends Dao<E>> extends AbstractRepos
   }
 
   @override
-  Future<List<E>> find(Map<String, dynamic> criteria) async {
-    final Database db = await databaseProvider.db();
-    final List<Map<String, dynamic>> rows = await db.query(
-      dao.tableName,
+  Future<List<E>> find(Map<String, dynamic> criteria, {int limit}) async {
+    return query(
       where: criteria.keys.map((String key) => '$key = ?').join(' AND '),
       whereArgs: criteria.values.toList(),
+      limit: limit,
     );
-
-    return _mapRows(rows);
   }
 
   @override
   Future<E> findOne(Map<String, dynamic> criteria) async {
-    final List<E> rows = await find(criteria);
-    return rows.isEmpty ? null : rows.first;
+    final List<E> records = await find(criteria);
+    return records.isEmpty ? null : records.first;
   }
 
   @override
   Future<E> findOneOrFail(Map<String, dynamic> criteria) async {
-    final List<E> rows = await find(criteria);
+    final List<E> records = await find(criteria, limit: 1);
 
-    if (rows.isEmpty) {
+    if (records.isEmpty) {
       throw Exception('Entity meets criteria: $criteria was not found.');
     }
 
-    return rows.first;
+    return records.first;
   }
 
   @override
   Future<E> get(dynamic id) async {
-    final Database db = await databaseProvider.db();
-
-    final List<Map<String, dynamic>> rows = await db.query(
-      dao.tableName,
+    final List<E> records = await query(
       where: singleWhereClause,
       whereArgs: <dynamic>[id],
     );
 
-    return rows.isNotEmpty ? dao.fromMap(rows.first) : null;
+    return records.isNotEmpty ? records.first : null;
   }
 
   @override
@@ -101,6 +92,35 @@ abstract class AbstractCRUDRepository<E, T extends Dao<E>> extends AbstractRepos
   @override
   Future<int> create(E entity) async {
     return save(entity, conflictAlgorithm: ConflictAlgorithm.fail);
+  }
+
+  @override
+  Future<List<E>> query({
+    bool distinct,
+    List<String> columns,
+    String where,
+    List<dynamic> whereArgs,
+    String groupBy,
+    String having,
+    String orderBy,
+    int limit,
+    int offset,
+  }) async {
+    final Database db = await databaseProvider.db();
+    final List<Map<String, dynamic>> rows = await db.query(
+      dao.tableName,
+      distinct: distinct,
+      columns: columns,
+      where: where,
+      whereArgs: whereArgs,
+      groupBy: groupBy,
+      having: having,
+      orderBy: orderBy,
+      limit: limit,
+      offset: offset,
+    );
+
+    return _mapRows(rows);
   }
 
   @override
@@ -129,6 +149,38 @@ abstract class Findable<E> {
 abstract class Gettable<E> {
   Future<E> get(dynamic id);
   Future<E> getOrFail(dynamic id);
+}
+
+abstract class Paginatable<E> extends Queryable<E> {
+  String get paginationColumn;
+
+  Future<List<E>> paginate(dynamic id, int itemsPerPage);
+}
+
+mixin PaginationMixin<E> on Queryable<E> implements Paginatable<E> {
+  @override
+  Future<List<E>> paginate(dynamic id, int itemsPerPage) {
+    return query(
+      where: '$paginationColumn < ?',
+      whereArgs: <dynamic>[id],
+      orderBy: '$paginationColumn DESC',
+      limit: itemsPerPage,
+    );
+  }
+}
+
+abstract class Queryable<E> {
+  Future<List<E>> query({
+    bool distinct,
+    List<String> columns,
+    String where,
+    List<dynamic> whereArgs,
+    String groupBy,
+    String having,
+    String orderBy,
+    int limit,
+    int offset,
+  });
 }
 
 abstract class Savable<E> {
