@@ -17,9 +17,12 @@ class SalmonResultDao extends Dao<InternalSalmonResult> with ClassNameTableNameM
   ''';
 }
 
-class SalmonResultRepository extends AbstractCRUDRepository<InternalSalmonResult, SalmonResultDao> {
+class SalmonResultRepository extends AbstractCRUDRepository<InternalSalmonResult, SalmonResultDao> with PaginationMixin<InternalSalmonResult> {
   SalmonResultRepository(DatabaseProvider databaseProvider) : super(databaseProvider);
 
   @override
   SalmonResultDao get dao => SalmonResultDao();
+
+  @override
+  String get paginationColumn => 'id';
 }
