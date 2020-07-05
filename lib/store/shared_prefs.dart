@@ -1,3 +1,4 @@
+import 'package:salmon_stats_app/ui/all.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum SharedPrefsKeys {
@@ -11,7 +12,11 @@ enum SharedPrefsTypes {
   string,
 }
 
-class AppSharedPrefs {
+/// [AppSharedPrefs] supports 2 ways to access.
+/// 1. Use `AppSharedPrefs().salmonStatsToken` if you don't need to listen to changes.
+/// 2. Use provider API (e.g. `context.select((AppSharedPrefs store) => store.checkForUpdates)`) to
+///    listen to updates.
+class AppSharedPrefs with ChangeNotifier {
   factory AppSharedPrefs() {
     return _instance;
   }
@@ -29,10 +34,10 @@ class AppSharedPrefs {
   int getInt(SharedPrefsKeys key) => _s.getInt(key.toString());
   String getString(SharedPrefsKeys key) => _s.getString(key.toString());
 
-  Future<bool> setBool(SharedPrefsKeys key, bool value) => _s.setBool(key.toString(), value);
-  Future<bool> setDouble(SharedPrefsKeys key, double value) => _s.setDouble(key.toString(), value);
-  Future<bool> setInt(SharedPrefsKeys key, int value) => _s.setInt(key.toString(), value);
-  Future<bool> setString(SharedPrefsKeys key, String value) => _s.setString(key.toString(), value);
+  Future<bool> setBool(SharedPrefsKeys key, bool value) => _s.setBool(key.toString(), value).whenComplete(notifyListeners);
+  Future<bool> setDouble(SharedPrefsKeys key, double value) => _s.setDouble(key.toString(), value).whenComplete(notifyListeners);
+  Future<bool> setInt(SharedPrefsKeys key, int value) => _s.setInt(key.toString(), value).whenComplete(notifyListeners);
+  Future<bool> setString(SharedPrefsKeys key, String value) => _s.setString(key.toString(), value).whenComplete(notifyListeners);
 
   Future<bool> Function(bool value) _boolSetter(SharedPrefsKeys key) => (bool value) => setBool(key, value);
   Future<bool> Function(double value) _doubleSetter(SharedPrefsKeys key) => (double value) => setDouble(key, value);

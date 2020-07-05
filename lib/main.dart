@@ -56,6 +56,9 @@ Future<void> main() async {
         ChangeNotifierProvider<GlobalStore>(
           create: (_) => globalStore,
         ),
+        ChangeNotifierProvider<AppSharedPrefs>(
+          create: (_) => AppSharedPrefs(),
+        ),
       ],
       child: Restartable(
         key: globalStore.getGlobalKey<RestartableState>(),
