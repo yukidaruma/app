@@ -51,7 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "resultPageUnderConstruction" : MessageLookupByLibrary.simpleMessage("Result page is under construction. For the time being, please upload result to Salmon Stats and visit Salmon Stats."),
     "resultsFetchingError" : MessageLookupByLibrary.simpleMessage("Failed to fetch results from Splatnet."),
     "salmonStats" : MessageLookupByLibrary.simpleMessage("Salmon Stats"),
-    "salmonStatsApiToken" : MessageLookupByLibrary.simpleMessage("Salmon Stats\nAPI Token"),
+    "salmonStatsApiToken" : MessageLookupByLibrary.simpleMessage("Salmon Stats API Token"),
     "salmonStatsApiTokenNotSet" : MessageLookupByLibrary.simpleMessage("Salmon Stats API Token is not set."),
     "salmonStatsProfile" : MessageLookupByLibrary.simpleMessage("profile"),
     "settings" : MessageLookupByLibrary.simpleMessage("Settings"),

@@ -43,7 +43,7 @@
   "navResults": "Results",
   "ok": "OK",
   "salmonStats": "Salmon Stats",
-  "salmonStatsApiToken": "Salmon Stats\nAPI Token",
+  "salmonStatsApiToken": "Salmon Stats API Token",
 
   "$comment": "This line exists to allow comma dangle"
 }

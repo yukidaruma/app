@@ -156,6 +156,8 @@ class _PreferencesPageState extends State<PreferencesPage> {
   void initState() {
     super.initState();
 
+    final AppSharedPrefs prefs = AppSharedPrefs();
+
     _options = <PreferenceItem>[
       StringPreferenceItem(
         readOnly: () => !_enterApiTokenManually,
@@ -173,14 +175,9 @@ class _PreferencesPageState extends State<PreferencesPage> {
       ),
       WidgetPreferenceItem(
         visibility: () => !_enterApiTokenManually,
-        builder: (_) => Column(
-          children: <Widget>[
-            const Padding(padding: EdgeInsets.only(bottom: 16.0)),
-            FlatButton(
-              child: Text(S.of(context).enterApiTokenManually),
-              onPressed: () => setState(() => _enterApiTokenManually = true),
-            ),
-          ],
+        builder: (_) => FlatButton(
+          child: Text(S.of(context).enterApiTokenManually),
+          onPressed: () => setState(() => _enterApiTokenManually = true),
         ),
       ),
       if (context.read<GlobalStore>().isInDebugMode)
@@ -299,13 +296,27 @@ class _PreferencesPageState extends State<PreferencesPage> {
       return option.builder(context);
     }
 
+    if (control is TextField) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(option.labelBuilder(context)),
+          control,
+        ],
+      );
+    }
+
     return Row(
+      mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        SizedBox(
+        Expanded(
+          flex: 8,
           child: Text(option.labelBuilder(context)),
-          width: 160,
         ),
-        Expanded(child: control),
+        Expanded(
+          flex: 2,
+          child: control,
+        ),
       ],
     );
   }

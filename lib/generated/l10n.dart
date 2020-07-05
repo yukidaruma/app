@@ -346,7 +346,7 @@ class S {
 
   String get salmonStatsApiToken {
     return Intl.message(
-      'Salmon Stats\nAPI Token',
+      'Salmon Stats API Token',
       name: 'salmonStatsApiToken',
       desc: '',
       args: [],
