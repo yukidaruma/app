@@ -17,6 +17,6 @@ NEW_VERSION=$(head -1 CHANGELOG.md | sed -e 's/^# Version \(.\+\) .\+$/\1/')
 < CHANGELOG.md dart "$SCRIPT_DIR/convert-markdown.dart" > assets/release_notes.html
 git add CHANGELOG.md assets/release_notes.html
 git commit -m "Release $NEW_VERSION"
-git tag -a "v$NEW_VERSION" -m "'$RELEASE_NOTES'"
+git -c core.commentChar=";" tag -a "v$NEW_VERSION" -m "'$RELEASE_NOTES'"
 
 flutter build appbundle --target-platform android-arm,android-arm64,android-x64
