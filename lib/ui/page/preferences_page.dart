@@ -18,24 +18,26 @@ abstract class PreferenceItem<T> {
     this.labelBuilder,
     this.readOnly,
     this.type,
+    this.defaultValue,
   });
 
   final SharedPrefsKeys key;
   final LabelBuilder labelBuilder;
   final bool Function() readOnly;
   final SharedPrefsTypes type;
+  final T defaultValue;
 
   // ignore: missing_return
   T restore() {
     switch (type) {
       case SharedPrefsTypes.bool:
-        return _sharedPrefs.getBoolUnsafe(key) as T;
+        return _sharedPrefs.getBoolUnsafe(key) as T ?? defaultValue;
       case SharedPrefsTypes.double:
-        return _sharedPrefs.getDoubleUnsafe(key) as T;
+        return _sharedPrefs.getDoubleUnsafe(key) as T ?? defaultValue;
       case SharedPrefsTypes.int:
-        return _sharedPrefs.getIntUnsafe(key) as T;
+        return _sharedPrefs.getIntUnsafe(key) as T ?? defaultValue;
       case SharedPrefsTypes.string:
-        return _sharedPrefs.getStringUnsafe(key) as T;
+        return _sharedPrefs.getStringUnsafe(key) as T ?? defaultValue;
     }
   }
 
@@ -59,11 +61,13 @@ class BoolPreferenceItem extends PreferenceItem<bool> {
     bool Function() readOnly,
     @required SharedPrefsKeys key,
     @required LabelBuilder labelBuilder,
+    bool defaultValue,
   }) : super(
           readOnly: readOnly,
           key: key,
           labelBuilder: labelBuilder,
           type: SharedPrefsTypes.bool,
+          defaultValue: defaultValue,
         );
 }
 
@@ -72,11 +76,13 @@ class DoublePreferenceItem extends PreferenceItem<double> {
     bool Function() readOnly,
     @required SharedPrefsKeys key,
     @required LabelBuilder labelBuilder,
+    double defaultValue,
   }) : super(
           readOnly: readOnly,
           key: key,
           labelBuilder: labelBuilder,
           type: SharedPrefsTypes.double,
+          defaultValue: defaultValue,
         );
 }
 
@@ -85,11 +91,13 @@ class IntPreferenceItem extends PreferenceItem<int> {
     bool Function() readOnly,
     @required SharedPrefsKeys key,
     @required LabelBuilder labelBuilder,
+    int defaultValue,
   }) : super(
           readOnly: readOnly,
           key: key,
           labelBuilder: labelBuilder,
           type: SharedPrefsTypes.int,
+          defaultValue: defaultValue,
         );
 }
 
@@ -98,11 +106,13 @@ class StringPreferenceItem extends PreferenceItem<String> {
     bool Function() readOnly,
     @required SharedPrefsKeys key,
     @required LabelBuilder labelBuilder,
+    String defaultValue,
   }) : super(
           readOnly: readOnly,
           key: key,
           labelBuilder: labelBuilder,
           type: SharedPrefsTypes.string,
+          defaultValue: defaultValue,
         );
 }
 

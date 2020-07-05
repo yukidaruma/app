@@ -30,13 +30,13 @@ class AppSharedPrefs with ChangeNotifier {
   }
 
   /// Use methods ending with "Unsafe" only when you need to tell whether the value is set (non-null) or unset (null).
-  bool getBool(SharedPrefsKeys key) => _s.getBool(key.toString()) ?? false;
+  bool getBool(SharedPrefsKeys key, [bool defaultValue]) => _s.getBool(key.toString()) ?? defaultValue ?? false;
   bool getBoolUnsafe(SharedPrefsKeys key) => _s.getBool(key.toString());
-  double getDouble(SharedPrefsKeys key) => _s.getDouble(key.toString()) ?? 0.0;
+  double getDouble(SharedPrefsKeys key, [double defaultValue]) => _s.getDouble(key.toString()) ?? defaultValue ?? 0.0;
   double getDoubleUnsafe(SharedPrefsKeys key) => _s.getDouble(key.toString());
-  int getInt(SharedPrefsKeys key) => _s.getInt(key.toString()) ?? 0;
+  int getInt(SharedPrefsKeys key, [int defaultValue]) => _s.getInt(key.toString()) ?? defaultValue ?? 0;
   int getIntUnsafe(SharedPrefsKeys key) => _s.getInt(key.toString());
-  String getString(SharedPrefsKeys key) => _s.getString(key.toString()) ?? '';
+  String getString(SharedPrefsKeys key, [String defaultValue]) => _s.getString(key.toString()) ?? defaultValue ?? '';
   String getStringUnsafe(SharedPrefsKeys key) => _s.getString(key.toString());
 
   Future<bool> setBool(SharedPrefsKeys key, bool value) => _s.setBool(key.toString(), value).whenComplete(notifyListeners);
