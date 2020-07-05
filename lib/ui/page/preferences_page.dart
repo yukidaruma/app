@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:salmon_stats_app/api.dart';
 import 'package:salmon_stats_app/config.dart';
 import 'package:salmon_stats_app/exceptions.dart';
+import 'package:salmon_stats_app/store/global.dart';
 import 'package:salmon_stats_app/store/shared_prefs.dart';
 import 'package:salmon_stats_app/ui/all.dart';
 
@@ -172,6 +173,18 @@ class _PreferencesPageState extends State<PreferencesPage> {
           ],
         ),
       ),
+      if (context.read<GlobalStore>().isInDebugMode)
+        WidgetPreferenceItem(
+          visibility: () => !_enterApiTokenManually,
+          builder: (_) => Column(
+            children: <Widget>[
+              FlatButton(
+                child: Text('[DEV] Reset all settings', style: errorTextStyle(context)),
+                onPressed: () => AppSharedPrefs().devResetAll().then((_) => Navigator.pop(context)),
+              ),
+            ],
+          ),
+        ),
     ];
 
     for (final PreferenceItem option in _options) {

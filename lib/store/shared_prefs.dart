@@ -40,4 +40,8 @@ class AppSharedPrefs {
   Future<bool> Function(String value) _stringSetter(SharedPrefsKeys key) => (String value) => setString(key, value);
 
   String get salmonStatsToken => getString(SharedPrefsKeys.SALMON_STATS_TOKEN);
+
+  Future<void> devResetAll() {
+    return Future.forEach(SharedPrefsKeys.values.map((SharedPrefsKeys key) => key.toString()), _s.remove);
+  }
 }
