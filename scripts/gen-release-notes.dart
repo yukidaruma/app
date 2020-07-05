@@ -6,7 +6,7 @@ import 'dart:io';
 
 import '../lib/ui/extensions/iterable_extension.dart';
 
-enum States {
+enum State {
   foundDelimiter,
   foundFirstLine,
   readingBody,
@@ -96,32 +96,32 @@ Future<void> main(List<String> args) async {
   final commits = <Commit>[];
 
   Commit commit;
-  var state = States.foundDelimiter;
+  var state = State.foundDelimiter;
 
   for (final line in splitter.convert(input)) {
     switch (state) {
-      case States.foundDelimiter:
+      case State.foundDelimiter:
         if (commit != null) {
           commits.add(commit);
         }
 
         commit = Commit(line, commitClassifier(line));
-        state = States.foundFirstLine;
+        state = State.foundFirstLine;
 
         break;
 
-      case States.foundFirstLine:
+      case State.foundFirstLine:
         if (line.isEmpty) {
           continue;
         }
 
-        state = States.readingBody;
+        state = State.readingBody;
         continue READING_BODY;
 
       READING_BODY:
-      case States.readingBody:
+      case State.readingBody:
         if (line.startsWith('----')) {
-          state = States.foundDelimiter;
+          state = State.foundDelimiter;
           continue;
         }
 

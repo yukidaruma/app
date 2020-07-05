@@ -21,22 +21,22 @@ abstract class PreferenceItem<T> {
     this.defaultValue,
   });
 
-  final SharedPrefsKeys key;
+  final SharedPrefsKey key;
   final LabelBuilder labelBuilder;
   final bool Function() readOnly;
-  final SharedPrefsTypes type;
+  final SharedPrefsType type;
   final T defaultValue;
 
   // ignore: missing_return
   T restore() {
     switch (type) {
-      case SharedPrefsTypes.bool:
+      case SharedPrefsType.bool:
         return _sharedPrefs.getBoolUnsafe(key) as T ?? defaultValue;
-      case SharedPrefsTypes.double:
+      case SharedPrefsType.double:
         return _sharedPrefs.getDoubleUnsafe(key) as T ?? defaultValue;
-      case SharedPrefsTypes.int:
+      case SharedPrefsType.int:
         return _sharedPrefs.getIntUnsafe(key) as T ?? defaultValue;
-      case SharedPrefsTypes.string:
+      case SharedPrefsType.string:
         return _sharedPrefs.getStringUnsafe(key) as T ?? defaultValue;
     }
   }
@@ -44,13 +44,13 @@ abstract class PreferenceItem<T> {
   // ignore: missing_return
   Future<void> save(T value) {
     switch (type) {
-      case SharedPrefsTypes.bool:
+      case SharedPrefsType.bool:
         return _sharedPrefs.setBool(key, value as bool);
-      case SharedPrefsTypes.double:
+      case SharedPrefsType.double:
         return _sharedPrefs.setDouble(key, value as double);
-      case SharedPrefsTypes.int:
+      case SharedPrefsType.int:
         return _sharedPrefs.setInt(key, value as int);
-      case SharedPrefsTypes.string:
+      case SharedPrefsType.string:
         return _sharedPrefs.setString(key, value as String);
     }
   }
@@ -59,14 +59,14 @@ abstract class PreferenceItem<T> {
 class BoolPreferenceItem extends PreferenceItem<bool> {
   const BoolPreferenceItem({
     bool Function() readOnly,
-    @required SharedPrefsKeys key,
+    @required SharedPrefsKey key,
     @required LabelBuilder labelBuilder,
     bool defaultValue,
   }) : super(
           readOnly: readOnly,
           key: key,
           labelBuilder: labelBuilder,
-          type: SharedPrefsTypes.bool,
+          type: SharedPrefsType.bool,
           defaultValue: defaultValue,
         );
 }
@@ -74,14 +74,14 @@ class BoolPreferenceItem extends PreferenceItem<bool> {
 class DoublePreferenceItem extends PreferenceItem<double> {
   const DoublePreferenceItem({
     bool Function() readOnly,
-    @required SharedPrefsKeys key,
+    @required SharedPrefsKey key,
     @required LabelBuilder labelBuilder,
     double defaultValue,
   }) : super(
           readOnly: readOnly,
           key: key,
           labelBuilder: labelBuilder,
-          type: SharedPrefsTypes.double,
+          type: SharedPrefsType.double,
           defaultValue: defaultValue,
         );
 }
@@ -89,14 +89,14 @@ class DoublePreferenceItem extends PreferenceItem<double> {
 class IntPreferenceItem extends PreferenceItem<int> {
   const IntPreferenceItem({
     bool Function() readOnly,
-    @required SharedPrefsKeys key,
+    @required SharedPrefsKey key,
     @required LabelBuilder labelBuilder,
     int defaultValue,
   }) : super(
           readOnly: readOnly,
           key: key,
           labelBuilder: labelBuilder,
-          type: SharedPrefsTypes.int,
+          type: SharedPrefsType.int,
           defaultValue: defaultValue,
         );
 }
@@ -104,14 +104,14 @@ class IntPreferenceItem extends PreferenceItem<int> {
 class StringPreferenceItem extends PreferenceItem<String> {
   const StringPreferenceItem({
     bool Function() readOnly,
-    @required SharedPrefsKeys key,
+    @required SharedPrefsKey key,
     @required LabelBuilder labelBuilder,
     String defaultValue,
   }) : super(
           readOnly: readOnly,
           key: key,
           labelBuilder: labelBuilder,
-          type: SharedPrefsTypes.string,
+          type: SharedPrefsType.string,
           defaultValue: defaultValue,
         );
 }
@@ -148,7 +148,7 @@ class PreferencesPage extends StatefulWidget implements PushablePage<Preferences
 }
 
 class _PreferencesPageState extends State<PreferencesPage> {
-  final Map<SharedPrefsKeys, ValueNotifier<dynamic>> _controllers = <SharedPrefsKeys, ValueNotifier<dynamic>>{};
+  final Map<SharedPrefsKey, ValueNotifier<dynamic>> _controllers = <SharedPrefsKey, ValueNotifier<dynamic>>{};
   List<PreferenceItem> _options;
   bool _enterApiTokenManually = false;
 
@@ -161,7 +161,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
     _options = <PreferenceItem>[
       StringPreferenceItem(
         readOnly: () => !_enterApiTokenManually,
-        key: SharedPrefsKeys.SALMON_STATS_TOKEN,
+        key: SharedPrefsKey.SALMON_STATS_TOKEN,
         labelBuilder: (BuildContext context) => S.of(context).salmonStatsApiToken,
       ),
       WidgetPreferenceItem(
@@ -198,22 +198,22 @@ class _PreferencesPageState extends State<PreferencesPage> {
       ValueNotifier<dynamic> controller;
 
       switch (option.type) {
-        case SharedPrefsTypes.bool:
+        case SharedPrefsType.bool:
           controller = ValueNotifier<bool>(option.restore() as bool ?? false);
           controller.addListener(() => option.save(controller.value));
           break;
 
-        case SharedPrefsTypes.double:
-        case SharedPrefsTypes.int:
+        case SharedPrefsType.double:
+        case SharedPrefsType.int:
           controller = TextEditingController(text: (option.restore() ?? 0).toString());
           controller.addListener(() {
             final String text = (controller as TextEditingController).text;
-            final dynamic parsedValue = option.type == SharedPrefsTypes.int ? int.tryParse(text) : double.tryParse(text);
+            final dynamic parsedValue = option.type == SharedPrefsType.int ? int.tryParse(text) : double.tryParse(text);
             return option.save(parsedValue);
           });
           break;
 
-        case SharedPrefsTypes.string:
+        case SharedPrefsType.string:
           controller = TextEditingController(text: option.restore() as String ?? '');
           controller.addListener(() => option.save((controller as TextEditingController).text));
           break;
@@ -263,7 +263,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
       final bool readOnly = option.readOnly != null && option.readOnly();
       final ValueNotifier<dynamic> listenable = _controllers[option.key];
       switch (option.type) {
-        case SharedPrefsTypes.bool:
+        case SharedPrefsType.bool:
           return ValueListenableBuilder<bool>(
             valueListenable: listenable as ValueNotifier<bool>,
             builder: (_, bool value, __) => Row(
@@ -276,18 +276,18 @@ class _PreferencesPageState extends State<PreferencesPage> {
             ),
           );
 
-        case SharedPrefsTypes.string:
+        case SharedPrefsType.string:
           return TextField(
             controller: listenable as TextEditingController,
             readOnly: readOnly,
           );
 
-        case SharedPrefsTypes.double:
-        case SharedPrefsTypes.int:
+        case SharedPrefsType.double:
+        case SharedPrefsType.int:
           return TextField(
             controller: listenable as TextEditingController,
             readOnly: readOnly,
-            keyboardType: option.type == SharedPrefsTypes.int ? const TextInputType.numberWithOptions(decimal: false) : TextInputType.number,
+            keyboardType: option.type == SharedPrefsType.int ? const TextInputType.numberWithOptions(decimal: false) : TextInputType.number,
           );
       }
     })();
@@ -330,9 +330,9 @@ class _PreferencesPageState extends State<PreferencesPage> {
     );
 
     final ValueNotifier<TextEditingValue> controller = _controllers.entries
-        .whereType<MapEntry<SharedPrefsKeys, ValueNotifier<TextEditingValue>>>()
+        .whereType<MapEntry<SharedPrefsKey, ValueNotifier<TextEditingValue>>>()
         .firstWhere(
-          (MapEntry<SharedPrefsKeys, ValueNotifier<dynamic>> controller) => controller.key == SharedPrefsKeys.SALMON_STATS_TOKEN,
+          (MapEntry<SharedPrefsKey, ValueNotifier<dynamic>> controller) => controller.key == SharedPrefsKey.SALMON_STATS_TOKEN,
         )
         .value;
     controller.value = TextEditingValue(text: token);

@@ -1,11 +1,11 @@
 import 'package:salmon_stats_app/ui/all.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum SharedPrefsKeys {
+enum SharedPrefsKey {
   SALMON_STATS_TOKEN,
 }
 
-enum SharedPrefsTypes {
+enum SharedPrefsType {
   bool,
   double,
   int,
@@ -30,28 +30,28 @@ class AppSharedPrefs with ChangeNotifier {
   }
 
   /// Use methods ending with "Unsafe" only when you need to tell whether the value is set (non-null) or unset (null).
-  bool getBool(SharedPrefsKeys key, [bool defaultValue]) => _s.getBool(key.toString()) ?? defaultValue ?? false;
-  bool getBoolUnsafe(SharedPrefsKeys key) => _s.getBool(key.toString());
-  double getDouble(SharedPrefsKeys key, [double defaultValue]) => _s.getDouble(key.toString()) ?? defaultValue ?? 0.0;
-  double getDoubleUnsafe(SharedPrefsKeys key) => _s.getDouble(key.toString());
-  int getInt(SharedPrefsKeys key, [int defaultValue]) => _s.getInt(key.toString()) ?? defaultValue ?? 0;
-  int getIntUnsafe(SharedPrefsKeys key) => _s.getInt(key.toString());
-  String getString(SharedPrefsKeys key, [String defaultValue]) => _s.getString(key.toString()) ?? defaultValue ?? '';
-  String getStringUnsafe(SharedPrefsKeys key) => _s.getString(key.toString());
+  bool getBool(SharedPrefsKey key, [bool defaultValue]) => _s.getBool(key.toString()) ?? defaultValue ?? false;
+  bool getBoolUnsafe(SharedPrefsKey key) => _s.getBool(key.toString());
+  double getDouble(SharedPrefsKey key, [double defaultValue]) => _s.getDouble(key.toString()) ?? defaultValue ?? 0.0;
+  double getDoubleUnsafe(SharedPrefsKey key) => _s.getDouble(key.toString());
+  int getInt(SharedPrefsKey key, [int defaultValue]) => _s.getInt(key.toString()) ?? defaultValue ?? 0;
+  int getIntUnsafe(SharedPrefsKey key) => _s.getInt(key.toString());
+  String getString(SharedPrefsKey key, [String defaultValue]) => _s.getString(key.toString()) ?? defaultValue ?? '';
+  String getStringUnsafe(SharedPrefsKey key) => _s.getString(key.toString());
 
-  Future<bool> setBool(SharedPrefsKeys key, bool value) => _s.setBool(key.toString(), value).whenComplete(notifyListeners);
-  Future<bool> setDouble(SharedPrefsKeys key, double value) => _s.setDouble(key.toString(), value).whenComplete(notifyListeners);
-  Future<bool> setInt(SharedPrefsKeys key, int value) => _s.setInt(key.toString(), value).whenComplete(notifyListeners);
-  Future<bool> setString(SharedPrefsKeys key, String value) => _s.setString(key.toString(), value).whenComplete(notifyListeners);
+  Future<bool> setBool(SharedPrefsKey key, bool value) => _s.setBool(key.toString(), value).whenComplete(notifyListeners);
+  Future<bool> setDouble(SharedPrefsKey key, double value) => _s.setDouble(key.toString(), value).whenComplete(notifyListeners);
+  Future<bool> setInt(SharedPrefsKey key, int value) => _s.setInt(key.toString(), value).whenComplete(notifyListeners);
+  Future<bool> setString(SharedPrefsKey key, String value) => _s.setString(key.toString(), value).whenComplete(notifyListeners);
 
-  Future<bool> Function(bool value) _boolSetter(SharedPrefsKeys key) => (bool value) => setBool(key, value);
-  Future<bool> Function(double value) _doubleSetter(SharedPrefsKeys key) => (double value) => setDouble(key, value);
-  Future<bool> Function(int value) _intSetter(SharedPrefsKeys key) => (int value) => setInt(key, value);
-  Future<bool> Function(String value) _stringSetter(SharedPrefsKeys key) => (String value) => setString(key, value);
+  Future<bool> Function(bool value) _boolSetter(SharedPrefsKey key) => (bool value) => setBool(key, value);
+  Future<bool> Function(double value) _doubleSetter(SharedPrefsKey key) => (double value) => setDouble(key, value);
+  Future<bool> Function(int value) _intSetter(SharedPrefsKey key) => (int value) => setInt(key, value);
+  Future<bool> Function(String value) _stringSetter(SharedPrefsKey key) => (String value) => setString(key, value);
 
-  String get salmonStatsToken => getString(SharedPrefsKeys.SALMON_STATS_TOKEN);
+  String get salmonStatsToken => getString(SharedPrefsKey.SALMON_STATS_TOKEN);
 
   Future<void> devResetAll() {
-    return Future.forEach(SharedPrefsKeys.values.map((SharedPrefsKeys key) => key.toString()), _s.remove);
+    return Future.forEach(SharedPrefsKey.values.map((SharedPrefsKey key) => key.toString()), _s.remove);
   }
 }
