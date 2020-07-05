@@ -29,13 +29,13 @@ abstract class PreferenceItem<T> {
   T restore() {
     switch (type) {
       case SharedPrefsTypes.bool:
-        return _sharedPrefs.getBool(key) as T;
+        return _sharedPrefs.getBoolUnsafe(key) as T;
       case SharedPrefsTypes.double:
-        return _sharedPrefs.getDouble(key) as T;
+        return _sharedPrefs.getDoubleUnsafe(key) as T;
       case SharedPrefsTypes.int:
-        return _sharedPrefs.getInt(key) as T;
+        return _sharedPrefs.getIntUnsafe(key) as T;
       case SharedPrefsTypes.string:
-        return _sharedPrefs.getString(key) as T;
+        return _sharedPrefs.getStringUnsafe(key) as T;
     }
   }
 

@@ -3,7 +3,7 @@ import 'package:salmon_stats_app/api_provider.dart';
 import 'package:salmon_stats_app/config.dart';
 import 'package:salmon_stats_app/store/shared_prefs.dart';
 
-String get salmonStatsAPIToken => (AppSharedPrefs().salmonStatsToken?.isEmpty ?? true) ? Config.DEV_SALMON_STATS_API_TOKEN : AppSharedPrefs().salmonStatsToken;
+String get salmonStatsAPIToken => AppSharedPrefs().salmonStatsToken.isEmpty ? Config.DEV_SALMON_STATS_API_TOKEN : AppSharedPrefs().salmonStatsToken;
 
 class SalmonStatsRepository {
   final SalmonStatsAPIProvider _provider = SalmonStatsAPIProvider();
