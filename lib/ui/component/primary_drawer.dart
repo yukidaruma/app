@@ -113,14 +113,12 @@ class _PrimaryDrawerState extends State<PrimaryDrawer> {
   List<Widget> _buildDebugInfo() {
     return <Widget>[
       const Divider(),
+      const ListTile(
+        title: Text('Debug info'),
+      ),
       ListTile(
-        title: const Text('Debug info'),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text('Salmon Stats API: ${Config.SALMON_STATS_API_ORIGIN}'),
-          ],
-        ),
+        title: const Text('Restart app'),
+        onTap: () => context.read<GlobalStore>().restartApp(),
       ),
       ListTile(
         title: const Text('.env'),
