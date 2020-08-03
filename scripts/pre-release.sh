@@ -33,6 +33,8 @@ NEW_VERSION=${TEMP_ARR[0]}
 
 echo "Updated version field in pubspec.yaml to $NEW_SEMVER."
 
+git checkout -b "release/v$NEW_VERSION"
+
 if [ "$DRY_RUN" -eq 0 ]; then
   git add pubspec.yaml
   git commit -m "chore(internal): Bump version to $NEW_VERSION"
