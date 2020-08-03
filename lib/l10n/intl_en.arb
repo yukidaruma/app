@@ -44,6 +44,7 @@
   "ok": "OK",
   "salmonStats": "Salmon Stats",
   "salmonStatsApiToken": "Salmon Stats API Token",
+  "salmonStatsSharingText": "{url} #SalmonStats #SalmonStatsAndroid",
 
   "$comment": "This line exists to allow comma dangle"
 }

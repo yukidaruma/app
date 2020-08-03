@@ -8,8 +8,12 @@ import 'intl/messages_all.dart';
 // Made by Localizely
 // **************************************************************************
 
+// ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars
+
 class S {
   S();
+  
+  static S current;
   
   static const AppLocalizationDelegate delegate =
     AppLocalizationDelegate();
@@ -19,7 +23,9 @@ class S {
     final localeName = Intl.canonicalizedLocale(name); 
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
-      return S();
+      S.current = S();
+      
+      return S.current;
     });
   } 
 
@@ -27,6 +33,7 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  /// `Cancel`
   String get cancel {
     return Intl.message(
       'Cancel',
@@ -36,6 +43,7 @@ class S {
     );
   }
 
+  /// `Go back`
   String get goBack {
     return Intl.message(
       'Go back',
@@ -45,6 +53,7 @@ class S {
     );
   }
 
+  /// `Refresh`
   String get refresh {
     return Intl.message(
       'Refresh',
@@ -54,6 +63,7 @@ class S {
     );
   }
 
+  /// `Yes`
   String get yes {
     return Intl.message(
       'Yes',
@@ -63,6 +73,7 @@ class S {
     );
   }
 
+  /// `About this app`
   String get aboutThisApp {
     return Intl.message(
       'About this app',
@@ -72,6 +83,7 @@ class S {
     );
   }
 
+  /// `Add account`
   String get addAccount {
     return Intl.message(
       'Add account',
@@ -81,6 +93,7 @@ class S {
     );
   }
 
+  /// `Are you sure you want to stop uploading?`
   String get confirmCancelUploading {
     return Intl.message(
       'Are you sure you want to stop uploading?',
@@ -90,6 +103,7 @@ class S {
     );
   }
 
+  /// `Yes, stop uploading`
   String get confirmCancelUploadingYes {
     return Intl.message(
       'Yes, stop uploading',
@@ -99,6 +113,7 @@ class S {
     );
   }
 
+  /// `Are you sure you want to remove account "{name}"?`
   String confirmRemoveAccount(Object name) {
     return Intl.message(
       'Are you sure you want to remove account "$name"?',
@@ -108,6 +123,7 @@ class S {
     );
   }
 
+  /// `Continue`
   String get continueButtonText {
     return Intl.message(
       'Continue',
@@ -117,6 +133,7 @@ class S {
     );
   }
 
+  /// `Enter your iksm_session`
   String get iksmSessionPromptText {
     return Intl.message(
       'Enter your iksm_session',
@@ -126,6 +143,7 @@ class S {
     );
   }
 
+  /// `Open {pageName}`
   String openOtherPage(Object pageName) {
     return Intl.message(
       'Open $pageName',
@@ -135,6 +153,7 @@ class S {
     );
   }
 
+  /// `No results were found. Please play some Salmon Run and refresh the page.`
   String get noResultsFound {
     return Intl.message(
       'No results were found. Please play some Salmon Run and refresh the page.',
@@ -144,6 +163,7 @@ class S {
     );
   }
 
+  /// `Release notes`
   String get releaseNotes {
     return Intl.message(
       'Release notes',
@@ -153,6 +173,7 @@ class S {
     );
   }
 
+  /// `Salmon Stats API Token is not set.`
   String get salmonStatsApiTokenNotSet {
     return Intl.message(
       'Salmon Stats API Token is not set.',
@@ -162,6 +183,7 @@ class S {
     );
   }
 
+  /// `profile`
   String get salmonStatsProfile {
     return Intl.message(
       'profile',
@@ -171,6 +193,7 @@ class S {
     );
   }
 
+  /// `Start Uploading`
   String get startUploadingButtonText {
     return Intl.message(
       'Start Uploading',
@@ -180,6 +203,7 @@ class S {
     );
   }
 
+  /// `Stopping upload...`
   String get uploadCancellingButtonText {
     return Intl.message(
       'Stopping upload...',
@@ -189,6 +213,7 @@ class S {
     );
   }
 
+  /// `Successfully stopped `
   String get uploadCanceledButtonText {
     return Intl.message(
       'Successfully stopped ',
@@ -198,6 +223,7 @@ class S {
     );
   }
 
+  /// `Upload completed.`
   String get uploadCompletedButtonText {
     return Intl.message(
       'Upload completed.',
@@ -209,6 +235,7 @@ class S {
 
   // skipped getter for the '\$comment' key
 
+  /// `Enter API Token manually`
   String get enterApiTokenManually {
     return Intl.message(
       'Enter API Token manually',
@@ -218,6 +245,7 @@ class S {
     );
   }
 
+  /// `Get API Token`
   String get getApiToken {
     return Intl.message(
       'Get API Token',
@@ -227,6 +255,7 @@ class S {
     );
   }
 
+  /// `Update API Token`
   String get updateApiToken {
     return Intl.message(
       'Update API Token',
@@ -236,6 +265,7 @@ class S {
     );
   }
 
+  /// `Error`
   String get errorDialogTitle {
     return Intl.message(
       'Error',
@@ -245,6 +275,7 @@ class S {
     );
   }
 
+  /// `You already have added this iksm_session.`
   String get iksmSessionAlreadyUsed {
     return Intl.message(
       'You already have added this iksm_session.',
@@ -254,6 +285,7 @@ class S {
     );
   }
 
+  /// `Invalid iksm_session. Please make sure you enter correct iksm_session and try again.`
   String get invalidIksmSession {
     return Intl.message(
       'Invalid iksm_session. Please make sure you enter correct iksm_session and try again.',
@@ -263,6 +295,7 @@ class S {
     );
   }
 
+  /// `Failed to fetch results from Splatnet.`
   String get resultsFetchingError {
     return Intl.message(
       'Failed to fetch results from Splatnet.',
@@ -272,6 +305,7 @@ class S {
     );
   }
 
+  /// `Settings`
   String get settings {
     return Intl.message(
       'Settings',
@@ -281,6 +315,7 @@ class S {
     );
   }
 
+  /// `Result page is under construction. For the time being, please upload result to Salmon Stats and visit Salmon Stats.`
   String get resultPageUnderConstruction {
     return Intl.message(
       'Result page is under construction. For the time being, please upload result to Salmon Stats and visit Salmon Stats.',
@@ -290,6 +325,7 @@ class S {
     );
   }
 
+  /// `Clear`
   String get clear {
     return Intl.message(
       'Clear',
@@ -299,6 +335,7 @@ class S {
     );
   }
 
+  /// `Fail`
   String get fail {
     return Intl.message(
       'Fail',
@@ -308,6 +345,7 @@ class S {
     );
   }
 
+  /// `iksm_session`
   String get iksmSession {
     return Intl.message(
       'iksm_session',
@@ -317,6 +355,7 @@ class S {
     );
   }
 
+  /// `Results`
   String get navResults {
     return Intl.message(
       'Results',
@@ -326,6 +365,7 @@ class S {
     );
   }
 
+  /// `OK`
   String get ok {
     return Intl.message(
       'OK',
@@ -335,6 +375,7 @@ class S {
     );
   }
 
+  /// `Salmon Stats`
   String get salmonStats {
     return Intl.message(
       'Salmon Stats',
@@ -344,12 +385,23 @@ class S {
     );
   }
 
+  /// `Salmon Stats API Token`
   String get salmonStatsApiToken {
     return Intl.message(
       'Salmon Stats API Token',
       name: 'salmonStatsApiToken',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `{url} #SalmonStats #SalmonStatsAndroid`
+  String salmonStatsSharingText(Object url) {
+    return Intl.message(
+      '$url #SalmonStats #SalmonStatsAndroid',
+      name: 'salmonStatsSharingText',
+      desc: '',
+      args: [url],
     );
   }
 }

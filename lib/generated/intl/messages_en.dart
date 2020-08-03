@@ -23,6 +23,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m1(pageName) => "Open ${pageName}";
 
+  static m2(url) => "${url} #SalmonStats #SalmonStatsAndroid";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "aboutThisApp" : MessageLookupByLibrary.simpleMessage("About this app"),
@@ -54,6 +56,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "salmonStatsApiToken" : MessageLookupByLibrary.simpleMessage("Salmon Stats API Token"),
     "salmonStatsApiTokenNotSet" : MessageLookupByLibrary.simpleMessage("Salmon Stats API Token is not set."),
     "salmonStatsProfile" : MessageLookupByLibrary.simpleMessage("profile"),
+    "salmonStatsSharingText" : m2,
     "settings" : MessageLookupByLibrary.simpleMessage("Settings"),
     "startUploadingButtonText" : MessageLookupByLibrary.simpleMessage("Start Uploading"),
     "updateApiToken" : MessageLookupByLibrary.simpleMessage("Update API Token"),
