@@ -43,6 +43,7 @@ Future<void> main() async {
 
   final GlobalStore globalStore = GlobalStore(
     cookieJar: cookieJar,
+    iksmValidityFuture: validateIksmSession(cookieJar),
     packageInfoFuture: PackageInfo.fromPlatform(),
     profiles: profiles,
   );

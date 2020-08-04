@@ -9,13 +9,20 @@ import 'package:salmon_stats_app/store/global.dart';
 import 'package:salmon_stats_app/ui/all.dart';
 import 'package:salmon_stats_app/util/all.dart';
 
-class EnterIksmPage extends StatefulWidget {
+class EnterIksmPage extends StatefulWidget implements PushablePage {
   const EnterIksmPage({this.restartOnComplete = false});
 
   final bool restartOnComplete;
 
   @override
   _EnterIksmPageState createState() => _EnterIksmPageState();
+
+  Future<void> push(BuildContext context) {
+    return Navigator.push(
+      context,
+      MaterialPageRoute<void>(builder: (_) => this),
+    );
+  }
 }
 
 class _EnterIksmPageState extends State<EnterIksmPage> {
@@ -98,6 +105,7 @@ class _EnterIksmPageState extends State<EnterIksmPage> {
         ..cookieJar = cookieJar;
 
       if (widget.restartOnComplete) {
+        store.iksmValidityFuture = validateIksmSession(cookieJar);
         await store.switchProfile(profile);
         Navigator.pop(context);
       }

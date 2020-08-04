@@ -36,6 +36,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "errorDialogTitle" : MessageLookupByLibrary.simpleMessage("エラー"),
     "getApiToken" : MessageLookupByLibrary.simpleMessage("API Tokenを取得"),
     "goBack" : MessageLookupByLibrary.simpleMessage("戻る"),
+    "iksmExpirationMessage" : MessageLookupByLibrary.simpleMessage("iksm_session の有効期限が切れています。"),
+    "iksmExpirationUpdateButtonLabel" : MessageLookupByLibrary.simpleMessage("iksm_session を更新する"),
     "iksmSessionAlreadyUsed" : MessageLookupByLibrary.simpleMessage("この iksm_session はすでに追加されています。"),
     "iksmSessionPromptText" : MessageLookupByLibrary.simpleMessage("iksm_session を入力してください"),
     "invalidIksmSession" : MessageLookupByLibrary.simpleMessage("iksm_session が正しくありません。入力内容を確認の上、もう一度やり直してください。"),

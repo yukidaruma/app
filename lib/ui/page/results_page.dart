@@ -78,6 +78,31 @@ class _ResultsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilderWrapper<bool>(
+      future: context.select((GlobalStore store) => store.iksmValidityFuture),
+      builder: (BuildContext context, bool isIksmValid) {
+        if (!isIksmValid) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                ErrorText(S.of(context).iksmExpirationMessage),
+                const Padding(padding: EdgeInsets.only(bottom: 8.0)),
+                RaisedButton(
+                  child: Text(S.of(context).iksmExpirationUpdateButtonLabel),
+                  onPressed: () => const EnterIksmPage(restartOnComplete: true).push(context),
+                ),
+              ],
+            ),
+          );
+        }
+
+        return _buildContent(context);
+      },
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
     Widget makeRefreshable(Widget child) {
       return RefreshIndicator(
         key: _refreshIndicatorKey,
