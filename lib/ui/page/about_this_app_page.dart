@@ -26,18 +26,19 @@ class AboutThisAppPage extends StatelessWidget implements PushablePage<AboutThis
   Widget build(BuildContext context) {
     Widget heading(IconData icon, String heading) => _buildHeading(context, icon, heading);
 
-    final PackageInfo packageInfo = context.select((GlobalStore store) => store.packageInfo);
-
     final Widget body = ListView(
       children: <Widget>[
         const Padding(padding: EdgeInsets.only(bottom: 32.0)),
         Center(
-          child: Column(
-            children: <Widget>[
-              Text(packageInfo.appName, style: context.textTheme.headline4.copyWith(color: SalmonStatsColors.strong)),
-              const Padding(padding: EdgeInsets.only(bottom: 8.0)),
-              Text('v${packageInfo.version} (${packageInfo.buildNumber})'),
-            ],
+          child: FutureBuilderWrapper<PackageInfo>(
+            future: context.select((GlobalStore store) => store.packageInfoFuture),
+            builder: (_, PackageInfo packageInfo) => Column(
+              children: <Widget>[
+                Text(packageInfo.appName, style: context.textTheme.headline4.copyWith(color: SalmonStatsColors.strong)),
+                const Padding(padding: EdgeInsets.only(bottom: 8.0)),
+                Text('v${packageInfo.version} (${packageInfo.buildNumber})'),
+              ],
+            ),
           ),
         ),
         const Padding(padding: EdgeInsets.only(bottom: 32.0)),
