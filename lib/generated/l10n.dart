@@ -133,6 +133,26 @@ class S {
     );
   }
 
+  /// `iksm_session has expired.`
+  String get iksmExpirationMessage {
+    return Intl.message(
+      'iksm_session has expired.',
+      name: 'iksmExpirationMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update iksm_session.`
+  String get iksmExpirationUpdateButtonLabel {
+    return Intl.message(
+      'Update iksm_session.',
+      name: 'iksmExpirationUpdateButtonLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Enter your iksm_session`
   String get iksmSessionPromptText {
     return Intl.message(

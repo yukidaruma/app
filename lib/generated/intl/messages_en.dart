@@ -40,6 +40,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "fail" : MessageLookupByLibrary.simpleMessage("Fail"),
     "getApiToken" : MessageLookupByLibrary.simpleMessage("Get API Token"),
     "goBack" : MessageLookupByLibrary.simpleMessage("Go back"),
+    "iksmExpirationMessage" : MessageLookupByLibrary.simpleMessage("iksm_session has expired."),
+    "iksmExpirationUpdateButtonLabel" : MessageLookupByLibrary.simpleMessage("Update iksm_session."),
     "iksmSession" : MessageLookupByLibrary.simpleMessage("iksm_session"),
     "iksmSessionAlreadyUsed" : MessageLookupByLibrary.simpleMessage("You already have added this iksm_session."),
     "iksmSessionPromptText" : MessageLookupByLibrary.simpleMessage("Enter your iksm_session"),

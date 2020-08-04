@@ -9,8 +9,9 @@ import 'package:salmon_stats_app/util/all.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class GlobalStore with ChangeNotifier {
-  GlobalStore({CookieJar cookieJar, this.packageInfoFuture, List<UserProfile> profiles})
+  GlobalStore({CookieJar cookieJar, Future<bool> iksmValidityFuture, this.packageInfoFuture, List<UserProfile> profiles})
       : _cookieJar = cookieJar,
+        _iksmValidityFuture = iksmValidityFuture,
         _profiles = profiles;
 
   final Map<Type, GlobalKey> _globalKeys = <Type, GlobalKey>{};
@@ -27,6 +28,13 @@ class GlobalStore with ChangeNotifier {
   CookieJar get cookieJar => _cookieJar;
   set cookieJar(CookieJar value) {
     _cookieJar = value;
+    notifyListeners();
+  }
+
+  Future<bool> _iksmValidityFuture;
+  Future<bool> get iksmValidityFuture => _iksmValidityFuture;
+  set iksmValidityFuture(Future<bool> iksmValidityFuture) {
+    _iksmValidityFuture = iksmValidityFuture;
     notifyListeners();
   }
 

@@ -10,6 +10,8 @@
   "confirmCancelUploadingYes": "Yes, stop uploading",
   "confirmRemoveAccount": "Are you sure you want to remove account \"{name}\"?",
   "continueButtonText": "Continue",
+  "iksmExpirationMessage": "iksm_session has expired.",
+  "iksmExpirationUpdateButtonLabel": "Update iksm_session.",
   "iksmSessionPromptText": "Enter your iksm_session",
   "openOtherPage": "Open {pageName}",
   "noResultsFound": "No results were found. Please play some Salmon Run and refresh the page.",
