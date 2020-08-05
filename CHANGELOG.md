@@ -1,3 +1,10 @@
+# Version 0.1.3 (2020-08-06)
+
+## Other updates
+
+* Release 0.1.2
+
+
 # Version 0.1.2 (2020-08-06)
 
 ## Bug fixes
