@@ -1,5 +1,8 @@
-# Create GitHub Release on `vx.y.z` tag push
-# TODO: Release on 
+###
+# This action will
+# * Create GitHub Release with `.apk`
+# on `vX.Y.Z` tag push
+###
 
 name: Create release
 
@@ -9,14 +12,57 @@ on:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
-  build:
-    name: Create Release
+  build-apk:
+    name: Build APK
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          channel: 'beta'
+
+      - name: Copy .env
+        run: cp .env assets/.env
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build APK
+        run: flutter build apk
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: built-apk
+          path: |
+            build/app/outputs/
+          if-no-files-found: error
+
+  release-github:
+    name: Create Release on GitHub
+    needs: [build-apk]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
       - name: Get tag subject
         run: echo ::set-env name=TAG_SUBJECT::$(git tag -l --format='%(subject)' "$GITHUB_REF")
+
+      - name: Get the version
+        run: echo ::set-env name=RELEASE_VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+
+      - name: Download artifact made by `build-apk`
+        id: download
+        uses: actions/download-artifact@v2
+        with:
+          name: built-apk
 
       - name: Create Release
         id: create_release
@@ -25,7 +71,43 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          release_name: Release ${{ env.RELEASE_VERSION }}
           body: ${{ env.TAG_SUBJECT  }}
           draft: false
           prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ steps.download.outputs.download-path }}/apk/release/app-release.apk
+          asset_name: salmon-stats.${{ env.RELEASE_VERSION }}.release.apk
+          asset_content_type: application/vnd.android.package-archive
+
+
+  create-pull-request:
+    name: Create pull request of release branch
+    needs: [release-github]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get the pushed branch name
+        run: echo ::set-env name=PUSHED_TAG_NAME::$(echo $GITHUB_REF | cut -d / -f 3)
+
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v3
+        with:
+          branch: release/${{ env.PUSHED_TAG_NAME }}
+          title: Release ${{ env.PUSHED_TAG_NAME }}
+          body: |
+            _This Pull Request is created automatically with [create-pull-request](https://github.com/peter-evans/create-pull-request).
+          labels: |
+            release
+
+      - name: Check output
+        run: |
+          echo "Created Pull Request: #${{ steps.cpr.outputs.pull-request-number }}"
