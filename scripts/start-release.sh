@@ -21,7 +21,7 @@ done
 
 OPTS=()
 if [ "$DRY_RUN" -eq 1 ]; then
-  OPTS+="--dry-run"
+  OPTS+=("--dry-run")
 fi
 
 # shellcheck disable=SC2086
@@ -34,11 +34,6 @@ NEW_VERSION=${TEMP_ARR[0]}
 echo "Updated version field in pubspec.yaml to $NEW_SEMVER."
 
 git checkout -b "release/v$NEW_VERSION"
-
-if [ "$DRY_RUN" -eq 0 ]; then
-  git add pubspec.yaml
-  git commit -m "chore(internal): Bump version to $NEW_VERSION"
-fi
 
 # Generating release notes
 LAST_RELEASE=$(git describe --tags $(git rev-list --tags --max-count=1))
