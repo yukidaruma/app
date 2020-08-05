@@ -12,8 +12,8 @@ description: A new Flutter project.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-# DO NOT EDIT: This field is automatically updated on running `scripts/commit-release.sh`.
 version: 0.1.1+4
+# DO NOT EDIT: This field is automatically updated on running `scripts/start-release.sh`.
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
