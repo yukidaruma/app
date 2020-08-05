@@ -18,11 +18,3 @@ NEW_VERSION=$(head -1 CHANGELOG.md | sed -e 's/^# Version \(.\+\) .\+$/\1/')
 git add CHANGELOG.md assets/release_notes.html
 git commit -m "Release $NEW_VERSION"
 git -c core.commentChar=";" tag -a "v$NEW_VERSION" -m "'$RELEASE_NOTES'"
-
-flutter build appbundle --target-platform android-arm,android-arm64,android-x64
-
-RELEASE_BRANCH_NAME="release/v$NEW_VERSION"
-
-git checkout master
-git merge "$RELEASE_BRANCH_NAME" --no-edit --no-ff
-git branch -d "$RELEASE_BRANCH_NAME"
