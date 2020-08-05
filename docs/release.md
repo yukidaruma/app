@@ -20,10 +20,9 @@
 ### Build for release
 
 ```sh
-# Running `pre-release.sh` will do:
+# Running `start-release.sh` will do:
 # 1. Increment version field in `pubspec.yaml`.
-# 2. Make "Release $newVersion" commit with git tag (it contains release notes as message).
-# 3. Update `CHANGELOG.md` from commit messages.
+# 2. Update `CHANGELOG.md` from commit messages since last release.
 #
 # When incrementing major / minor version: Use -M / -m option respectively.
 # When incrementing only build number: Use -V option.
@@ -31,13 +30,12 @@
 # actually modifying files.
 ./scripts/pre-release.sh
 
-# If necessary, manually edit `CHANGELOG.md` before running `release.sh` (which depends on `CHANGELOG.md`).
+# If necessary, manually edit `CHANGELOG.md` before running `commit-release.sh` (which commits changes made to `CHANGELOG.md`).
 $EDITOR CHANGELOG.md
 
-# In addition to `flutter build`, `release.sh` does following things:
-# 1. Reset `assets/.env` to default.
-# 2. Stop if you have changes to files other than `CHANGELOG.md`.
-# 3. Generate `assets/release_notes.html` from `CHANGELOG.md`.
-# 4. Make commit with release notes tag (Update to `CHANGELOG.md` should be attached to this commit).
+# After editing CHANGELOG.md, you now make release commit with `commit-release.sh`.
+# 1. This script make sure you have no uncommited changes to files other than `CHANGELOG.md`.
+# 2. Update `assets/release_notes.html` from `CHANGELOG.md`.
+# 3. Create git-tag with release notes using `CHANGELOG.md`'s diff.
 ./scripts/release.sh
 ```
