@@ -1,7 +1,8 @@
 ###
 # This action will
 # * Create GitHub Release with `.apk`
-# on `vX.Y.Z` tag push
+# * Upload `.aab` to Google Play
+# on `release/vX.Y.Z` branch push
 ###
 
 name: Create release
@@ -47,6 +48,7 @@ jobs:
 
   release-github:
     name: Create Release on GitHub
+    needs: [build-apk]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -57,7 +59,10 @@ jobs:
       - name: Get release notes
         run: |
           release_notes=$(printf %s "$(sed '/^----$/Q' CHANGELOG.md)")
-          echo "::set-env name=RELEASE_NOTES::${release_notes//$'\n'/'%0a'}"
+          release_notes="${release_notes//'%'/'%25'}"
+          release_notes="${release_notes//$'\n'/'%0A'}"
+          release_notes="${release_notes//$'\r'/'%0D'}"
+          echo "::set-env name=RELEASE_NOTES::$release_notes"
 
       - name: Download artifact made by `build-apk`
         id: download
@@ -111,3 +116,66 @@ jobs:
       - name: Check output
         run: |
           echo "Created Pull Request: #${{ steps.cpr.outputs.pull-request-number }}"
+
+
+  build-aab:
+    name: Build App Bundle
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          channel: 'beta'
+
+      - name: Copy .env
+        run: cp .env assets/.env
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build App Bundle
+        run: flutter build appbundle --target-platform android-arm,android-arm64,android-x64
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: built-aab
+          path: |
+            build/app/outputs/
+          if-no-files-found: error
+
+  release-google-play:
+    name: Upload built App Bundle to Google Play
+    needs: [build-aab]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get tag subject
+        run: echo ::set-env name=TAG_SUBJECT::$(git tag -l --format='%(subject)' "$GITHUB_REF")
+
+      - name: Create whatsNewDirectory
+        run: |
+          mkdir /tmp/whatsnew
+          printf '%s' "$TAG_SUBJECT" > /tmp/whatsnew/whatsnew-en-US
+
+      - name: Download artifact made by `build-aab`
+        id: download
+        uses: actions/download-artifact@v2
+        with:
+          name: built-aab
+
+      - name: Upload App Bundle to Google Play
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON_CONTENT }}
+          packageName: games.yuki.salmon_stats_android
+          releaseFile: ${{ steps.download.outputs.download-path }}/bundle/release/app-release.aab
+          track: alpha
+          whatsNewDirectory: /tmp/whatsnew
+          mappingFile: ${{ steps.download.outputs.download-path }}/mapping/release/mapping.txt
