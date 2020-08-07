@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:salmon_stats_app/store/shared_prefs.dart';
 import 'package:salmon_stats_app/ui/all.dart';
 
 class ReleaseNotesPage extends StatefulWidget implements PushablePage<ReleaseNotesPage> {
@@ -19,6 +20,13 @@ class ReleaseNotesPage extends StatefulWidget implements PushablePage<ReleaseNot
 
 class _ReleaseNotesPageState extends State<ReleaseNotesPage> {
   final Future<String> _releaseNotesFuture = rootBundle.loadString('assets/release_notes.html');
+
+  @override
+  void initState() {
+    super.initState();
+
+    context.read<AppSharedPrefs>().hasUnreadReleaseNotes = false;
+  }
 
   @override
   Widget build(BuildContext context) {

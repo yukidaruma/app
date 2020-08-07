@@ -41,10 +41,23 @@ Future<void> main() async {
 
   Config.env = await loadEnv('.env');
 
+  final Future<PackageInfo> packageInfoFuture = PackageInfo.fromPlatform()
+    ..then((PackageInfo packageInfo) {
+      final AppSharedPrefs prefs = AppSharedPrefs();
+
+      if (prefs.oldVersion != packageInfo.version) {
+        if (prefs.oldVersion != null) {
+          // Do not place updates indicator on first launch.
+          prefs.hasUnreadReleaseNotes = true;
+        }
+
+        prefs.oldVersion = packageInfo.version;
+      }
+    });
   final GlobalStore globalStore = GlobalStore(
     cookieJar: cookieJar,
     iksmStatusFuture: validateIksmSession(cookieJar),
-    packageInfoFuture: PackageInfo.fromPlatform(),
+    packageInfoFuture: packageInfoFuture,
     profiles: profiles,
   );
 
