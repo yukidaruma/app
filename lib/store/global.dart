@@ -95,6 +95,7 @@ class GlobalStore with ChangeNotifier {
 
     await loadProfiles(shouldNotifyListeners: false);
     cookieJar = createCookieJar(profile.iksmSession);
+    iksmValidityFuture = validateIksmSession(cookieJar);
 
     restartApp();
   }

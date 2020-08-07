@@ -6,9 +6,10 @@ import 'package:salmon_stats_app/store/global.dart';
 import 'package:salmon_stats_app/ui/all.dart';
 
 class _ResultsStore with ChangeNotifier {
-  _ResultsStore(this._context, this.pid);
+  _ResultsStore(this._context, this.isIksmValid, this.pid);
 
   final BuildContext _context;
+  final bool isIksmValid;
   final String pid;
   final List<SalmonResult> _results = <SalmonResult>[];
   bool hasLoaded = false;
@@ -19,9 +20,13 @@ class _ResultsStore with ChangeNotifier {
 
   Future<void> fetchResults() async {
     try {
-      final SalmonResults results = await SplatnetAPIRepository(_context.read<GlobalStore>().cookieJar).fetchResults();
-      error = null;
-      _results.addAll(results.results);
+      if (isIksmValid) {
+        final SalmonResults results = await SplatnetAPIRepository(_context.read<GlobalStore>().cookieJar).fetchResults();
+        error = null;
+        _results.addAll(results.results);
+      } else {
+        await loadFromDB();
+      }
     } catch (e) {
       error = e;
     }
@@ -66,47 +71,28 @@ class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClient
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-
-    return ChangeNotifierProvider<_ResultsStore>(
-      create: (BuildContext context) => _ResultsStore(context)..fetchResults(),
-      child: _ResultsList(_refreshIndicatorKey),
+    return FutureBuilderWrapper<bool>(
+      future: context.select((GlobalStore store) => store.iksmValidityFuture),
+      builder: (_, bool isIksmValid) => ChangeNotifierProvider<_ResultsStore>(
+        create: (BuildContext context) => _ResultsStore(
+          context,
+          isIksmValid,
+          context.read<GlobalStore>().profile.pid,
+        )..fetchResults(),
+        child: _ResultsList(_refreshIndicatorKey, isIksmValid),
+      ),
     );
   }
 }
 
 class _ResultsList extends StatelessWidget {
-  const _ResultsList(this._refreshIndicatorKey);
+  const _ResultsList(this._refreshIndicatorKey, this.isIksmValid);
 
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
+  final bool isIksmValid;
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilderWrapper<bool>(
-      future: context.select((GlobalStore store) => store.iksmValidityFuture),
-      builder: (BuildContext context, bool isIksmValid) {
-        if (!isIksmValid) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                ErrorText(S.of(context).iksmExpirationMessage),
-                const Padding(padding: EdgeInsets.only(bottom: 8.0)),
-                RaisedButton(
-                  child: Text(S.of(context).iksmExpirationUpdateButtonLabel),
-                  onPressed: () => const EnterIksmPage(type: EnterIksmPageType.sessionTimeOut).push(context),
-                ),
-              ],
-            ),
-          );
-        }
-
-        return _buildContent(context);
-      },
-    );
-  }
-
-  Widget _buildContent(BuildContext context) {
     Widget makeRefreshable(Widget child) {
       return RefreshIndicator(
         key: _refreshIndicatorKey,
@@ -129,23 +115,39 @@ class _ResultsList extends StatelessWidget {
     if (store.hasError) {
       body = makeRefreshable(Center(child: ErrorText(S.of(context).resultsFetchingError)));
     } else if (store.hasLoaded) {
-      body = isEmpty
-          ? makeRefreshable(
-              PagePadding(
-                child: ScrollColumnExpandable(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
+      body = makeRefreshable(
+        NotificationListener<ScrollNotification>(
+          onNotification: (ScrollNotification notification) {
+            if (notification.metrics.pixels >= notification.metrics.maxScrollExtent - 100) {
+              context.read<_ResultsStore>().loadFromDB(results.last.jobId);
+            }
+
+            return true;
+          },
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: PagePadding(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  if (!isIksmValid) ...<Widget>[
+                    Center(child: ErrorText(S.of(context).iksmExpirationMessage)),
+                    const Padding(padding: EdgeInsets.only(bottom: 8.0)),
+                    RaisedButton(
+                      child: Text(S.of(context).iksmExpirationUpdateButtonLabel),
+                      onPressed: () => const EnterIksmPage(type: EnterIksmPageType.sessionTimeOut).push(context),
+                    ),
+                  ] else if (isEmpty) ...<Widget>[
                     Text(S.of(context).noResultsFound),
                     const Padding(padding: EdgeInsets.only(bottom: 16.0)),
-                    RaisedButton(
-                      onPressed: () => _refreshIndicatorKey.currentState.show(),
-                      child: Text(S.of(context).refresh),
-                    ),
                   ],
-                ),
+                  if (!isEmpty) _buildListView(context, results, latestUploadedJobId),
+                ],
               ),
-            )
-          : makeRefreshable(_buildListView(context, results, latestUploadedJobId));
+            ),
+          ),
+        ),
+      );
     } else {
       body = const Center(child: CircularProgressIndicator());
     }
@@ -177,7 +179,9 @@ class _ResultsList extends StatelessWidget {
   }
 
   Widget _buildListView(BuildContext context, List<SalmonResult> results, int latestUploadedJobId) {
-    final Widget listView = ListView.builder(
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
       padding: listTopPadding,
       itemBuilder: (_, int i) {
         final SalmonResult result = results[i];
@@ -246,17 +250,6 @@ class _ResultsList extends StatelessWidget {
         );
       },
       itemCount: results.length,
-    );
-
-    return NotificationListener<ScrollNotification>(
-      onNotification: (ScrollNotification notification) {
-        if (notification.metrics.pixels >= notification.metrics.maxScrollExtent - 100) {
-          context.read<_ResultsStore>().loadFromDB(results.last.jobId);
-        }
-
-        return true;
-      },
-      child: listView,
     );
   }
 

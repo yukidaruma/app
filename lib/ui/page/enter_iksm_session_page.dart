@@ -115,7 +115,6 @@ class _EnterIksmPageState extends State<EnterIksmPage> {
       }
 
       if (widget.type != EnterIksmPageType.firstLogin) {
-        store.iksmValidityFuture = validateIksmSession(cookieJar);
         await store.switchProfile(profile);
         Navigator.pop(context);
       }
