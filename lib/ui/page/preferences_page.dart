@@ -330,11 +330,10 @@ class _PreferencesPageState extends State<PreferencesPage> {
     );
 
     final ValueNotifier<TextEditingValue> controller = _controllers.entries
-        .whereType<MapEntry<SharedPrefsKey, ValueNotifier<TextEditingValue>>>()
         .firstWhere(
           (MapEntry<SharedPrefsKey, ValueNotifier<dynamic>> controller) => controller.key == SharedPrefsKey.SALMON_STATS_TOKEN,
         )
-        .value;
+        .value as TextEditingController;
     controller.value = TextEditingValue(text: token);
   }
 }
