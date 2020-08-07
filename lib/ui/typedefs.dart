@@ -9,3 +9,9 @@ abstract class PushablePage<T extends Widget> {
 //    throw UnimplementedError();
 //  }
 }
+
+enum IksmStatus {
+  expired, // When NSO API returns 403 error.
+  error, // Likely because the device is offline.
+  valid, // When NSO API returns 200.
+}

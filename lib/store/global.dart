@@ -9,9 +9,9 @@ import 'package:salmon_stats_app/util/all.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class GlobalStore with ChangeNotifier {
-  GlobalStore({CookieJar cookieJar, Future<bool> iksmValidityFuture, this.packageInfoFuture, List<UserProfile> profiles})
+  GlobalStore({CookieJar cookieJar, Future<IksmStatus> iksmStatusFuture, this.packageInfoFuture, List<UserProfile> profiles})
       : _cookieJar = cookieJar,
-        _iksmValidityFuture = iksmValidityFuture,
+        _iksmStatusFuture = iksmStatusFuture,
         _profiles = profiles;
 
   final Map<Type, GlobalKey> _globalKeys = <Type, GlobalKey>{};
@@ -28,14 +28,15 @@ class GlobalStore with ChangeNotifier {
   CookieJar get cookieJar => _cookieJar;
   set cookieJar(CookieJar value) {
     _cookieJar = value;
+    resetIksmStatusFuture();
     notifyListeners();
   }
 
-  Future<bool> _iksmValidityFuture;
-  Future<bool> get iksmValidityFuture => _iksmValidityFuture;
-  set iksmValidityFuture(Future<bool> iksmValidityFuture) {
-    _iksmValidityFuture = iksmValidityFuture;
-    notifyListeners();
+  Future<IksmStatus> _iksmStatusFuture;
+  Future<IksmStatus> get iksmStatusFuture => _iksmStatusFuture;
+
+  void resetIksmStatusFuture() {
+    _iksmStatusFuture = validateIksmSession(cookieJar);
   }
 
   final Future<PackageInfo> packageInfoFuture;
@@ -94,8 +95,7 @@ class GlobalStore with ChangeNotifier {
     }
 
     await loadProfiles(shouldNotifyListeners: false);
-    cookieJar = createCookieJar(profile.iksmSession);
-    iksmValidityFuture = validateIksmSession(cookieJar);
+    cookieJar = createCookieJar(newProfile.iksmSession);
 
     restartApp();
   }

@@ -6,10 +6,10 @@ import 'package:salmon_stats_app/store/global.dart';
 import 'package:salmon_stats_app/ui/all.dart';
 
 class _ResultsStore with ChangeNotifier {
-  _ResultsStore(this._context, this.isIksmValid, this.pid);
+  _ResultsStore(this._context, this.iksmStatus, this.pid);
 
   final BuildContext _context;
-  final bool isIksmValid;
+  final IksmStatus iksmStatus;
   final String pid;
   final List<SalmonResult> _results = <SalmonResult>[];
   bool hasLoaded = false;
@@ -20,7 +20,7 @@ class _ResultsStore with ChangeNotifier {
 
   Future<void> fetchResults() async {
     try {
-      if (isIksmValid) {
+      if (iksmStatus == IksmStatus.valid) {
         final SalmonResults results = await SplatnetAPIRepository(_context.read<GlobalStore>().cookieJar).fetchResults();
         error = null;
         _results.addAll(results.results);
@@ -35,7 +35,9 @@ class _ResultsStore with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loadFromDB([int loadedUntil]) async {
+  Future<void> loadFromDB() async {
+    final int loadedUntil = _results.isEmpty ? null : _results.last.jobId;
+
     if (_isLoadingFromDB) {
       return;
     }
@@ -71,25 +73,27 @@ class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClient
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilderWrapper<bool>(
-      future: context.select((GlobalStore store) => store.iksmValidityFuture),
-      builder: (_, bool isIksmValid) => ChangeNotifierProvider<_ResultsStore>(
+    super.build(context);
+
+    return FutureBuilderWrapper<IksmStatus>(
+      future: context.select((GlobalStore store) => store.iksmStatusFuture),
+      builder: (_, IksmStatus iksmStatus) => ChangeNotifierProvider<_ResultsStore>(
         create: (BuildContext context) => _ResultsStore(
           context,
-          isIksmValid,
+          iksmStatus,
           context.read<GlobalStore>().profile.pid,
         )..fetchResults(),
-        child: _ResultsList(_refreshIndicatorKey, isIksmValid),
+        child: _ResultsList(_refreshIndicatorKey, iksmStatus),
       ),
     );
   }
 }
 
 class _ResultsList extends StatelessWidget {
-  const _ResultsList(this._refreshIndicatorKey, this.isIksmValid);
+  const _ResultsList(this._refreshIndicatorKey, this.iksmStatus);
 
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
-  final bool isIksmValid;
+  final IksmStatus iksmStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -112,17 +116,33 @@ class _ResultsList extends StatelessWidget {
     final int oldestJobId = isEmpty ? 0 : results?.last?.jobId ?? 0;
 
     Widget body;
-    if (store.hasError) {
-      body = makeRefreshable(Center(child: ErrorText(S.of(context).resultsFetchingError)));
-    } else if (store.hasLoaded) {
+
+    final List<Widget> errorWidgets = <Widget>[
+      if (iksmStatus == IksmStatus.expired) ...<Widget>[
+        Center(child: ErrorText(S.of(context).iksmExpirationMessage)),
+        RaisedButton(
+          child: Text(S.of(context).iksmExpirationUpdateButtonLabel),
+          onPressed: () => const EnterIksmPage(type: EnterIksmPageType.sessionTimeOut).push(context),
+        ),
+      ] else if (iksmStatus == IksmStatus.error)
+        ErrorText(S.of(context).resultsFetchingError)
+      else if (store.hasError)
+        ErrorText(store.error.toString()),
+    ];
+    errorWidgets.addAll(<Widget>[
+      if (errorWidgets.isNotEmpty && isEmpty) const Padding(padding: EdgeInsets.only(bottom: 8.0)),
+      if (isEmpty) Text(S.of(context).noResultsFound),
+    ]);
+
+    if (store.hasLoaded) {
       body = makeRefreshable(
         NotificationListener<ScrollNotification>(
           onNotification: (ScrollNotification notification) {
             if (notification.metrics.pixels >= notification.metrics.maxScrollExtent - 100) {
-              context.read<_ResultsStore>().loadFromDB(results.last.jobId);
+              context.read<_ResultsStore>().loadFromDB();
             }
 
-            return true;
+            return false;
           },
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
@@ -130,17 +150,8 @@ class _ResultsList extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  if (!isIksmValid) ...<Widget>[
-                    Center(child: ErrorText(S.of(context).iksmExpirationMessage)),
-                    const Padding(padding: EdgeInsets.only(bottom: 8.0)),
-                    RaisedButton(
-                      child: Text(S.of(context).iksmExpirationUpdateButtonLabel),
-                      onPressed: () => const EnterIksmPage(type: EnterIksmPageType.sessionTimeOut).push(context),
-                    ),
-                  ] else if (isEmpty) ...<Widget>[
-                    Text(S.of(context).noResultsFound),
-                    const Padding(padding: EdgeInsets.only(bottom: 16.0)),
-                  ],
+                  ...errorWidgets,
+                  if (errorWidgets.isNotEmpty) const Padding(padding: EdgeInsets.only(bottom: 8.0)),
                   if (!isEmpty) _buildListView(context, results, latestUploadedJobId),
                 ],
               ),
