@@ -150,7 +150,7 @@ class _PrimaryDrawerState extends State<PrimaryDrawer> {
     return Navigator.push(
       context,
       MaterialPageRoute<void>(
-        builder: (_) => const EnterIksmPage(restartOnComplete: true),
+        builder: (_) => const EnterIksmPage(type: EnterIksmPageType.addAccount),
       ),
     );
   }

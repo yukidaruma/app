@@ -30,7 +30,7 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     if (Provider.of<GlobalStore>(context).cookieJar == null) {
-      return const EnterIksmPage();
+      return const EnterIksmPage(type: EnterIksmPageType.firstLogin);
     }
 
     final Widget scaffold = Scaffold(

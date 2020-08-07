@@ -9,10 +9,16 @@ import 'package:salmon_stats_app/store/global.dart';
 import 'package:salmon_stats_app/ui/all.dart';
 import 'package:salmon_stats_app/util/all.dart';
 
-class EnterIksmPage extends StatefulWidget implements PushablePage {
-  const EnterIksmPage({this.restartOnComplete = false});
+enum EnterIksmPageType {
+  addAccount,
+  firstLogin,
+  sessionTimeOut,
+}
 
-  final bool restartOnComplete;
+class EnterIksmPage extends StatefulWidget implements PushablePage {
+  const EnterIksmPage({@required this.type});
+
+  final EnterIksmPageType type;
 
   @override
   _EnterIksmPageState createState() => _EnterIksmPageState();
@@ -97,14 +103,18 @@ class _EnterIksmPageState extends State<EnterIksmPage> {
         ..iksmSession = iksmSession
         ..avatar = avatar;
 
-      await UserProfileRepository(DatabaseProvider.instance).create(profile);
-
       final GlobalStore store = context.read<GlobalStore>();
       store
         ..addProfile(profile)
         ..cookieJar = cookieJar;
 
-      if (widget.restartOnComplete) {
+      if (widget.type == EnterIksmPageType.sessionTimeOut) {
+        await UserProfileRepository(DatabaseProvider.instance).save(profile);
+      } else {
+        await UserProfileRepository(DatabaseProvider.instance).create(profile);
+      }
+
+      if (widget.type != EnterIksmPageType.firstLogin) {
         store.iksmValidityFuture = validateIksmSession(cookieJar);
         await store.switchProfile(profile);
         Navigator.pop(context);

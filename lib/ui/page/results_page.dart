@@ -94,7 +94,7 @@ class _ResultsList extends StatelessWidget {
                 const Padding(padding: EdgeInsets.only(bottom: 8.0)),
                 RaisedButton(
                   child: Text(S.of(context).iksmExpirationUpdateButtonLabel),
-                  onPressed: () => const EnterIksmPage(restartOnComplete: true).push(context),
+                  onPressed: () => const EnterIksmPage(type: EnterIksmPageType.sessionTimeOut).push(context),
                 ),
               ],
             ),
