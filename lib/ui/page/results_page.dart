@@ -6,9 +6,10 @@ import 'package:salmon_stats_app/store/global.dart';
 import 'package:salmon_stats_app/ui/all.dart';
 
 class _ResultsStore with ChangeNotifier {
-  _ResultsStore(this._context);
+  _ResultsStore(this._context, this.pid);
 
   final BuildContext _context;
+  final String pid;
   final List<SalmonResult> _results = <SalmonResult>[];
   bool hasLoaded = false;
   bool _isLoadingFromDB = false;
@@ -29,7 +30,7 @@ class _ResultsStore with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loadFromDB(int loadedUntil) async {
+  Future<void> loadFromDB([int loadedUntil]) async {
     if (_isLoadingFromDB) {
       return;
     }
@@ -37,7 +38,10 @@ class _ResultsStore with ChangeNotifier {
     _isLoadingFromDB = true;
 
     try {
-      final List<InternalSalmonResult> results = await SalmonResultRepository(DatabaseProvider.instance).paginate(loadedUntil, paginationItemCount);
+      final List<InternalSalmonResult> results = await SalmonResultRepository(
+        DatabaseProvider.instance,
+        pid,
+      ).paginate(loadedUntil, paginationItemCount);
       _results.addAll(results.map((InternalSalmonResult result) => result.toSalmonResult()));
     } catch (e) {
       error = e;

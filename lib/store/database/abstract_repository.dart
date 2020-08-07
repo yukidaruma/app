@@ -161,8 +161,8 @@ mixin PaginationMixin<E> on Queryable<E> implements Paginatable<E> {
   @override
   Future<List<E>> paginate(dynamic id, int itemsPerPage) {
     return query(
-      where: '$paginationColumn < ?',
-      whereArgs: <dynamic>[id],
+      where: id == null ? null : '$paginationColumn < ?',
+      whereArgs: id == null ? null : <dynamic>[id],
       orderBy: '$paginationColumn DESC',
       limit: itemsPerPage,
     );
