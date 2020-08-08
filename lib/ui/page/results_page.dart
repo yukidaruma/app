@@ -4,13 +4,21 @@ import 'package:salmon_stats_app/store/database/all.dart';
 import 'package:salmon_stats_app/store/database/salmon_result.dart';
 import 'package:salmon_stats_app/store/global.dart';
 import 'package:salmon_stats_app/ui/all.dart';
+import 'package:salmon_stats_app/util/all.dart';
 
 class _ResultsStore with ChangeNotifier {
-  _ResultsStore(this._context, this.iksmStatus, this.pid);
+  _ResultsStore(this._context, this._iksmStatus, this.pid);
 
   final BuildContext _context;
-  final IksmStatus iksmStatus;
   final String pid;
+
+  IksmStatus _iksmStatus;
+  IksmStatus get iksmStatus => _iksmStatus;
+  set iksmStatus(IksmStatus iksmStatus) {
+    _iksmStatus = iksmStatus;
+    notifyListeners();
+  }
+
   final List<SalmonResult> _results = <SalmonResult>[];
   bool hasLoaded = false;
   bool _isLoadingFromDB = false;
@@ -87,24 +95,33 @@ class _ResultsPageState extends State<ResultsPage> with AutomaticKeepAliveClient
           iksmStatus,
           context.read<GlobalStore>().profile.pid,
         )..fetchResults(),
-        child: _ResultsList(_refreshIndicatorKey, iksmStatus),
+        child: _ResultsList(_refreshIndicatorKey),
       ),
     );
   }
 }
 
 class _ResultsList extends StatelessWidget {
-  const _ResultsList(this._refreshIndicatorKey, this.iksmStatus);
+  const _ResultsList(this._refreshIndicatorKey);
 
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
-  final IksmStatus iksmStatus;
 
   @override
   Widget build(BuildContext context) {
+    final IksmStatus iksmStatus = context.select((_ResultsStore store) => store.iksmStatus);
+
     Widget makeRefreshable(Widget child) {
       return RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: () async {
+          if (iksmStatus == IksmStatus.error) {
+            context.read<_ResultsStore>().iksmStatus = await validateIksmSession(context.read<GlobalStore>().cookieJar);
+
+            if (context.read<_ResultsStore>().iksmStatus != IksmStatus.valid) {
+              return;
+            }
+          }
+
           return context.read<_ResultsStore>().fetchResults();
         },
         child: child,
@@ -140,24 +157,31 @@ class _ResultsList extends StatelessWidget {
 
     if (store.hasLoaded) {
       body = makeRefreshable(
-        NotificationListener<ScrollNotification>(
-          onNotification: (ScrollNotification notification) {
-            if (notification.metrics.pixels >= notification.metrics.maxScrollExtent - 100) {
-              context.read<_ResultsStore>().loadFromDB();
-            }
+        LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) => SizedBox.fromSize(
+            size: Size.fromHeight(constraints.maxHeight),
+            child: NotificationListener<ScrollNotification>(
+              onNotification: (ScrollNotification notification) {
+                final ScrollMetrics metrics = notification.metrics;
+                final bool onReachedBottom = metrics.maxScrollExtent >= 0 && metrics.pixels >= metrics.maxScrollExtent - 100;
+                if (onReachedBottom) {
+                  context.read<_ResultsStore>().loadFromDB();
+                }
 
-            return false;
-          },
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            child: PagePadding(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  ...errorWidgets,
-                  if (errorWidgets.isNotEmpty) const Padding(padding: EdgeInsets.only(bottom: 8.0)),
-                  if (!isEmpty) _buildListView(context, results, latestUploadedJobId),
-                ],
+                return false;
+              },
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: PagePadding(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      ...errorWidgets,
+                      if (errorWidgets.isNotEmpty) const Padding(padding: EdgeInsets.only(bottom: 8.0)),
+                      if (!isEmpty) _buildListView(context, results, latestUploadedJobId),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
