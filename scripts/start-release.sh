@@ -33,14 +33,13 @@ NEW_VERSION=${TEMP_ARR[0]}
 
 echo "Updated version field in pubspec.yaml to $NEW_SEMVER."
 
-git checkout -b "release/v$NEW_VERSION"
-
 # Generating release notes
 LAST_RELEASE=$(git describe --tags $(git rev-list --tags --max-count=1))
 NEW_RELEASE_NOTES=$(git --no-pager log --pretty=format:"%B----" "$LAST_RELEASE"..HEAD | dart "$SCRIPT_DIR/gen-release-notes.dart" "$NEW_VERSION")
 TMP_FILE=$(mktemp)
 
 if [ "$DRY_RUN" -eq 0 ]; then
+  git checkout -b "release/v$NEW_VERSION" || exit
   touch CHANGELOG.md # Make sure to create CHANGELOG.md before calling cat
   printf "%s\n\n\n" "$NEW_RELEASE_NOTES" | cat - CHANGELOG.md > "$TMP_FILE"
   rm CHANGELOG.md && mv "$TMP_FILE" CHANGELOG.md
