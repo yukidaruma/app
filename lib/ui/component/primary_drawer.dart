@@ -2,6 +2,7 @@ import 'package:salmon_stats_app/config.dart';
 import 'package:salmon_stats_app/model/all.dart';
 import 'package:salmon_stats_app/store/database/all.dart';
 import 'package:salmon_stats_app/store/global.dart';
+import 'package:salmon_stats_app/store/shared_prefs.dart';
 import 'package:salmon_stats_app/ui/all.dart';
 
 class PrimaryDrawer extends StatefulWidget {
@@ -97,7 +98,20 @@ class _PrimaryDrawerState extends State<PrimaryDrawer> {
         },
       ),
       ListTile(
-        leading: const Icon(FontAwesomeIcons.fileAlt),
+        leading: Stack(
+          children: <Widget>[
+            const Icon(FontAwesomeIcons.fileAlt),
+            if (context.select((AppSharedPrefs prefs) => prefs.hasUnreadReleaseNotes))
+              Container(
+                height: 8.0,
+                width: 8.0,
+                decoration: BoxDecoration(
+                  color: context.theme.accentColor,
+                  shape: BoxShape.circle,
+                ),
+              ),
+          ],
+        ),
         title: Text(S.of(context).releaseNotes),
         onTap: () => ReleaseNotesPage.push(context),
       ),

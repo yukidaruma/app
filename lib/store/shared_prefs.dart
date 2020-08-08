@@ -2,6 +2,8 @@ import 'package:salmon_stats_app/ui/all.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum SharedPrefsKey {
+  HAS_UNREAD_RELEASE_NOTES,
+  OLD_VERSION,
   SALMON_STATS_TOKEN,
 }
 
@@ -48,6 +50,12 @@ class AppSharedPrefs with ChangeNotifier {
   Future<bool> Function(double value) _doubleSetter(SharedPrefsKey key) => (double value) => setDouble(key, value);
   Future<bool> Function(int value) _intSetter(SharedPrefsKey key) => (int value) => setInt(key, value);
   Future<bool> Function(String value) _stringSetter(SharedPrefsKey key) => (String value) => setString(key, value);
+
+  bool get hasUnreadReleaseNotes => getBool(SharedPrefsKey.HAS_UNREAD_RELEASE_NOTES);
+  set hasUnreadReleaseNotes(bool value) => setBool(SharedPrefsKey.HAS_UNREAD_RELEASE_NOTES, value).then((_) => notifyListeners());
+
+  String get oldVersion => getStringUnsafe(SharedPrefsKey.OLD_VERSION);
+  set oldVersion(String value) => setString(SharedPrefsKey.OLD_VERSION, value);
 
   String get salmonStatsToken => getString(SharedPrefsKey.SALMON_STATS_TOKEN);
 
