@@ -14,6 +14,7 @@ class _ResultsStore with ChangeNotifier {
   final List<SalmonResult> _results = <SalmonResult>[];
   bool hasLoaded = false;
   bool _isLoadingFromDB = false;
+  bool _reachedBottom = false;
   Object error;
 
   bool get hasError => error != null;
@@ -36,11 +37,11 @@ class _ResultsStore with ChangeNotifier {
   }
 
   Future<void> loadFromDB() async {
-    final int loadedUntil = _results.isEmpty ? null : _results.last.jobId;
-
-    if (_isLoadingFromDB) {
+    if (_reachedBottom || _isLoadingFromDB) {
       return;
     }
+
+    final int loadedUntil = _results.isEmpty ? null : _results.last.jobId;
 
     _isLoadingFromDB = true;
 
@@ -50,6 +51,7 @@ class _ResultsStore with ChangeNotifier {
         pid,
       ).paginate(loadedUntil, paginationItemCount);
       _results.addAll(results.map((InternalSalmonResult result) => result.toSalmonResult()));
+      _reachedBottom = results.isEmpty;
     } catch (e) {
       error = e;
     } finally {
