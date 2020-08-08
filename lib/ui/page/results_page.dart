@@ -24,7 +24,9 @@ class _ResultsStore with ChangeNotifier {
       if (iksmStatus == IksmStatus.valid) {
         final SalmonResults results = await SplatnetAPIRepository(_context.read<GlobalStore>().cookieJar).fetchResults();
         error = null;
-        _results.addAll(results.results);
+        _results
+          ..clear()
+          ..addAll(results.results);
       } else {
         await loadFromDB();
       }
