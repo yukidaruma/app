@@ -35,7 +35,7 @@ echo "Updated version field in pubspec.yaml to $NEW_SEMVER."
 
 # Generating release notes
 LAST_RELEASE=$(git describe --tags $(git rev-list --tags --max-count=1))
-NEW_RELEASE_NOTES=$(git --no-pager log --pretty=format:"%B----" "$LAST_RELEASE"..HEAD | dart "$SCRIPT_DIR/gen-release-notes.dart" "$NEW_VERSION")
+NEW_RELEASE_NOTES=$(git --no-pager log --pretty=format:"%B%n----" "$LAST_RELEASE"..HEAD | dart "$SCRIPT_DIR/gen-release-notes.dart" "$NEW_VERSION")
 TMP_FILE=$(mktemp)
 
 if [ "$DRY_RUN" -eq 0 ]; then
