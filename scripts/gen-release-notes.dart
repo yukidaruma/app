@@ -23,6 +23,9 @@ enum CommitType {
   /// Pick up manually if necessary (otherwise just remove them).
   chore,
 
+  /// Style commits are non-functional design/layout changes.
+  style,
+
   /// Documentation, internal (such as refactor) and meta commits (such as merge commit) are excluded
   /// from generated release notes.
   documentation,
@@ -31,7 +34,7 @@ enum CommitType {
 }
 
 const ignoreCommitTypes = <CommitType>[CommitType.documentation, CommitType.meta];
-const metaCommits = <Pattern>['Merge'];
+const metaCommits = <Pattern>['Merge', 'Rename'];
 final RegExp scopePattern = RegExp(r'^(\w+)(?:\((\w+)\))?: ');
 
 CommitType commitClassifier(String summary) {
@@ -71,6 +74,8 @@ CommitType commitClassifier(String summary) {
       return CommitType.fix;
     case 'refactor':
       return CommitType.internal;
+    case 'style':
+      return CommitType.style;
   }
 
   return CommitType.chore;
@@ -150,6 +155,7 @@ String _generateReleaseNotes(String version, List<Commit> commits) {
   const sectionHeadings = <CommitType, String>{
     CommitType.feature: 'Feature updates',
     CommitType.fix: 'Bug fixes',
+    CommitType.style: 'UI improvements',
     CommitType.chore: 'Other updates',
   };
 
